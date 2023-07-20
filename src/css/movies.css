@@ -1,0 +1,616 @@
+.movie-page-box {
+    height: 100vh;
+    display: flex;
+    display: -webkit-flex;
+    padding: 2rem 4rem;
+}
+
+.movie-left-box {
+
+}
+
+.back-box {
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.movie-back-search-box {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+}
+
+.movie-top-back-box {
+    width: 7.3rem;
+    height: 7.3rem;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 0.3rem solid transparent;
+}
+
+.movie-top-back-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.movie-top-back-box>img {
+
+}
+
+.movie-top-search-box {
+    width: 33.7rem;
+    height: 7.2rem;
+    border-radius: 2rem;
+    display: flex;
+    align-items: center;
+    font-size: 2.8rem;
+    color: white;
+    font-weight: 700;
+    margin-left: 0.7rem;
+    background-color: rgba(255, 255, 255, 0.11);
+    border: 0.3rem solid transparent;
+}
+
+.movie-top-search-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.movie-top-search-box>img {
+    margin-left: 2.7rem;
+    margin-right: 3.2rem;
+}
+
+.movie-categories-box {
+    margin-top: 2.7rem;
+    height: 87rem;
+    overflow: hidden;
+    width: 41.7rem;
+}
+
+.movie-categories-content-box {
+    height: 1e+32rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    transition: 0.2s linear;
+    position: relative;
+}
+
+.movie-categories-card-box {
+    height: 8.2rem;
+    color: white;
+    font-size: 2.8rem;
+    font-weight: 700;
+    background-color: rgba(30, 31, 32, 0.45);
+    border-radius: 2rem;
+    /* margin-top: 3rem; */
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    padding: 2rem;
+    text-align: center;
+    border: 0.3rem solid rgba(255, 255, 255, 0.122);
+    white-space: nowrap;
+    position: absolute;
+    width: 100%;
+}
+
+.movie-categories-card-box:nth-child(1) {
+    margin-top: 0rem;
+}
+
+.movie-categories-card-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.movie-categories-card-box.selectid {
+    background-color: rgb(60, 199, 44);
+}
+
+.movie-vods-box {
+    margin-left: 2rem;
+    width: 140rem;
+    height: 97rem;
+    overflow: hidden;
+}
+
+.movie-vods-content-box {
+    transition: 0.2s linear;
+    position: relative;
+}
+
+.movie-vods-rows-box {
+    display: flex;
+    /* margin-top: 2.6rem; */
+    position: absolute;
+}
+
+.movie-vods-rows-box:nth-child(1) {
+    margin-top: 0rem;
+}
+
+.movie-vods-card-box {
+    width: 32.8rem;
+    height: 43.4rem;
+    border-radius: 2rem;
+    /* margin-left: 2.4rem; */
+    /* position: relative; */
+    border: 0.3rem solid transparent;
+    position: absolute;
+}
+
+.movie-vods-card-box:nth-child(1) {
+    margin-left: 0;
+}
+
+.movie-vods-card-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.movie-vods-card-poster {
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    object-fit: cover;
+    position: relative;
+}
+
+.movie-vods-card-name {
+    color: white;
+    font-size: 2.6rem;
+    font-weight: 800;
+    position: absolute;
+    z-index: 9;
+    top: 2.2rem;
+    left: 2.2rem;
+    max-width: 20rem;
+    overflow: hidden;
+    max-height: 12rem;
+}
+
+.movie-vods-card-gradient {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    border-radius: 2rem;
+    background-color: rgba(22, 24, 30, 0.5);
+}
+
+.movie-loading-box {
+    height: 100vh;
+    display: flex;
+    display: -webkit-flex;
+    padding: 1rem 4rem;
+}
+
+.movie-loading-categories-box {
+    overflow: hidden;
+    width: 41.7rem;
+}
+
+.categories-loaidng-item {
+    height: 8.2rem;
+    border-radius: 2rem;
+    margin-top: 3.3rem;
+    padding: 2rem;
+    width: 100%;
+    position: relative;
+    background: rgb(58, 58, 58);
+    background-image: linear-gradient(to right, rgb(58, 58, 58) 0%, rgb(63, 63, 63) 10%, rgb(74, 74, 74) 20%, rgb(63, 63, 63) 30%, rgb(58, 58, 58) 50%, rgb(58, 58, 58) 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 500px; 
+
+    /* Animantion */
+    -webkit-animation-duration: 1s;
+
+    /* Specifies style for element when animation isn't playing */
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: shimmer-header-load-card;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+.movies-loading-vods-box {
+    width: 142rem;
+    overflow: hidden;
+}
+
+.movies-loading-vods-row-box {
+    display: flex;
+    margin-top: 2.6rem;
+}
+
+.movies-loading-vods-row-item {
+    width: 25.8rem;
+    height: 32.4rem;
+    border-radius: 2rem;
+    margin-left: 2.4rem;
+    position: relative;
+    border: 0.3rem solid transparent;
+    transition: 0.2s linear;
+
+    position: relative;
+    background: rgb(58, 58, 58);
+    background-image: linear-gradient(to right, rgb(58, 58, 58) 0%, rgb(63, 63, 63) 10%, rgb(74, 74, 74) 20%, rgb(63, 63, 63) 30%, rgb(58, 58, 58) 50%, rgb(58, 58, 58) 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 500px; 
+
+    /* Animantion */
+    -webkit-animation-duration: 1s;
+
+    /* Specifies style for element when animation isn't playing */
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-name: shimmer-header-load-card;
+    -webkit-animation-timing-function: ease-in-out;
+}
+
+.movie-search-page-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 9;
+    width: 100%;
+    height: 100vh;
+    background-image: url(../images/Bg.png);
+    padding: 2rem 3rem;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.movie-search-vods-list-box {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 10rem;
+}
+
+.movie-search-vods-list-content-box {
+    transition: 0.2s linear;
+    display: -webkit-box;
+    position: relative;
+    height: 43.5rem;
+}
+
+.movie-search-keyboard-box {
+    width: 123rem;
+    padding: 2rem 3rem;
+    border-radius: 1rem;
+    background: #0B0A0A;
+    position: fixed;
+    bottom: 2rem;
+}
+
+.search-header-box {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-back-box {
+    width: 7.3rem;
+    height: 7.3rem;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 0.3rem solid transparent;
+}
+
+.search-back-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.search-search-bar-box {
+    display: flex;
+    display: -webkit-flex;
+    width: 160rem;
+    margin-left: 3rem;
+    height: 7.2rem;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 2rem;
+    align-items: center;
+}
+
+.search-bar-icon {
+    width: 4rem;
+    height: 4rem;
+    margin-left: 3rem;
+}
+
+.search-bar-input {
+    background-color: transparent;
+    border: 0;
+    width: 140rem;
+    color: white;
+    margin-left: 2rem;
+    height: 100%;
+    border-radius: 2rem;
+    font-size: 3rem;
+}
+
+.info-loading-box {
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0B0A0A;
+    z-index: 99;
+}
+
+.info-loading-content {
+    height: 10rem;
+    width: 10rem;
+}
+
+.movie-info-page-box {
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    z-index: 99;
+    left: 0;
+    top: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 2rem 4rem;
+    background-color: rgba(255, 255, 255, 0);
+    transition: 0.3s;
+    opacity: 0;
+}
+
+.movie-info-page-back {
+    position: relative;
+    width: 7.3rem;
+    height: 7.3rem;
+    border-radius: 2rem;
+    background-color: rgba(78, 75, 75, 0.3);
+    border: 0.3rem solid transparent;
+    z-index: 99;
+}
+
+.movie-info-page-back.active {
+    border: 0.3rem solid #3eff0e;
+}
+
+.movie-info-left-gradient {
+    height: 100vh;
+    width: 192rem;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background-image: linear-gradient(270deg, rgba(32, 32, 32, 0), rgb(32, 32, 32));
+}
+
+.movie-info-bottom-gradient {
+    position: absolute;
+    width: 100%;
+    height: 50rem;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(180deg, rgba(32, 32, 32, 0), rgb(32, 32, 32));
+}
+
+.movie-info-content-box {
+    margin-top: 2rem;
+    position: relative;
+}
+
+.movie-info-content-name-box {
+    color: #FDFDFD;
+    font-size: 3.4rem;
+    font-weight: 700;
+}
+
+.movie-info-content-desc-box {
+    height: 21rem;
+    font-weight: 400;
+    font-size: 2.6rem;
+    width: 85rem;
+    color: white;
+    overflow: hidden;
+    margin-top: 1rem;
+    white-space: break-spaces;
+    text-overflow: ellipsis;
+    line-height: 3.5rem;
+}
+
+.movie-info-content-buttons-box {
+    margin-top: 7rem;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    color: white;
+    
+}
+
+.movie-info-content-button-box {
+    background-color: rgba(62, 255, 14, 0.769);
+    width: 20rem;
+    height: 7.5rem;
+    border-radius: 1.2rem;
+    font-size: 2.7rem;
+    padding: 1.5rem;
+    text-align: center;
+    margin-left: 3rem;
+    border: 0.3rem solid transparent;
+}
+
+.movie-info-content-button-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.movie-info-content-button-box:nth-child(1) {
+    margin-left: 0rem;
+}
+
+.movie-info-content-button-box:nth-child(2) {
+    background-color: rgba(249, 249, 249, 0.20) !important;
+}
+
+.movie-info-similar-vods-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    margin-top: 2rem;
+}
+
+.movie-info-similar-title {
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-top: 3rem;
+}
+
+.movie-info-similar-list-box {
+    margin-top: 2rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+.movie-info-similar-list-content-box {
+    display: inline-flex;
+    position: relative;
+    height: 43.5rem;
+    transition: 0.3s;
+}
+
+.movie-info-series-box {
+    position: relative;
+}
+
+.movie-info-seasons-buttons {
+    width: 90rem;
+    overflow: hidden;
+    margin-top: 6rem;
+}
+
+.movie-info-seasons-buttons-content {
+    display: inline-flex;
+    transition: 0.2s linear;
+}
+
+.movie-info-seasons-button {
+    border: 0.3rem solid rgba(255, 255, 255, 0.31) !important;
+    color: white;
+    font-weight: 700;
+    font-size: 2.4rem;
+    background-color: rgba(30, 31, 32, 0.45);
+    width: 21.4rem;
+    height: 9rem;
+    display: flex;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-radius: 1.2rem;
+    margin-left: 2.3rem;
+}
+
+.movie-info-seasons-button:nth-child(1) {
+    margin-left: 0rem;
+}
+
+.movie-info-seasons-button.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.movie-info-episodes-box {
+    position: relative;
+}
+
+.movie-info-episodes-title {
+    color: white;
+    font-weight: 400;
+    font-size: 3.2rem;
+    margin-top: 5rem;
+}
+
+.movie-info-episodes-list-box {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 2rem;
+}
+
+.movie-info-episodes-list-content-box {
+    transition: 0.2s linear;
+    display: inline-flex;
+}
+
+.movie-info-episodes-card-box {
+    color: white;
+    width: 40rem;
+    height: 29rem;
+    border-radius: 2rem;
+    margin-left: 3rem;
+    border: 0.3rem solid transparent !important;
+    position: relative;
+}
+
+.movie-info-episodes-card-box:nth-child(1) {
+    margin-left: 0rem;
+}
+
+.movie-info-episodes-card-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.movie-info-episodes-poster-box {
+    width: 100%;
+    border-radius: 2rem;
+    height: 22.1rem;
+    object-fit: cover;
+}
+
+.movie-info-episodes-name-box {
+    margin-top: 1.5rem;
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-left: 1.5rem;
+    height: 3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: break-spaces;
+}
+
+.movie-info-episodes-gradient-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 2rem;
+    background-color: rgba(22, 24, 30, 0.5);
+    width: 100%;
+    height: 22.1rem;
+}
+
+.movie-player-page-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    z-index: 9999;
+}
+
+.movie-player-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes shimmer-header-load-card {
+    0% {
+        background-position: -400px 0;
+    }
+    100% {
+        background-position: 400px 0; 
+    }
+}
