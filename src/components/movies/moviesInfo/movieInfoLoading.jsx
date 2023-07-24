@@ -3,8 +3,6 @@ import RenderLoadingBox from "../../loading.jsx";
 import useKeydown from "../../../remote/useKeydown.js";
 
 function RenderInfoLoading ({ onAbort, onClose }) {
-    console.log(onAbort, onClose);
-
     const dispatch = useDispatch()
 
     const currentControls = useSelector(function (state) {

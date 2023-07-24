@@ -2,6 +2,7 @@ async function get_movies_data () {
     const CATEGORYURL = 'http://diblax.spartacus.site/player_api.php?username=WOYQyy5YzT&password=2WawEOAw0d&type=m3u_plus&output=ts&action=get_vod_categories'
     const MOVIESURL = 'http://diblax.spartacus.site/player_api.php?username=WOYQyy5YzT&password=2WawEOAw0d&type=m3u_plus&output=ts&action=get_vod_streams'
     let vods = {}
+    const movies_favorite = localStorage.getItem('movies-favorit') ? JSON.parse(localStorage.getItem('movies-favorit')) : {}
 
     let json_data = await fetch(CATEGORYURL)
     let category = await json_data.json();
@@ -15,6 +16,11 @@ async function get_movies_data () {
 
     for (let i = 0; i < movies.length; i++) {
         if (vods[movies[i].category_id]) {
+            if (movies_favorite[movies[i].stream_id]) {
+                if (movies_favorite[movies[i].stream_id].favorit) {
+                    movies[i].favorit = true
+                }
+            }
             vods[movies[i].category_id].movies.push(movies[i])
         }
     }

@@ -43,6 +43,15 @@ function RenderMenu () {
                         }
                     }
                 )
+
+                dispatch(
+                    {
+                        type: 'CHANGE_SELECTID_CATEGORY_ID',
+                        payload: {
+                            categoryId: 0
+                        }
+                    }
+                )
             }
         },
         {
@@ -64,6 +73,15 @@ function RenderMenu () {
                         type: 'CHANGE_SELECTID_CATEGORY',
                         payload: {
                             category: 0
+                        }
+                    }
+                )
+
+                dispatch(
+                    {
+                        type: 'CHANGE_SELECTID_CATEGORY_ID',
+                        payload: {
+                            categoryId: 0
                         }
                     }
                 )

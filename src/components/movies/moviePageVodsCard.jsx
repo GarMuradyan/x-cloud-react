@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import notFound from "../../images/notFound.png"
+import favorit from "../../images/favorit.png"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { memo } from "react"
@@ -52,8 +53,8 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
     return (
         <div onClick={cardClick} style={{ left: index * 352 + 'px' }} className={isActive ? "movie-vods-card-box active" : "movie-vods-card-box"}>
 
-            <img className="movie-vods-card-poster" src={image} placeholder="blur" onError={(e) => {
-                setImage(notFound)
+            <img className="movie-vods-card-poster" src={data.cover || data.stream_icon || notFound} placeholder="blur" onError={(e) => {
+                e.target.src = notFound
             }}
 
                 onLoad={() => {
@@ -63,6 +64,8 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
             <p className="movie-vods-card-name">{data.name}</p>
 
             {image !== notFound ? <div className="movie-vods-card-gradient"></div> : false}
+
+            {data.favorit ? <img className="movie-vods-card-favorit" src={favorit} /> : false}
 
         </div>
     )

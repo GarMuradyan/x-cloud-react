@@ -98,7 +98,7 @@ function RenderMovieInfoPage () {
                     )
                 }
             } else {
-                console.log('----chkaaa');
+                console.log('data-not-found');
                 onClose()
             }
         }, state.type)
@@ -151,7 +151,6 @@ function RenderMovieInfoPage () {
 
 
     setTimeout(() => {
-        console.log(infoRef.current);
         if (infoRef.current) {
             infoRef.current.style.opacity = '1'
         }

@@ -1,20 +1,70 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import useKeydown from "../../../remote/useKeydown"
+import Portal from "../../portal.jsx"
+import RenderMoviePlayerPage from '../moviePlayer/moviePlayer.jsx'
+import { moviesFavorit } from "../favoritConfig"
 
 function RenderMovieInfoContent ({ data, onClose, type }) {
 
-    const buttonsInfo = [{ name: 'Play', type: "play" }, { name: 'Watch trailer', type: "trailer" }]
+    const buttonsInfo = [{ name: 'Play', type: "play" }, { name: 'Watch trailer', type: "trailer" }, { name: 'Favorit', type: 'favorit' }]
+    const [showPlayer, setShowPlayer] = useState(false)
 
     const selectidMovie = useSelector(function (state) {
         return state.selectidMovie
     })
 
+    const playerInfo = {
+        src: `http://diblax.spartacus.site/movie/WOYQyy5YzT/2WawEOAw0d/${ selectidMovie.stream_id }.${ selectidMovie.container_extension }`,
+        onClose: () => {
+            setShowPlayer(false)
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'movie-info-buttons'
+                    }
+                }
+            )
+        }
+    }
+
     const buttonsClick = (val) => {
         if (val.type == 'play') {
             if (type == 'movie') {
                 console.log(selectidMovie);
+                setShowPlayer(true)
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'movie-player'
+                        }
+                    }
+                )
             }
+        } else if (val.type == 'favorit') {
+            // if (type == 'movie') {
+            //     const id = selectidMovie.stream_id
+            //     console.log(selectidMovie);
+            //     if (selectidMovie.favorit) {
+            //         selectidMovie.favorit = false
+            //         if (moviesFavorit[id]) {
+            //             moviesFavorit[id].favorit = false
+            //         } else {
+            //             moviesFavorit[id] = { favorit: false }
+            //         }
+            //         localStorage.setItem('movies-favorit', JSON.stringify(moviesFavorit))
+            //     } else {
+            //         selectidMovie.favorit = true
+            //         if (moviesFavorit[id]) {
+            //             moviesFavorit[id].favorit = true
+            //         } else {
+            //             moviesFavorit[id] = { favorit: true }
+            //         }
+            //         localStorage.setItem('movies-favorit', JSON.stringify(moviesFavorit))
+            //     }
+            // }
         }
     }
 
@@ -106,6 +156,9 @@ function RenderMovieInfoContent ({ data, onClose, type }) {
                 })}
 
             </div>
+
+
+            {showPlayer ? <Portal element={<RenderMoviePlayerPage {...playerInfo} />}></Portal> : false}
 
         </div>
     )

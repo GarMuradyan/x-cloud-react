@@ -17,6 +17,18 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
     const [playerInfo, setPLayerInfo] = useState(false)
 
     let [isIndex, setIsIndex] = useState(0)
+    let [transIndex, setTransIndex] = useState(0)
+    let [start, setStart] = useState(0)
+    let [end, setEnd] = useState(5)
+    const [isAnimated, setIsAnimated] = useState(true)
+    const fixCategories = []
+
+    for (let i = start; i < end; i++) {
+        if (season[i]) {
+            season[i].index = i
+            fixCategories.push(season[i])
+        }
+    }
 
     const cardClick = (data) => {
 
@@ -24,6 +36,14 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
             src: null,
             onClose: () => {
                 setShowPlayer(false)
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'movie-info-episodes'
+                        }
+                    }
+                )
             }
         }
         console.log(data);
@@ -47,14 +67,54 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
         isActive: currentControls == 'movie-info-episodes',
 
         ok: function (e) {
-            cardClick(season[isIndex])
+            cardClick(fixCategories[isIndex])
         },
 
         left: function (e) {
-
+            if (isIndex > 0) {
+                if (isAnimated) {
+                    setIsIndex(isIndex -= 1)
+                    if (isIndex < 2 && end !== 5) {
+                        setTransIndex(transIndex -= 1)
+                        setIsAnimated(false)
+                        setTimeout(() => {
+                            setIsAnimated(true)
+                            setIsIndex(2)
+                            setStart(start -= 1)
+                            setEnd(end -= 1)
+                        }, 100);
+                    } else {
+                        if (isIndex > 1) {
+                            setTransIndex(transIndex -= 1)
+                        }
+                    }
+                }
+            }
         },
 
         right: function (e) {
+
+            if (isIndex < fixCategories.length - 1) {
+                if (isAnimated) {
+                    setIsIndex(isIndex += 1)
+                    if (isIndex > 2 && end < season.length) {
+                        setTransIndex(transIndex += 1)
+                        setIsAnimated(false)
+                        console.log(isAnimated);
+                        setTimeout(() => {
+                            setIsAnimated(true)
+                            console.log(isAnimated);
+                            setIsIndex(2)
+                            setStart(start += 1)
+                            setEnd(end += 1)
+                        }, 100);
+                    } else {
+                        if (isIndex > 2) {
+                            setTransIndex(transIndex += 1)
+                        }
+                    }
+                }
+            }
 
         },
 
@@ -89,11 +149,11 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
 
             <div className="movie-info-episodes-list-box">
 
-                <div className="movie-info-episodes-list-content-box">
+                <div style={{ transform: 'translateX(' + (- transIndex * 530) + 'px)' }} className="movie-info-episodes-list-content-box">
 
-                    {season.map((val, i) => {
+                    {fixCategories.map((val, i) => {
                         return (
-                            <RenderMovieInfoEpisodesCard key={i} data={val} type={type} isActive={control.isActive && isIndex == i} />
+                            <RenderMovieInfoEpisodesCard key={i} data={val} type={type} isActive={control.isActive && isIndex == i} index={val.index} />
                         )
                     })}
 

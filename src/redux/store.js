@@ -55,6 +55,14 @@ const store = createStore(function (state, action) {
 
     }
 
+    if (action.type === 'CHANGE_SELECTID_CATEGORY_ID') {
+        return {
+            ...state,
+            selectidCategoryId: action.payload.categoryId
+        }
+
+    }
+
     return state
 }, {
     currentControl: '',
@@ -64,6 +72,7 @@ const store = createStore(function (state, action) {
     searchList: [],
     selectidMovie: null,
     selectidCategory: 0,
+    selectidCategoryId: 0,
 })
 
 export default store

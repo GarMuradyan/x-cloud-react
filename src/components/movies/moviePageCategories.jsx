@@ -11,7 +11,6 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
     const navigate = useNavigate()
     const contentRef = useRef(null)
     let [isIndex, setIsIndex] = useState(0)
-    let [isSelectid, setIsSelectid] = useState(0)
     let [start, setStart] = useState(0)
     let [end, setEnd] = useState(8)
     let [selectCateg, setSelectCateg] = useState(0)
@@ -35,7 +34,6 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
 
         ok: function (e) {
             setSelectidCategories(selectCateg)
-            setIsSelectid(isIndex)
             dispatch(
                 {
                     type: 'CHANGE_CONTROLS',
@@ -50,6 +48,15 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
                     type: 'CHANGE_SELECTID_CATEGORY',
                     payload: {
                         category: selectCateg
+                    }
+                }
+            )
+
+            dispatch(
+                {
+                    type: 'CHANGE_SELECTID_CATEGORY_ID',
+                    payload: {
+                        categoryId: fixCategories[isIndex].category_id
                     }
                 }
             )
@@ -139,7 +146,7 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
                 {fixCategories.map((val, i) => {
 
                     return (
-                        <RenderMoviesCategoriesCard key={i} data={val} isActive={isIndex == i && control.isActive} setSelectidCategories={setSelectidCategories} index={val.index} selectid={isSelectid == isIndex} />
+                        <RenderMoviesCategoriesCard key={i} data={val} isActive={isIndex == i && control.isActive} setSelectidCategories={setSelectidCategories} index={val.index} />
                     )
 
                 })}
