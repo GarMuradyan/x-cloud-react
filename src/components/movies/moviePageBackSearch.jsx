@@ -66,6 +66,14 @@ function RenderMovieBackSearch ({ movies }) {
         ok: function (e) {
             if (isIndex == 0) {
                 navigate('/menu')
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'menu-item'
+                        }
+                    }
+                )
             } else if (isIndex == 1) {
                 searchButtonClick()
             }
@@ -114,6 +122,14 @@ function RenderMovieBackSearch ({ movies }) {
 
         back: () => {
             navigate('/menu')
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'menu-item'
+                    }
+                }
+            )
         }
 
     }

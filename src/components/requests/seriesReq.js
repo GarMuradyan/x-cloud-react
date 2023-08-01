@@ -1,7 +1,10 @@
+import { seriesFavoritArr } from "../movies/favoritConfig"
+
 async function get_series_data () {
     const CATEGORYURL = 'http://diblax.spartacus.site/player_api.php?username=WOYQyy5YzT&password=2WawEOAw0d&type=m3u_plus&output=ts&action=get_series_categories'
     const MOVIESURL = 'http://diblax.spartacus.site/player_api.php?username=WOYQyy5YzT&password=2WawEOAw0d&type=m3u_plus&output=ts&action=get_series'
     let vods = {}
+    const series_favorite = localStorage.getItem('series-favorit') ? JSON.parse(localStorage.getItem('series-favorit')) : {}
 
     let json_data = await fetch(CATEGORYURL)
     let category = await json_data.json();
@@ -15,6 +18,12 @@ async function get_series_data () {
 
     for (let i = 0; i < movies.length; i++) {
         if (vods[movies[i].category_id]) {
+            if (series_favorite[movies[i].series_id]) {
+                if (series_favorite[movies[i].series_id].favorit) {
+                    movies[i].favorit = true
+                    seriesFavoritArr.movies.push(movies[i])
+                }
+            }
             vods[movies[i].category_id].movies.push(movies[i])
         }
     }
@@ -26,6 +35,10 @@ async function get_series_data () {
         if (ARR[i].movies.length) {
             MOVIESDATA.push(ARR[i])
         }
+    }
+
+    if (seriesFavoritArr.movies.length) {
+        MOVIESDATA.unshift(seriesFavoritArr)
     }
 
 

@@ -1,3 +1,5 @@
+import { movieFavoritArr } from "../movies/favoritConfig"
+
 async function get_movies_data () {
     const CATEGORYURL = 'http://diblax.spartacus.site/player_api.php?username=WOYQyy5YzT&password=2WawEOAw0d&type=m3u_plus&output=ts&action=get_vod_categories'
     const MOVIESURL = 'http://diblax.spartacus.site/player_api.php?username=WOYQyy5YzT&password=2WawEOAw0d&type=m3u_plus&output=ts&action=get_vod_streams'
@@ -19,6 +21,7 @@ async function get_movies_data () {
             if (movies_favorite[movies[i].stream_id]) {
                 if (movies_favorite[movies[i].stream_id].favorit) {
                     movies[i].favorit = true
+                    movieFavoritArr.movies.push(movies[i])
                 }
             }
             vods[movies[i].category_id].movies.push(movies[i])
@@ -32,6 +35,10 @@ async function get_movies_data () {
         if (ARR[i].movies.length) {
             MOVIESDATA.push(ARR[i])
         }
+    }
+
+    if (movieFavoritArr.movies.length) {
+        MOVIESDATA.unshift(movieFavoritArr)
     }
 
 

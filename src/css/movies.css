@@ -176,8 +176,24 @@
     width: 3.5rem;
     height: 3.5rem;
     position: absolute;
-    bottom: 3rem;
+    bottom: 5rem;
     right: 2rem;
+}
+
+.movie-vods-card-progres {
+    position: absolute;
+    width: 30rem;
+    background-color: rgb(190, 187, 183);
+    height: 0.7rem;
+    bottom: 2rem;
+    left: 1rem;
+    border-radius: 2rem;
+}
+
+.movie-vods-card-progresbar-box {
+    background-color: rgb(62, 255, 14);
+    height: 0.7rem;
+    border-radius: 2rem;
 }
 
 .movie-vods-card-gradient {
@@ -290,7 +306,7 @@
     width: 123rem;
     padding: 2rem 3rem;
     border-radius: 1rem;
-    background: #0B0A0A;
+    background: rgb(11, 10, 10);
     position: fixed;
     bottom: 2rem;
 }
@@ -352,7 +368,7 @@
     display: -webkit-flex;
     justify-content: center;
     align-items: center;
-    background-color: #0B0A0A;
+    background-color: rgb(11, 10, 10);
     z-index: 99;
 }
 
@@ -374,7 +390,7 @@
     padding: 2rem 4rem;
     background-color: rgba(255, 255, 255, 0);
     transition: 0.3s;
-    opacity: 0;
+    opacity: 1;
 }
 
 .movie-info-page-back {
@@ -388,7 +404,7 @@
 }
 
 .movie-info-page-back.active {
-    border: 0.3rem solid #3eff0e;
+    border: 0.3rem solid rgb(62, 255, 14);
 }
 
 .movie-info-left-gradient {
@@ -415,7 +431,7 @@
 }
 
 .movie-info-content-name-box {
-    color: #FDFDFD;
+    color: rgb(253, 253, 253);
     font-size: 3.4rem;
     font-weight: 700;
 }
@@ -478,11 +494,11 @@
     color: white;
     font-size: 3rem;
     font-weight: 800;
-    margin-top: 3rem;
+    margin-top: 5rem;
 }
 
 .movie-info-similar-list-box {
-    margin-top: 2rem;
+    margin-top: 5rem;
     width: 100%;
     overflow: hidden;
 }
@@ -499,7 +515,7 @@
 }
 
 .movie-info-seasons-buttons {
-    width: 90rem;
+    width: 105rem;
     overflow: hidden;
     margin-top: 6rem;
 }
@@ -540,13 +556,13 @@
     color: white;
     font-weight: 400;
     font-size: 3.2rem;
-    margin-top: 5rem;
+    margin-top: 7rem;
 }
 
 .movie-info-episodes-list-box {
     width: 100%;
     overflow: hidden;
-    margin-top: 2rem;
+    margin-top: 5rem;
 }
 
 .movie-info-episodes-list-content-box {
@@ -592,7 +608,7 @@
     white-space: break-spaces;
     width: 34rem;
     position: relative;
-    bottom: 10rem;
+    bottom: 12rem;
     z-index: 99;
 }
 
@@ -601,7 +617,7 @@
     color: white;
     font-size: 2.5rem;
     position: relative;
-    bottom: 90px;
+    bottom: 12rem;
     z-index: 99;
     font-weight: 700;
 }
@@ -614,6 +630,23 @@
     background-color: rgba(22, 24, 30, 0.5);
     width: 100%;
     height: 100%;
+}
+
+.movie-info-episodes-progres-box {
+    border-radius: 2rem;
+    position: relative;
+    bottom: 10rem;
+    z-index: 99;
+    margin-left: 2rem;
+    width: 45rem;
+    height: 0.6rem;
+    background-color: rgb(190, 187, 183);
+}
+
+.movie-info-episodes-progresbar-box {
+    background-color: rgb(62, 255, 14);
+    height: 0.6rem;
+    border-radius: 2rem;
 }
 
 .movie-player-page-box {
@@ -659,7 +692,7 @@
 .movie-player-timeline-box {
     width: 150rem;
     height: 0.6rem;
-    background-color: #E4E7E5;
+    background-color: rgb(228, 231, 229);
     border-radius: 1rem;
 }
 
@@ -697,6 +730,15 @@
     position: absolute;
     top: 45%;
     left: 48%;
+}
+
+.video-play-pause-box {
+    position: fixed;
+    top: -48rem;
+    left: 49.3%;
+    width: 4rem;
+    height: 5rem;
+    transition: 0.2s linear;
 }
 
 @keyframes shimmer-header-load-card {

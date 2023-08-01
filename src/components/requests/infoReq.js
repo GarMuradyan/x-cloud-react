@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom'
 import req from './req.js'
 
 function GET_INFO_DATA (id, cb, type) {
@@ -14,10 +13,7 @@ function GET_INFO_DATA (id, cb, type) {
         cb(res)
     }).catch(function (err) {
         cb(err)
-        console.log(err, '-----');
     })
-
-    console.log(promise);
 
     return promise
 }

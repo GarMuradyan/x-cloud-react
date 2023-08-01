@@ -65,7 +65,7 @@ const store = createStore(function (state, action) {
 
     return state
 }, {
-    currentControl: '',
+    currentControl: 'menu-item',
     movieData: null,
     seriesData: null,
     searchInputValue: '',

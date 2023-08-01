@@ -12,7 +12,7 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
     const contentRef = useRef(null)
     let [isIndex, setIsIndex] = useState(0)
     let [start, setStart] = useState(0)
-    let [end, setEnd] = useState(8)
+    let [end, setEnd] = useState(15)
     let [selectCateg, setSelectCateg] = useState(0)
     let [transIndex, setTransIndex] = useState(0)
     const [isAnimated, setIsAnimated] = useState(true)
@@ -79,7 +79,8 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
 
         up: function (e) {
 
-            if (isIndex == 0) {
+            if (start == 0) {
+                setIsIndex(0)
                 dispatch(
                     {
                         type: 'CHANGE_CONTROLS',
@@ -88,21 +89,24 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
                         }
                     }
                 )
+                return
             }
 
-            if (isIndex > 0) {
+            if (isIndex >= 0) {
                 if (isAnimated) {
                     setIsIndex(isIndex -= 1)
                     setSelectCateg(selectCateg -= 1)
-                    if (isIndex < 3 && end !== 8) {
+                    if (isIndex < 0 && end !== 8) {
                         setTransIndex(transIndex -= 1)
                         setIsAnimated(false)
+                        setIsIndex(0)
+                        setStart(start -= 1)
+                        setEnd(end -= 1)
                         setTimeout(() => {
                             setIsAnimated(true)
-                            setIsIndex(3)
-                            setStart(start -= 1)
-                            setEnd(end -= 1)
                         }, 100);
+                    } else {
+                        setTransIndex(transIndex -= 1)
                     }
                 }
 
@@ -114,17 +118,17 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
                 if (isAnimated) {
                     setIsIndex(isIndex += 1)
                     setSelectCateg(selectCateg += 1)
-                    if (isIndex > 3 && end < category.length) {
+                    if (isIndex > 0 && end < category.length) {
                         setTransIndex(transIndex += 1)
                         setIsAnimated(false)
-                        console.log(isAnimated);
+                        setIsIndex(0)
                         setTimeout(() => {
-                            setIsAnimated(true)
-                            console.log(isAnimated);
-                            setIsIndex(3)
                             setStart(start += 1)
                             setEnd(end += 1)
+                            setIsAnimated(true)
                         }, 100);
+                    } else {
+                        setTransIndex(transIndex += 1)
                     }
                 }
             }
@@ -132,6 +136,14 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
 
         back: () => {
             navigate('/menu')
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'menu-item'
+                    }
+                }
+            )
         }
 
     }

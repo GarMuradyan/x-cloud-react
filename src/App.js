@@ -8,16 +8,27 @@ import RenderSeries from './components/movies/series.js';
 import RenderMovie from './components/movies/movie.js';
 import RenderMovieSearch from './components/movies/moviesSearch/movieSearch.jsx'
 import RenderMovieInfoPage from './components/movies/moviesInfo/movieInfoPage.jsx';
+import RenderSettingsPage from './components/settings/settings.jsx';
+import { useDispatch } from 'react-redux';
 
 
 
 function App () {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
       navigate('/menu')
+      dispatch(
+        {
+          type: 'CHANGE_CONTROLS',
+          payload: {
+            name: 'menu-item'
+          }
+        }
+      )
     } else {
       navigate('/login')
     }
@@ -32,6 +43,7 @@ function App () {
       <Route path='/movie' element={<RenderMovie />} />
       <Route path='/search' element={<RenderMovieSearch />} />
       <Route path='/vod_info' element={<RenderMovieInfoPage />} />
+      <Route path='/settings' element={<RenderSettingsPage />} />
     </Routes>
   );
 }

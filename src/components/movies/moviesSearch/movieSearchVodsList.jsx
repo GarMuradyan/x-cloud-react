@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom"
 import { memo } from "react"
 
 function RenderMovieSearchVodsList ({ movies, onClose, type }) {
-    console.log('render-search-list');
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -42,8 +40,6 @@ function RenderMovieSearchVodsList ({ movies, onClose, type }) {
             id: data.stream_id || data.series_id,
             similar: movies
         }
-
-        console.log(stateData);
 
         navigate('/vod_info', { state: stateData })
     }

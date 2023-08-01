@@ -36,7 +36,6 @@ function RenderInfoLoading ({ onAbort, onClose }) {
         back: () => {
             onAbort.abort()
             onClose()
-            console.log(currentControls);
         }
     }
 

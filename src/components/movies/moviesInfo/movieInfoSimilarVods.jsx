@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { memo } from "react";
 
 function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
-
-    console.log(similar);
+    console.log('render-similar')
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -55,8 +54,6 @@ function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
             similar: similar
         }
 
-        console.log(stateData);
-
         navigate('/vod_info', { state: stateData })
     }
 
@@ -81,7 +78,6 @@ function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
                             setEnd(end -= 1)
                         }, 100);
                     } else {
-                        console.log('else');
                         if (isIndex > 3) {
                             setTransIndex(transIndex -= 1)
                         }
@@ -97,10 +93,8 @@ function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
                     if (isIndex > 3 && end < similar.length) {
                         setTransIndex(transIndex += 1)
                         setIsAnimated(false)
-                        console.log(isAnimated);
                         setTimeout(() => {
                             setIsAnimated(true)
-                            console.log(isAnimated);
                             setIsIndex(3)
                             setStart(start += 1)
                             setEnd(end += 1)

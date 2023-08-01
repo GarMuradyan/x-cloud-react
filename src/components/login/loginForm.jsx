@@ -2,6 +2,7 @@ import { useState } from 'react'
 import '../../css/login.css'
 import useKeydown from '../../remote/useKeydown'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 function RenderLoginForm () {
 
@@ -9,12 +10,20 @@ function RenderLoginForm () {
     const [showKeyboard, setShowKeyboard] = useState(false)
     let [isIndex, setIsIndex] = useState(0)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const itemClick = (e) => {
-        console.log('click');
         if (isIndex == 3) {
             localStorage.setItem('token', '123456')
             navigate('/menu')
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'menu-item'
+                    }
+                }
+            )
 
         }
     }

@@ -44,11 +44,11 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
                         }
                     }
                 )
-            }
+            },
+            movie: data,
+            type: type
         }
-        console.log(data);
         playerData.src = `http://diblax.spartacus.site/series/WOYQyy5YzT/2WawEOAw0d/${ data.id }.${ data.container_extension }`
-        console.log(playerData);
         setPLayerInfo(playerData)
 
         setShowPlayer(true)
@@ -82,7 +82,7 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
                             setIsIndex(2)
                             setStart(start -= 1)
                             setEnd(end -= 1)
-                        }, 100);
+                        }, 30);
                     } else {
                         if (isIndex > 1) {
                             setTransIndex(transIndex -= 1)
@@ -100,14 +100,12 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
                     if (isIndex > 2 && end < season.length) {
                         setTransIndex(transIndex += 1)
                         setIsAnimated(false)
-                        console.log(isAnimated);
                         setTimeout(() => {
                             setIsAnimated(true)
-                            console.log(isAnimated);
                             setIsIndex(2)
                             setStart(start += 1)
                             setEnd(end += 1)
-                        }, 100);
+                        }, 30);
                     } else {
                         if (isIndex > 2) {
                             setTransIndex(transIndex += 1)

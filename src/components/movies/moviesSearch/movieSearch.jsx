@@ -30,8 +30,6 @@ function RenderMovieSearch () {
         }
     })
 
-    console.log(filterData);
-
     dispatch(
         {
             type: 'CHANGE_SEARCH_INPUT_VALUE',
@@ -73,8 +71,6 @@ function RenderMovieSearch () {
             fixList.push(filterData[i])
         }
     }
-
-    console.log(filterData);
 
     return (
         <div className="movie-search-page-box">

@@ -8,9 +8,12 @@ import '../../css/menu.css'
 import { useState } from "react"
 import useKeydown from "../../remote/useKeydown"
 import { useNavigate } from "react-router-dom"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import RenderMenuExit from "./menuExit.jsx"
 
 function RenderMenu () {
+
+    const [showExit, setShowExit] = useState(false)
 
     const menu_data = [
         {
@@ -92,7 +95,14 @@ function RenderMenu () {
             path: '/settings',
             img: settingsLogo,
             dispatch: function () {
-
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-items'
+                        }
+                    }
+                )
             }
         },
     ]
@@ -103,8 +113,12 @@ function RenderMenu () {
 
     const dispatch = useDispatch()
 
-    useKeydown({
-        isActive: true,
+    const currentControls = useSelector(function (state) {
+        return state.currentControl
+    })
+
+    let control = {
+        isActive: currentControls == 'menu-item',
 
         ok: function (e) {
             navigate(menu_data[isIndex].path)
@@ -130,8 +144,22 @@ function RenderMenu () {
 
         down: function (e) {
 
+        },
+
+        back: () => {
+            setShowExit(true)
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'menu-exit'
+                    }
+                }
+            )
         }
-    })
+    }
+
+    useKeydown(control)
 
     return (
         <div className="menu-page-box">
@@ -142,11 +170,13 @@ function RenderMenu () {
 
                 {menu_data.map((val, i) => {
                     return (
-                        <RenderMenuCard key={i} data={val} isActive={isIndex == i} />
+                        <RenderMenuCard key={i} data={val} isActive={control.isActive && isIndex == i} />
                     )
                 })}
 
             </div>
+
+            {showExit ? <RenderMenuExit onClose={setShowExit} /> : false}
 
         </div>
     )

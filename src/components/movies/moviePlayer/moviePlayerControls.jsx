@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import useKeydown from "../../../remote/useKeydown";
 import { useState } from "react";
 import { useEffect } from "react";
+import playLogo from '../../../images/play.png'
+import pauseLogo from '../../../images/pause.png'
 
 function RenderMoviePlayerControls ({ duration, video, changeCurrentTime, currenTime }) {
     const dispatch = useDispatch()
@@ -57,7 +59,6 @@ function RenderMoviePlayerControls ({ duration, video, changeCurrentTime, curren
                 const timeoutId = setTimeout(() => {
                     video.currentTime = currenTime
                     video.play()
-                    console.log('left-play');
                 }, 300);
                 setCurrentTimeDelay(timeoutId)
             }
@@ -76,7 +77,6 @@ function RenderMoviePlayerControls ({ duration, video, changeCurrentTime, curren
                 const timeoutId = setTimeout(() => {
                     video.currentTime = currenTime
                     video.play()
-                    console.log('right-play');
                 }, 300);
                 setCurrentTimeDelay(timeoutId)
             }
@@ -128,6 +128,8 @@ function RenderMoviePlayerControls ({ duration, video, changeCurrentTime, curren
 
     return (
         <div style={{ transform: currentControls == 'video-controls' ? 'translateY(0px)' : false }} className="movie-player-controls-box">
+
+            <img style={{ opacity: currentControls == 'video-controls' ? 1 : 0 }} className="video-play-pause-box" src={pause ? pauseLogo : playLogo} />
 
             <div className="movie-player-current-time-box">{formatTime(currenTime)}</div>
 

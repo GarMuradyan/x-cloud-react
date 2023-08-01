@@ -7,8 +7,6 @@ import { memo } from "react";
 
 function RenderKeyboard ({ onClose, setValue, value, setFilterData, movies, keyboardClose }) {
 
-    console.log('keyboard');
-
     function lowerCase () {
         for (let i = 0; i < keyboard.length; i++) {
             for (let j = 0; j < keyboard[i].length; j++) {
@@ -71,7 +69,6 @@ function RenderKeyboard ({ onClose, setValue, value, setFilterData, movies, keyb
                 searchList.push(movies[i])
             }
         }
-        console.log(searchList);
         setVodsList(searchList)
         setFilterData(searchList)
     }
@@ -84,19 +81,16 @@ function RenderKeyboard ({ onClose, setValue, value, setFilterData, movies, keyb
                 searchList.push(movies[i])
             }
         }
-        console.log(searchList);
         setVodsList(searchList)
         setFilterData(searchList)
     }
 
     const shiftClick = () => {
-        console.log('shift');
         if (shift) {
             lowerCase()
             setShift(false)
         } else {
             upperCase()
-            console.log(keyboard);
             setShift(true)
         }
     }

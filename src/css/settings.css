@@ -1,0 +1,138 @@
+.settings-page-box {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings-page-header-box {
+    position: absolute;
+    top: 5rem;
+    left: 5rem;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-header-back-box {
+    width: 7.3rem;
+    height: 7.3rem;
+    border-radius: 2rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 0.3rem solid transparent;
+}
+
+.settings-header-back-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.settings-header-title-box {
+    margin-left: 0.8rem;
+    font-size: 2.8rem;
+    font-style: normal;
+    font-weight: 700;
+    color: rgb(253, 253, 253);
+    width: 66.3rem;
+    height: 7.3rem;
+    padding: 2rem 3rem;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2rem;
+}
+
+.settings-items-box {
+    width: 72rem;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.settings-item-box {
+    width: 71.8rem;
+    height: 8.9rem;
+    margin-top: 1.6rem;
+    border: 0.3rem solid rgba(255, 255, 255, 0.271);
+    border-radius: 1.8rem;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    position: relative;
+}
+
+.settings-item-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.settings-item-img-box {
+    width: 3rem;
+    height: 3rem;
+    margin-left: 3.4rem;
+}
+
+.settings-item-name-box {
+    margin-left: 2.8rem;
+    color: rgb(253, 253, 253);
+    font-size: 2.4rem;
+    font-weight: 700;
+}
+
+.settigs-item-check-box {
+    width: 8rem;
+    height: 4.5rem;
+    position: absolute;
+    right: 2rem;
+    border-radius: 5rem;
+    background: linear-gradient(141deg, rgb(57, 179, 42) 0%, rgb(58, 141, 75) 100%);
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+}
+
+.check-button-box {
+    width: 3.5rem;
+    height: 3.5rem;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.2s linear;
+    transform: translateX(38px);
+}
+
+.settings-log-out-box {
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.541);
+}
+
+.log-out-box {
+    height: 30rem;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+.log-out-item-box {
+    width: 30rem;
+    height: 10rem;
+    border-radius: 2rem;
+    color: white;
+    font-size: 2.8rem;
+    font-weight: 800;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.188);
+    margin: 0rem 3rem;
+}
+
+.log-out-item-box.active {
+    background-color: rgba(62, 255, 14, 0.723) !important;
+}

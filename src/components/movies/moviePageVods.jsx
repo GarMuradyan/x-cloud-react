@@ -9,12 +9,10 @@ function RenderMovieVods ({ category }) {
 
     const viewMoreArray = [];
 
-    console.log('render-movies');
-
     let quantArray = [];
     const fixCategories = []
     let [start, setStart] = useState(0)
-    let [end, setEnd] = useState(3)
+    let [end, setEnd] = useState(5)
     const contentRef = useRef(null)
 
     for (let i = 0; i < category.length; i++) {
@@ -39,7 +37,6 @@ function RenderMovieVods ({ category }) {
         }
     }
 
-    console.log(fixCategories);
 
     let [isIndex, setIsIndex] = useState(0)
     let [isRowIndex, setIsRowIndex] = useState(0)
@@ -79,7 +76,6 @@ function RenderMovieVods ({ category }) {
             similar: category
         }
 
-        console.log(stateData);
 
         navigate('/vod_info', { state: stateData })
 
@@ -98,7 +94,7 @@ function RenderMovieVods ({ category }) {
                     setIsIndex(0)
                     setIsRowIndex(0)
                     setStart(0)
-                    setEnd(3)
+                    setEnd(5)
                     setTransIndex(0)
                     dispatch(
                         {
@@ -123,23 +119,21 @@ function RenderMovieVods ({ category }) {
         },
 
         up: function (e) {
-            if (isRowIndex > 0) {
+            if (isRowIndex >= 0 && end !== 5) {
                 if (isAnimated) {
                     setIsRowIndex(isRowIndex -= 1)
 
-                    if (isRowIndex < 1 && end !== 3) {
+                    if (isRowIndex < 0 && end !== 5) {
                         setTransIndex(transIndex -= 1)
                         setIsAnimated(false)
+                        setIsRowIndex(0)
+                        setStart(start -= 1)
+                        setEnd(end -= 1)
                         setTimeout(() => {
-                            setIsRowIndex(1)
-                            setStart(start -= 1)
-                            setEnd(end -= 1)
                             setIsAnimated(true)
                         }, 100);
                     } else {
-                        if (isRowIndex == 1) {
-                            setTransIndex(transIndex -= 1)
-                        }
+                        setTransIndex(transIndex -= 1)
                     }
 
                     setIsIndex(0)
@@ -154,19 +148,17 @@ function RenderMovieVods ({ category }) {
                 if (isAnimated) {
                     setIsRowIndex(isRowIndex += 1)
 
-                    if (isRowIndex > 1 && end < viewMoreArray.length) {
+                    if (isRowIndex > 0 && end < viewMoreArray.length) {
                         setTransIndex(transIndex += 1)
                         setIsAnimated(false)
+                        setIsRowIndex(0)
                         setTimeout(() => {
-                            setIsRowIndex(1)
                             setStart(start += 1)
                             setEnd(end += 1)
                             setIsAnimated(true)
                         }, 100);
                     } else {
-                        if (isRowIndex == 2) {
-                            setTransIndex(transIndex += 1)
-                        }
+                        setTransIndex(transIndex += 1)
                     }
 
                     setIsIndex(0)
@@ -177,6 +169,14 @@ function RenderMovieVods ({ category }) {
 
         back: () => {
             navigate('/menu')
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'menu-item'
+                    }
+                }
+            )
         }
     }
 

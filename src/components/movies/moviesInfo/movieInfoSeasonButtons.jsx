@@ -12,6 +12,7 @@ function RenderMovieInfoSeasonButtons ({ onClose, seasons, setSelectidSeason }) 
     })
 
     let [isIndex, setIsIndex] = useState(0)
+    let [selectid, setSelectid] = useState(0)
 
     const seasonButtonClick = (number) => {
         setSelectidSeason(number)
@@ -30,6 +31,7 @@ function RenderMovieInfoSeasonButtons ({ onClose, seasons, setSelectidSeason }) 
 
         ok: function (e) {
             seasonButtonClick(isIndex)
+            setSelectid(isIndex)
         },
 
         left: function (e) {
@@ -82,7 +84,7 @@ function RenderMovieInfoSeasonButtons ({ onClose, seasons, setSelectidSeason }) 
 
                 {seasons.map((val, i) => {
                     return (
-                        <div key={i} className={control.isActive && isIndex == i ? "movie-info-seasons-button active" : "movie-info-seasons-button"} onClick={() => {
+                        <div key={i} style={{ backgroundColor: i == selectid ? 'rgba(62, 255, 14, 0.74)' : 'rgba(30, 31, 32, 0.45)' }} className={control.isActive && isIndex == i ? "movie-info-seasons-button active" : "movie-info-seasons-button"} onClick={() => {
                             seasonButtonClick(i + 1)
                         }}>{`Season ${ i + 1 }`}</div>
                     )

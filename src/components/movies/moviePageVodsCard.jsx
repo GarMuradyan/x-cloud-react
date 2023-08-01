@@ -6,14 +6,18 @@ import { useNavigate } from "react-router-dom"
 import { memo } from "react"
 
 function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
-    console.log(type);
-    const [image, setImage] = useState(notFound)
-
+    console.log('render-movie-card')
     const navigate = useNavigate()
 
-    useEffect(() => {
-        setImage(data.cover || data.stream_icon)
-    }, [data])
+    let favorits = null
+    let continueWatching = {}
+
+    if (type == 'movie') {
+        favorits = localStorage.getItem('movies-favorit') ? JSON.parse(localStorage.getItem('movies-favorit')) : {}
+        continueWatching = localStorage.getItem('movies-continue') ? JSON.parse(localStorage.getItem('movies-continue')) : {}
+    } else {
+        favorits = localStorage.getItem('series-favorit') ? JSON.parse(localStorage.getItem('series-favorit')) : {}
+    }
 
     const dispatch = useDispatch()
 
@@ -44,11 +48,10 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
             similar: similar
         }
 
-        console.log(stateData);
-
         navigate('/vod_info', { state: stateData })
 
     }
+    console.log(data)
 
     return (
         <div onClick={cardClick} style={{ left: index * 352 + 'px' }} className={isActive ? "movie-vods-card-box active" : "movie-vods-card-box"}>
@@ -58,14 +61,17 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
             }}
 
                 onLoad={() => {
-                    console.log('load')
                 }} />
 
             <p className="movie-vods-card-name">{data.name}</p>
 
-            {image !== notFound ? <div className="movie-vods-card-gradient"></div> : false}
+            <div className="movie-vods-card-gradient"></div>
 
-            {data.favorit ? <img className="movie-vods-card-favorit" src={favorit} /> : false}
+            {favorits[data.stream_id || data.series_id] ? <img className="movie-vods-card-favorit" src={favorit} /> : false}
+
+            {continueWatching[data.stream_id] && continueWatching[data.stream_id].progresBar ? <div className="movie-vods-card-progres">
+                <div style={{ width: continueWatching[data.stream_id].progresBar }} className="movie-vods-card-progresbar-box"></div>
+            </div> : false}
 
         </div>
     )

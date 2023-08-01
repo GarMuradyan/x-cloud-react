@@ -6,14 +6,12 @@ import RenderMoviePlayerPage from '../moviePlayer/moviePlayer.jsx'
 import { useState } from 'react';
 
 function RenderMovieInfoEpisodesCard ({ data, type, isActive, index }) {
-    console.log('render-episodes');
-    console.log(data);
 
     const [showPlayer, setShowPlayer] = useState(false)
     const dispatch = useDispatch()
+    let continueWatching = localStorage.getItem('series-continue') ? JSON.parse(localStorage.getItem('series-continue')) : {}
 
     const cardClick = () => {
-        console.log(data);
         setShowPlayer(true)
         dispatch(
             {
@@ -50,6 +48,10 @@ function RenderMovieInfoEpisodesCard ({ data, type, isActive, index }) {
             <div className='movie-info-episodes-num-box'>Episode {index + 1}</div>
 
             <div className="movie-info-episodes-gradient-box"></div>
+
+            {continueWatching[data.id] && continueWatching[data.id].progresBar ? <div className='movie-info-episodes-progres-box'>
+                <div style={{ width: continueWatching[data.id].progresBar }} className='movie-info-episodes-progresbar-box'></div>
+            </div> : false}
 
             {showPlayer ? <Portal element={<RenderMoviePlayerPage {...playerInfo} />}></Portal> : false}
 

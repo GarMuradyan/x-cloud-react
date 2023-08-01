@@ -3,7 +3,6 @@ import RenderMovieInfoSeasonButtons from "./movieInfoSeasonButtons.jsx";
 import RenderMovieInfoEpisodes from "./movieInfoEpisodes.jsx";
 
 function RenderMovieInfoSearies ({ onClose, infoData, type }) {
-    console.log(infoData);
 
     const seasons = Object.values(infoData.episodes)
 
