@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useKeydown from "../../remote/useKeydown";
 import RenderMovieVodsCard from "./moviePageVodsCard.jsx"
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ function RenderMovieVods ({ category }) {
     let quantArray = [];
     const fixCategories = []
     let [start, setStart] = useState(0)
-    let [end, setEnd] = useState(5)
+    let [end, setEnd] = useState(10)
     const contentRef = useRef(null)
 
     for (let i = 0; i < category.length; i++) {
@@ -31,7 +31,8 @@ function RenderMovieVods ({ category }) {
         if (viewMoreArray[i]) {
             const obj = {
                 index: i,
-                category: viewMoreArray[i]
+                category: viewMoreArray[i],
+                id: i
             }
             fixCategories.push(obj)
         }
@@ -81,104 +82,116 @@ function RenderMovieVods ({ category }) {
 
     }
 
-    let control = {
-        isActive: currentControls == 'movies',
+    useEffect(() => {
+        setIsIndex(0)
+        setIsRowIndex(0)
+        setStart(0)
+        setEnd(10)
+        setTransIndex(0)
+    }, [category])
 
-        ok: function (e) {
-            cardClick(fixCategories[isRowIndex].category[isIndex])
-        },
+    let control = useMemo(() => {
+        return {
+            isActive: currentControls == 'movies',
 
-        left: function (e) {
-            if (isIndex == 0) {
-                if (isAnimated) {
-                    setIsIndex(0)
-                    setIsRowIndex(0)
-                    setStart(0)
-                    setEnd(5)
-                    setTransIndex(0)
-                    dispatch(
-                        {
-                            type: 'CHANGE_CONTROLS',
-                            payload: {
-                                name: 'category'
+            ok: function (e) {
+                cardClick(fixCategories[isRowIndex].category[isIndex])
+            },
+
+            left: function (e) {
+                if (isIndex == 0) {
+                    if (isAnimated) {
+                        dispatch(
+                            {
+                                type: 'CHANGE_CONTROLS',
+                                payload: {
+                                    name: 'category'
+                                }
                             }
+                        )
+                    }
+                }
+
+                if (isIndex > 0) {
+                    setIsIndex(isIndex -= 1)
+                }
+            },
+
+            right: function (e) {
+                if (isIndex < fixCategories[isRowIndex].category.length - 1) {
+                    setIsIndex(isIndex += 1)
+                }
+            },
+
+            up: function (e) {
+                if (isRowIndex >= 0 && transIndex !== 0) {
+                    if (isAnimated) {
+                        if (viewMoreArray.length > 10) {
+                            setIsRowIndex(isRowIndex -= 1)
+                            if (isRowIndex < 0 && end !== 10) {
+                                setTransIndex(transIndex -= 1)
+                                setIsRowIndex(0)
+                                setStart(start -= 1)
+                                setEnd(end -= 1)
+                            } else {
+                                setTransIndex(transIndex -= 1)
+                            }
+                        } else {
+                            setIsRowIndex(isRowIndex -= 1)
+                            setTransIndex(transIndex -= 1)
                         }
-                    )
-                }
-            }
-
-            if (isIndex > 0) {
-                setIsIndex(isIndex -= 1)
-            }
-        },
-
-        right: function (e) {
-            if (isIndex < fixCategories[isRowIndex].category.length - 1) {
-                setIsIndex(isIndex += 1)
-            }
-        },
-
-        up: function (e) {
-            if (isRowIndex >= 0 && end !== 5) {
-                if (isAnimated) {
-                    setIsRowIndex(isRowIndex -= 1)
-
-                    if (isRowIndex < 0 && end !== 5) {
-                        setTransIndex(transIndex -= 1)
                         setIsAnimated(false)
-                        setIsRowIndex(0)
-                        setStart(start -= 1)
-                        setEnd(end -= 1)
                         setTimeout(() => {
                             setIsAnimated(true)
-                        }, 100);
-                    } else {
-                        setTransIndex(transIndex -= 1)
+                        }, 400);
                     }
-
-                    setIsIndex(0)
                 }
 
-            }
 
-        },
+            },
 
-        down: function (e) {
-            if (isRowIndex < fixCategories.length - 1) {
-                if (isAnimated) {
-                    setIsRowIndex(isRowIndex += 1)
+            down: function (e) {
+                if (isRowIndex < fixCategories.length - 1) {
+                    if (isAnimated) {
+                        if (viewMoreArray.length > 10) {
+                            setTransIndex(transIndex += 1)
+                            setIsRowIndex(isRowIndex += 1)
+                            if (isRowIndex > 5 && end < viewMoreArray.length) {
+                                setIsRowIndex(5)
+                                setStart(start += 1)
+                                setEnd(end += 1)
+                            }
+                        } else {
+                            setIsRowIndex(isRowIndex += 1)
+                            setTransIndex(transIndex += 1)
+                        }
 
-                    if (isRowIndex > 0 && end < viewMoreArray.length) {
-                        setTransIndex(transIndex += 1)
+                        if (!fixCategories[isRowIndex].category[isIndex]) {
+                            setIsIndex(fixCategories[isRowIndex].category.length - 1)
+                        }
                         setIsAnimated(false)
-                        setIsRowIndex(0)
                         setTimeout(() => {
-                            setStart(start += 1)
-                            setEnd(end += 1)
                             setIsAnimated(true)
-                        }, 100);
-                    } else {
-                        setTransIndex(transIndex += 1)
-                    }
+                        }, 400);
 
-                    setIsIndex(0)
+                    }
                 }
+
+            },
+
+            back: () => {
+                navigate('/menu')
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'menu-item'
+                        }
+                    }
+                )
             }
-
-        },
-
-        back: () => {
-            navigate('/menu')
-            dispatch(
-                {
-                    type: 'CHANGE_CONTROLS',
-                    payload: {
-                        name: 'menu-item'
-                    }
-                }
-            )
         }
-    }
+    })
 
     useKeydown(control)
 
@@ -189,12 +202,12 @@ function RenderMovieVods ({ category }) {
 
                 {fixCategories.map((array, row) => {
                     return (
-                        <div key={row} style={{ top: array.index * 460 + 'px' }} className="movie-vods-rows-box">
+                        <div key={array.id} style={{ top: array.index * 460 + 'px' }} className="movie-vods-rows-box">
 
                             {array.category.map((val, i) => {
 
                                 return (
-                                    <RenderMovieVodsCard key={i} data={val} isActive={isIndex == i && isRowIndex == row && control.isActive} similar={category} close={'movies'} type={location.pathname == '/movie' ? 'movie' : 'series'} index={i} />
+                                    <RenderMovieVodsCard key={val.stream_id || val.series_id} data={val} isActive={isIndex == i && isRowIndex == row && control.isActive} similar={category} close={'movies'} type={location.pathname == '/movie' ? 'movie' : 'series'} index={i} />
                                 )
 
                             })}

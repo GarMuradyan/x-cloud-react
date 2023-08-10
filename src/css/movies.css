@@ -65,7 +65,7 @@
 
 .movie-categories-box {
     margin-top: 2.7rem;
-    height: 87rem;
+    height: 96rem;
     overflow: hidden;
     width: 41.7rem;
 }
@@ -75,7 +75,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    transition: 0.2s linear;
+    transition: 0.3s linear;
     position: relative;
 }
 
@@ -113,7 +113,7 @@
 .movie-vods-box {
     margin-left: 2rem;
     width: 140rem;
-    height: 97rem;
+    height: 106rem;
     overflow: hidden;
 }
 
@@ -150,11 +150,10 @@
     border: 0.3rem solid rgb(62, 255, 14) !important;
 }
 
-.movie-vods-card-poster {
+.movie-vods-card-box>img {
     width: 100%;
     height: 100%;
     border-radius: 2rem;
-    object-fit: cover;
     position: relative;
 }
 
@@ -173,11 +172,12 @@
 }
 
 .movie-vods-card-favorit {
-    width: 3.5rem;
-    height: 3.5rem;
-    position: absolute;
-    bottom: 5rem;
-    right: 2rem;
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+    position: absolute !important;
+    bottom: 5rem !important;
+    right: 2rem !important;
+    border-radius: 0rem !important;
 }
 
 .movie-vods-card-progres {
@@ -201,8 +201,9 @@
     width: 100%;
     height: 100%;
     top: 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50) , rgba(0, 0, 0, 0.50));
     border-radius: 2rem;
-    background-color: rgba(22, 24, 30, 0.5);
+    transition: .3s linear;
 }
 
 .movie-loading-box {
@@ -224,8 +225,8 @@
     padding: 2rem;
     width: 100%;
     position: relative;
-    background: rgb(58, 58, 58);
-    background-image: linear-gradient(to right, rgb(58, 58, 58) 0%, rgb(63, 63, 63) 10%, rgb(74, 74, 74) 20%, rgb(63, 63, 63) 30%, rgb(58, 58, 58) 50%, rgb(58, 58, 58) 100%);
+    background: rgb(40, 40, 40);
+    background-image: linear-gradient(to right, rgb(40, 40, 40) 0%, rgb(50, 50, 50) 30%, rgb(50, 50, 50) 25%, rgb(50, 50, 50) 25%, rgb(40, 40, 40) 50%, rgb(40, 40, 40) 100%);
     background-repeat: no-repeat;
     background-size: 800px 500px; 
 
@@ -242,6 +243,7 @@
 .movies-loading-vods-box {
     width: 142rem;
     overflow: hidden;
+    height: 103.4rem;
 }
 
 .movies-loading-vods-row-box {
@@ -250,24 +252,19 @@
 }
 
 .movies-loading-vods-row-item {
-    width: 25.8rem;
-    height: 32.4rem;
+    width: 32.8rem;
+    height: 43.4rem;
     border-radius: 2rem;
     margin-left: 2.4rem;
     position: relative;
     border: 0.3rem solid transparent;
     transition: 0.2s linear;
-
-    position: relative;
-    background: rgb(58, 58, 58);
-    background-image: linear-gradient(to right, rgb(58, 58, 58) 0%, rgb(63, 63, 63) 10%, rgb(74, 74, 74) 20%, rgb(63, 63, 63) 30%, rgb(58, 58, 58) 50%, rgb(58, 58, 58) 100%);
+    position: relative;    
+    background: rgb(40, 40, 40);
+    background-image: linear-gradient(to right, rgb(40, 40, 40) 0%, rgb(50, 50, 50) 30%, rgb(50, 50, 50) 25%, rgb(50, 50, 50) 25%, rgb(40, 40, 40) 50%, rgb(40, 40, 40) 100%);
     background-repeat: no-repeat;
-    background-size: 800px 500px; 
-
-    /* Animantion */
+    background-size: 800px 500px;
     -webkit-animation-duration: 1s;
-
-    /* Specifies style for element when animation isn't playing */
     -webkit-animation-fill-mode: forwards;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-name: shimmer-header-load-card;
@@ -409,11 +406,11 @@
 
 .movie-info-left-gradient {
     height: 100vh;
-    width: 192rem;
+    width: 108rem;
     left: 0;
     top: 0;
     position: absolute;
-    background-image: linear-gradient(270deg, rgba(32, 32, 32, 0), rgb(32, 32, 32));
+    background-image: linear-gradient(90deg, rgb(32, 32, 32), rgb(32, 32, 32),rgba(32, 32, 32, 0.82), transparent);
 }
 
 .movie-info-bottom-gradient {
@@ -422,7 +419,7 @@
     height: 50rem;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(180deg, rgba(32, 32, 32, 0), rgb(32, 32, 32));
+    background-image: linear-gradient(0deg, rgb(32, 32, 32), rgb(32, 32, 32), rgb(32, 32, 32), rgba(32, 32, 32, 0));
 }
 
 .movie-info-content-box {
@@ -459,28 +456,29 @@
 }
 
 .movie-info-content-button-box {
-    background-color: rgba(62, 255, 14, 0.769);
+    background-color: rgba(255, 255, 255, 0.06);
     width: 20rem;
-    height: 7.5rem;
+    height: 6.5rem;
     border-radius: 1.2rem;
     font-size: 2.7rem;
-    padding: 1.5rem;
+    padding: 1rem;
     text-align: center;
     margin-left: 3rem;
     border: 0.3rem solid transparent;
 }
 
 .movie-info-content-button-box.active {
-    border: 0.3rem solid rgb(62, 255, 14) !important;
+    background-color: rgb(54, 102, 42) !important;
+
 }
 
 .movie-info-content-button-box:nth-child(1) {
     margin-left: 0rem;
 }
 
-.movie-info-content-button-box:nth-child(2) {
+/* .movie-info-content-button-box:nth-child(2) {
     background-color: rgba(249, 249, 249, 0.20) !important;
-}
+} */
 
 .movie-info-similar-vods-box {
     display: flex;
@@ -507,7 +505,7 @@
     display: inline-flex;
     position: relative;
     height: 43.5rem;
-    transition: 0.3s;
+    transition: 0.2s linear;
 }
 
 .movie-info-series-box {
@@ -532,7 +530,7 @@
     font-size: 2.4rem;
     background-color: rgba(30, 31, 32, 0.45);
     width: 21.4rem;
-    height: 9rem;
+    height: 7rem;
     display: flex;
     align-items: center;
     padding: 1rem 2rem;
@@ -579,6 +577,13 @@
     border-radius: 2rem;
     border: 0.3rem solid transparent !important;
     position: absolute;
+}
+
+.movie-info-episodes-card-box>img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2rem;
 }
 
 .movie-info-episodes-card-box:nth-child(1) {

@@ -26,7 +26,7 @@ module.exports = (env, argv) => {
 
         devServer: {
             open: true,
-            port: 8050,
+            port: 8060,
             hot: true,
             historyApiFallback: {
                 disableDotRule: true,

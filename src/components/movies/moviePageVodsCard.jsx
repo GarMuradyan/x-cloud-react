@@ -4,9 +4,10 @@ import favorit from "../../images/favorit.png"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { memo } from "react"
+import ResizeImage from "../imgResizer/ResizeImage"
 
 function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
-    console.log('render-movie-card')
+
     const navigate = useNavigate()
 
     let favorits = null
@@ -51,21 +52,21 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
         navigate('/vod_info', { state: stateData })
 
     }
-    console.log(data)
+
+    let originalSrc = data.cover || data.stream_icon || notFound
+
+    const poster = `https://image.tmdb.org/t/p/w200/${ originalSrc.split("/").pop() }`
 
     return (
         <div onClick={cardClick} style={{ left: index * 352 + 'px' }} className={isActive ? "movie-vods-card-box active" : "movie-vods-card-box"}>
 
-            <img className="movie-vods-card-poster" src={data.cover || data.stream_icon || notFound} placeholder="blur" onError={(e) => {
-                e.target.src = notFound
-            }}
+            <img className="movie-vods-card-poster" src={originalSrc} placeholder="blur" />
 
-                onLoad={() => {
-                }} />
+            {/* <ResizeImage src={data.cover || data.stream_icon || notFound} /> */}
 
             <p className="movie-vods-card-name">{data.name}</p>
 
-            <div className="movie-vods-card-gradient"></div>
+            {isActive ? <div className="movie-vods-card-gradient"></div> : false}
 
             {favorits[data.stream_id || data.series_id] ? <img className="movie-vods-card-favorit" src={favorit} /> : false}
 

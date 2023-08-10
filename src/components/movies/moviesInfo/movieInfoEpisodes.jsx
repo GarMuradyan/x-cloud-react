@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import RenderMovieInfoEpisodesCard from "./movieInfoEpisodesCard.jsx"
 import useKeydown from "../../../remote/useKeydown.js"
 import { useDispatch, useSelector } from "react-redux"
@@ -19,7 +19,7 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
     let [isIndex, setIsIndex] = useState(0)
     let [transIndex, setTransIndex] = useState(0)
     let [start, setStart] = useState(0)
-    let [end, setEnd] = useState(5)
+    let [end, setEnd] = useState(30)
     const [isAnimated, setIsAnimated] = useState(true)
     const fixCategories = []
 
@@ -48,7 +48,7 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
             movie: data,
             type: type
         }
-        playerData.src = `http://diblax.spartacus.site/series/WOYQyy5YzT/2WawEOAw0d/${ data.id }.${ data.container_extension }`
+        playerData.src = `https://globoplay.one/series/2452366/8950273/${ data.id }.${ data.container_extension }`
         setPLayerInfo(playerData)
 
         setShowPlayer(true)
@@ -63,6 +63,13 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
         )
     }
 
+    useEffect(() => {
+        setTransIndex(0)
+        setIsIndex(0)
+        setEnd(30)
+        setStart(0)
+    }, [season])
+
     let control = {
         isActive: currentControls == 'movie-info-episodes',
 
@@ -72,48 +79,61 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
 
         left: function (e) {
             if (isIndex > 0) {
-                if (isAnimated) {
-                    setIsIndex(isIndex -= 1)
-                    if (isIndex < 2 && end !== 5) {
-                        setTransIndex(transIndex -= 1)
-                        setIsAnimated(false)
-                        setTimeout(() => {
-                            setIsAnimated(true)
-                            setIsIndex(2)
-                            setStart(start -= 1)
-                            setEnd(end -= 1)
-                        }, 30);
-                    } else {
-                        if (isIndex > 1) {
+                if (season.length > 30) {
+                    if (isIndex < fixCategories.length) {
+                        if (transIndex !== 0) {
                             setTransIndex(transIndex -= 1)
                         }
                     }
+                    setIsIndex(isIndex -= 1)
+                    if (isIndex < 15 && end !== 30) {
+                        setIsIndex(15)
+                        setStart(start -= 1)
+                        setEnd(end -= 1)
+                    }
+                    console.log(isIndex)
+                } else {
+                    if (season.length > 3) {
+                        if (transIndex !== 0) {
+                            setTransIndex(transIndex -= 1)
+                        }
+                        setIsIndex(isIndex -= 1)
+                    } else {
+                        setIsIndex(isIndex -= 1)
+                    }
                 }
+
             }
         },
 
         right: function (e) {
-
             if (isIndex < fixCategories.length - 1) {
-                if (isAnimated) {
-                    setIsIndex(isIndex += 1)
-                    if (isIndex > 2 && end < season.length) {
-                        setTransIndex(transIndex += 1)
-                        setIsAnimated(false)
-                        setTimeout(() => {
-                            setIsAnimated(true)
-                            setIsIndex(2)
-                            setStart(start += 1)
-                            setEnd(end += 1)
-                        }, 30);
-                    } else {
-                        if (isIndex > 2) {
+                if (season.length > 30) {
+                    if (isIndex > 1) {
+                        if (transIndex < season.length - 3) {
                             setTransIndex(transIndex += 1)
                         }
                     }
+                    setIsIndex(isIndex += 1)
+                    if (isIndex > 15 && end < season.length) {
+                        setIsIndex(15)
+                        setStart(start += 1)
+                        setEnd(end += 1)
+                    }
+                    console.log(isIndex)
+                } else {
+                    if (season.length > 3) {
+                        if (transIndex < season.length - 3) {
+                            setTransIndex(transIndex += 1)
+                        }
+                        setIsIndex(isIndex += 1)
+                    } else {
+                        setIsIndex(isIndex += 1)
+                    }
+                    console.log(isIndex)
                 }
-            }
 
+            }
         },
 
         up: function (e) {
@@ -151,7 +171,7 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
 
                     {fixCategories.map((val, i) => {
                         return (
-                            <RenderMovieInfoEpisodesCard key={i} data={val} type={type} isActive={control.isActive && isIndex == i} index={val.index} />
+                            <RenderMovieInfoEpisodesCard key={val.id} data={val} type={type} isActive={control.isActive && isIndex == i} index={val.index} />
                         )
                     })}
 

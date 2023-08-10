@@ -152,9 +152,13 @@ function RenderMoviePlayerPage (props) {
     return (
         <div className="movie-player-page-box">
 
-            <video ref={videoRef} className="movie-player-video" src={props.src} autoPlay={true} controls={false} onPlaying={() => {
+            <video ref={videoRef} className="movie-player-video" onError={(event) => {
+                console.log('video-src-error')
+                console.log(event)
+            }} src={props.src} autoPlay={true} controls={false} onPlaying={() => {
                 setVideoControl(true)
                 setShowControl(true)
+                console.log('video-play')
             }} onTimeUpdate={(e) => {
                 onTimeUpdate(e.target)
             }} onWaiting={() => {

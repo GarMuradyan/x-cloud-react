@@ -18,10 +18,17 @@ function RenderMenu () {
     const menu_data = [
         {
             name: 'Live Tv',
-            path: '/liveTv',
+            path: '/live_tv',
             img: liveLogo,
             dispatch: function () {
-
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'live-tv-channels'
+                        }
+                    }
+                )
             }
         },
         {

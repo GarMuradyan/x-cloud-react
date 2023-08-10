@@ -10,6 +10,7 @@ import languageLogo from '../../images/language.png'
 import logoutLogo from '../../images/logout.png'
 import parentalLogo from '../../images/parental.png'
 import RenderSettingsLogOut from "./settingsLogOut.jsx"
+import RenderSettingsParentalCode from "./settingsParentalCode.jsx"
 
 function RenderSettingsItem () {
 
@@ -24,6 +25,8 @@ function RenderSettingsItem () {
     let [isIndex, setIsIndex] = useState(0)
 
     const [showLogOut, setShowLogOut] = useState(false)
+
+    const [showParentalCode, setShowParentalCode] = useState(false)
 
     const settingsData = [
         {
@@ -61,7 +64,15 @@ function RenderSettingsItem () {
             img: parentalLogo,
             name: 'Change parental code',
             onClick: function () {
-
+                setShowParentalCode(true)
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-parental-inputs'
+                        }
+                    }
+                )
             }
         },
         {
@@ -87,6 +98,30 @@ function RenderSettingsItem () {
             }
         },
     ]
+
+    const parentalCb = () => {
+        setShowParentalCode(false)
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'settings-items'
+                }
+            }
+        )
+    }
+
+    const parentalOnClose = () => {
+        setShowParentalCode(false)
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'settings-items'
+                }
+            }
+        )
+    }
 
     let control = {
         isActive: currentControls == 'settings-items',
@@ -171,6 +206,8 @@ function RenderSettingsItem () {
             })}
 
             {showLogOut ? <RenderSettingsLogOut onClose={setShowLogOut} /> : false}
+
+            {showParentalCode ? <RenderSettingsParentalCode onClose={parentalOnClose} cb={parentalCb} /> : false}
 
         </div>
     )

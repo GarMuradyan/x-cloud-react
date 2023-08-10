@@ -3,8 +3,9 @@ import check_key from "./keys";
 
 function useKeydown (props) {
     useEffect(() => {
+
         const handleKeydown = (e) => {
-            let key = check_key(e)
+            let key = check_key(e);
             if (props[key]) props[key](e);
         };
 
@@ -18,6 +19,7 @@ function useKeydown (props) {
         return () => {
             window.removeEventListener("keydown", handleKeydown);
         };
+
     }, [props]);
 }
 

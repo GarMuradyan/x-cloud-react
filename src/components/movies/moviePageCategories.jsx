@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ReactDOM from 'react-dom';
 import { useRef } from "react";
+import { memo } from "react";
 
 function RenderMovieCategories ({ category, setSelectidCategories }) {
 
@@ -12,7 +13,7 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
     const contentRef = useRef(null)
     let [isIndex, setIsIndex] = useState(0)
     let [start, setStart] = useState(0)
-    let [end, setEnd] = useState(15)
+    let [end, setEnd] = useState(30)
     let [selectCateg, setSelectCateg] = useState(0)
     let [transIndex, setTransIndex] = useState(0)
     const [isAnimated, setIsAnimated] = useState(true)
@@ -33,6 +34,7 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
         isActive: currentControls == 'category',
 
         ok: function (e) {
+            console.log(category)
             setSelectidCategories(selectCateg)
             dispatch(
                 {
@@ -79,7 +81,7 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
 
         up: function (e) {
 
-            if (start == 0) {
+            if (transIndex == 0 && isIndex == 0) {
                 setIsIndex(0)
                 dispatch(
                     {
@@ -92,43 +94,58 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
                 return
             }
 
-            if (isIndex >= 0) {
-                if (isAnimated) {
+            if (isIndex > 0) {
+                setSelectCateg(selectCateg -= 1)
+                if (category.length > 30) {
+                    if (isIndex < fixCategories.length - 3) {
+                        if (transIndex !== 0) {
+                            setTransIndex(transIndex -= 1)
+                        }
+                    }
                     setIsIndex(isIndex -= 1)
-                    setSelectCateg(selectCateg -= 1)
-                    if (isIndex < 0 && end !== 8) {
-                        setTransIndex(transIndex -= 1)
-                        setIsAnimated(false)
-                        setIsIndex(0)
+                    if (isIndex < 15 && end !== 30) {
+                        setIsIndex(15)
                         setStart(start -= 1)
                         setEnd(end -= 1)
-                        setTimeout(() => {
-                            setIsAnimated(true)
-                        }, 100);
+                    }
+                    console.log(isIndex)
+                } else {
+                    if (category.length > 10) {
+                        if (transIndex !== 0) {
+                            setTransIndex(transIndex -= 1)
+                        }
+                        setIsIndex(isIndex -= 1)
                     } else {
-                        setTransIndex(transIndex -= 1)
+                        setIsIndex(isIndex -= 1)
                     }
                 }
-
             }
         },
 
         down: function (e) {
             if (isIndex < fixCategories.length - 1) {
-                if (isAnimated) {
+                setSelectCateg(selectCateg += 1)
+                if (category.length > 30) {
+                    if (isIndex > 3) {
+                        if (transIndex < category.length - 8) {
+                            setTransIndex(transIndex += 1)
+                        }
+                    }
                     setIsIndex(isIndex += 1)
-                    setSelectCateg(selectCateg += 1)
-                    if (isIndex > 0 && end < category.length) {
-                        setTransIndex(transIndex += 1)
-                        setIsAnimated(false)
-                        setIsIndex(0)
-                        setTimeout(() => {
-                            setStart(start += 1)
-                            setEnd(end += 1)
-                            setIsAnimated(true)
-                        }, 100);
+                    if (isIndex > 15 && end < category.length) {
+                        setIsIndex(15)
+                        setStart(start += 1)
+                        setEnd(end += 1)
+                    }
+                    console.log(isIndex)
+                } else {
+                    if (category.length > 8) {
+                        if (transIndex < category.length - 8) {
+                            setTransIndex(transIndex += 1)
+                        }
+                        setIsIndex(isIndex += 1)
                     } else {
-                        setTransIndex(transIndex += 1)
+                        setIsIndex(isIndex += 1)
                     }
                 }
             }
@@ -158,7 +175,7 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
                 {fixCategories.map((val, i) => {
 
                     return (
-                        <RenderMoviesCategoriesCard key={i} data={val} isActive={isIndex == i && control.isActive} setSelectidCategories={setSelectidCategories} index={val.index} />
+                        <RenderMoviesCategoriesCard key={val.category_id} data={val} isActive={isIndex == i && control.isActive} setSelectidCategories={setSelectidCategories} index={val.index} />
                     )
 
                 })}
@@ -169,4 +186,4 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
     )
 }
 
-export default RenderMovieCategories
+export default memo(RenderMovieCategories)

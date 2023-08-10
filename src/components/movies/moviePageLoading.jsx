@@ -26,7 +26,6 @@ function RenderMovieLoading () {
                     <div className="movies-loading-vods-row-item"></div>
                     <div className="movies-loading-vods-row-item"></div>
                     <div className="movies-loading-vods-row-item"></div>
-                    <div className="movies-loading-vods-row-item"></div>
 
                 </div>
 
@@ -36,13 +35,11 @@ function RenderMovieLoading () {
                     <div className="movies-loading-vods-row-item"></div>
                     <div className="movies-loading-vods-row-item"></div>
                     <div className="movies-loading-vods-row-item"></div>
-                    <div className="movies-loading-vods-row-item"></div>
 
                 </div>
 
                 <div className="movies-loading-vods-row-box">
 
-                    <div className="movies-loading-vods-row-item"></div>
                     <div className="movies-loading-vods-row-item"></div>
                     <div className="movies-loading-vods-row-item"></div>
                     <div className="movies-loading-vods-row-item"></div>

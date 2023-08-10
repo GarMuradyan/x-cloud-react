@@ -136,3 +136,103 @@
 .log-out-item-box.active {
     background-color: rgba(62, 255, 14, 0.723) !important;
 }
+
+.settings-parental-code-page {
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: url(../images/Bg.png);
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-parental-back-box {
+    width: 7.3rem;
+    height: 7.3rem;
+    border-radius: 2rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 0.3rem solid transparent;
+    position: absolute;
+    top: 5rem;
+    left: 5rem;
+}
+
+.settings-parental-back-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.parental-code-inputs-page-box {
+    width: 100rem;
+    height: 43.5rem;
+    border-radius: 2rem;
+    background-color: rgb(15, 16, 16);
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.parental-code-inputs-title-box {
+    font-size: 4rem;
+    color: white;
+    font-weight: 500;
+    margin-top: 6rem;
+}
+
+.parental-code-inputs-box {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8rem;
+}
+
+.parental-code-inputs-item-box {
+    width: 16.4rem;
+    height: 16.9rem;
+    margin-left: 3.5rem;
+    background: rgb(32, 32, 32);
+    border-radius: 2rem;
+    border: 0.1rem solid rgb(59, 59, 60);
+    text-align: center;
+}
+
+.parental-code-inputs-item-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.parental-code-inputs-item-box:nth-child(1) {
+    margin-left: 0;
+}
+
+.parental-keyboard-box {
+    position: absolute;
+    bottom: 3rem;
+    display: flex;
+    font-size: 4rem;
+    color: white;
+}
+
+.parental-keyboard-item-box {
+    width: 7.9rem;
+    height: 7.7rem;
+    background: rgb(32, 32, 32);
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.5rem;
+    margin-left: 1.5rem;
+}
+
+.parental-keyboard-item-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.parental-keyboard-item-box:nth-child(1) {
+    margin-left: 0rem;
+}

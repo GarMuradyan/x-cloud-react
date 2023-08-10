@@ -4,9 +4,9 @@ function GET_INFO_DATA (id, cb, type) {
     let url = null
 
     if (type == 'series') {
-        url = 'http://diblax.spartacus.site/player_api.php?username=WOYQyy5YzT&password=2WawEOAw0d&type=m3u_plus&output=ts&action=get_series_info&series_id=' + id
+        url = 'https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_series_info&series_id=' + id
     } else {
-        url = 'http://diblax.spartacus.site/player_api.php?username=WOYQyy5YzT&password=2WawEOAw0d&type=m3u_plus&output=ts&action=get_vod_info&vod_id=' + id
+        url = 'https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_vod_info&vod_id=' + id
     }
 
     const promise = req(url, 'GET', null).then(function (res) {

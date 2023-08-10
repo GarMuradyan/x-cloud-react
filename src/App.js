@@ -10,6 +10,8 @@ import RenderMovieSearch from './components/movies/moviesSearch/movieSearch.jsx'
 import RenderMovieInfoPage from './components/movies/moviesInfo/movieInfoPage.jsx';
 import RenderSettingsPage from './components/settings/settings.jsx';
 import { useDispatch } from 'react-redux';
+import RenderLiveTv from './components/liveTv/liveTv.jsx';
+import os from './remote/register';
 
 
 
@@ -34,6 +36,12 @@ function App () {
     }
   }, [])
 
+  os()
+
+  if (!localStorage.getItem('pinCode')) {
+    localStorage.setItem('pinCode', '0000')
+  }
+
   return (
     <Routes>
       <Route path='/' element={<RenderLogin />} />
@@ -44,6 +52,7 @@ function App () {
       <Route path='/search' element={<RenderMovieSearch />} />
       <Route path='/vod_info' element={<RenderMovieInfoPage />} />
       <Route path='/settings' element={<RenderSettingsPage />} />
+      <Route path='/live_tv' element={<RenderLiveTv />} />
     </Routes>
   );
 }

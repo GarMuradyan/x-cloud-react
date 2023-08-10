@@ -33,7 +33,7 @@ function RenderMovieInfoContent ({ data, onClose, type, similar, setSimilarMovie
     })
 
     const playerInfo = {
-        src: `http://diblax.spartacus.site/movie/WOYQyy5YzT/2WawEOAw0d/${ selectidMovie.stream_id }.${ selectidMovie.container_extension }`,
+        src: `https://globoplay.one/movie/2452366/8950273/${ selectidMovie.stream_id }.${ selectidMovie.container_extension }`,
         onClose: () => {
             setShowPlayer(false)
             dispatch(

@@ -53,10 +53,8 @@ function RenderMovieSearchVodsList ({ movies, onClose, type }) {
 
         left: function (e) {
             if (isIndex > 0) {
-                if (movies.length > 5) {
-                    if (isIndex > 3) {
-                        setTransIndex(transIndex -= 1)
-                    }
+                if (transIndex !== 0) {
+                    setTransIndex(transIndex -= 1)
                 }
                 setIsIndex(isIndex -= 1)
             }
@@ -64,12 +62,10 @@ function RenderMovieSearchVodsList ({ movies, onClose, type }) {
 
         right: function (e) {
             if (isIndex < movies.length - 1) {
-                setIsIndex(isIndex += 1)
-                if (movies.length > 5) {
-                    if (isIndex > 3) {
-                        setTransIndex(transIndex += 1)
-                    }
+                if (transIndex < movies.length - 5) {
+                    setTransIndex(transIndex += 1)
                 }
+                setIsIndex(isIndex += 1)
             }
         },
 
@@ -112,7 +108,7 @@ function RenderMovieSearchVodsList ({ movies, onClose, type }) {
                 {movies.map((val, i) => {
 
                     return (
-                        <RenderMovieVodsCard key={i} data={val} isActive={control.isActive && isIndex == i} similar={movies} close={'keyboard'} type={type.type} index={i} />
+                        <RenderMovieVodsCard key={val.stream_id || val.series_id} data={val} isActive={control.isActive && isIndex == i} similar={movies} close={'keyboard'} type={type.type} index={i} />
                     )
 
                 })}

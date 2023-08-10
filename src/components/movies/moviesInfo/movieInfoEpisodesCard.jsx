@@ -24,7 +24,7 @@ function RenderMovieInfoEpisodesCard ({ data, type, isActive, index }) {
     }
 
     const playerInfo = {
-        src: `http://diblax.spartacus.site/series/WOYQyy5YzT/2WawEOAw0d/${ data.id }.${ data.container_extension }`,
+        src: `https://globoplay.one/series/2452366/8950273/${ data.id }.${ data.container_extension }`,
         onClose: () => {
             setShowPlayer(false)
             dispatch(
@@ -37,6 +37,12 @@ function RenderMovieInfoEpisodesCard ({ data, type, isActive, index }) {
             )
         }
     }
+
+    let originalSrc = data.info.movie_image
+
+    const poster = originalSrc ? `https://image.tmdb.org/t/p/w200/${ originalSrc.split("/").pop() }` : notFound
+
+    console.log(poster)
 
     return (
         <div className={isActive ? "movie-info-episodes-card-box active" : "movie-info-episodes-card-box"} style={{ left: index * 53 + 'rem' }} onClick={cardClick}>

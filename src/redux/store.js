@@ -23,6 +23,14 @@ const store = createStore(function (state, action) {
 
     }
 
+    if (action.type === 'CANGE_LIVETV_DATA') {
+        return {
+            ...state,
+            liveTvData: action.payload.data
+        }
+
+    }
+
     if (action.type === 'CHANGE_SEARCH_INPUT_VALUE') {
         return {
             ...state,
@@ -63,16 +71,47 @@ const store = createStore(function (state, action) {
 
     }
 
+    if (action.type === 'CHANGE_SELECTID_CHANNEL') {
+        return {
+            ...state,
+            selectidChannel: action.payload.channel
+        }
+
+    }
+
+    if (action.type === 'CHANGE_SELECTID_LIVE_CATEGORY') {
+        return {
+            ...state,
+            selectidLiveCategory: action.payload.liveCategory
+        }
+
+    }
+
+    if (action.type === 'CHANGE_LIVETV_ALL_CHANNELS') {
+        return {
+            ...state,
+            liveTvAllChannels: action.payload.channels
+        }
+
+    }
+
+
+
     return state
 }, {
     currentControl: 'menu-item',
     movieData: null,
     seriesData: null,
+    liveTvData: null,
     searchInputValue: '',
     searchList: [],
     selectidMovie: null,
     selectidCategory: 0,
     selectidCategoryId: 0,
+    selectidChannel: 0,
+    selectidLiveCategory: null,
+    liveTvAllChannels: null,
+
 })
 
 export default store
