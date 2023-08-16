@@ -4,10 +4,11 @@ import useKeydown from "../../../remote/useKeydown"
 import Portal from "../../portal.jsx"
 import RenderMoviePlayerPage from '../moviePlayer/moviePlayer.jsx'
 import { movieFavoritArr, moviesFavorit, seriesFavorit, seriesFavoritArr } from "../favoritConfig"
+import words from "../../settings/words"
 
 function RenderMovieInfoContent ({ data, onClose, type, similar, setSimilarMovies }) {
 
-    const buttonsInfo = [{ name: 'Play', type: "play" }, { name: 'Watch trailer', type: "trailer" }, { name: 'Favorite', type: 'favorit' }]
+    const buttonsInfo = [{ name: words[localStorage.getItem('language')].play, type: "play" }, { name: words[localStorage.getItem('language')].watchTrailer, type: "trailer" }, { name: 'Favorite', type: 'favorit' }]
     const [showPlayer, setShowPlayer] = useState(false)
 
     const selectidMovie = useSelector(function (state) {

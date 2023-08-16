@@ -3,6 +3,8 @@ import useKeydown from "../../remote/useKeydown"
 import { useNavigate } from "react-router-dom"
 import { memo, useEffect, useState } from "react"
 import RenderLiveTvChannelsCard from "./liveTvChannelsCard.jsx"
+import { liveTvLock } from "../settings/settingsConfig"
+import RenderSettingsParentalCode from "../settings/settingsParentalCode.jsx"
 
 function RenderLiveTvChannels () {
 
@@ -18,14 +20,17 @@ function RenderLiveTvChannels () {
         return state.selectidChannel
     })
 
+    const selectidLiveCategory = useSelector(function (state) {
+        return state.selectidLiveCategory
+    })
+
+    const [showLocked, setShowLocked] = useState(false)
+
     let [isIndex, setIsIndex] = useState(0)
     let [transIndex, setTransIndex] = useState(0)
     let [start, setStart] = useState(0)
     let [end, setEnd] = useState(30)
     const fixCategories = []
-    const selectidLiveCategory = useSelector(function (state) {
-        return state.selectidLiveCategory
-    })
 
     const channels = selectidLiveCategory ? selectidLiveCategory.channels : null
 
@@ -43,11 +48,60 @@ function RenderLiveTvChannels () {
         setIsIndex(0)
     }, [selectidLiveCategory.category_id])
 
+    const lockedOnClose = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'live-tv-channels'
+                }
+            }
+        )
+    }
+
+    const lockedCb = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_SELECTID_CHANNEL',
+                payload: {
+                    channel: fixCategories[isIndex]
+                }
+            }
+        )
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'live-tv-channels'
+                }
+            }
+        )
+    }
+
     let control = {
         isActive: currentControls == 'live-tv-channels',
 
         ok: function (e) {
             console.log(fixCategories[isIndex])
+            if (fixCategories[isIndex] !== selectidChannel) {
+                if (selectidLiveCategory.category_id == '-0' || selectidLiveCategory.category_id == '-1' || selectidLiveCategory.category_id == '-2') {
+                    if (liveTvLock[fixCategories[isIndex].category_id]) {
+                        console.log('locked')
+                        setShowLocked(true)
+                        dispatch(
+                            {
+                                type: 'CHANGE_CONTROLS',
+                                payload: {
+                                    name: 'settings-parental-keyboard'
+                                }
+                            }
+                        )
+                        return
+                    }
+                }
+            }
             dispatch(
                 {
                     type: 'CHANGE_SELECTID_CHANNEL',
@@ -181,6 +235,30 @@ function RenderLiveTvChannels () {
                     }
                 }
             )
+        },
+
+        green: () => {
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'live-tv-categories'
+                    }
+                }
+            )
+        },
+
+        blue: () => {
+            navigate('/menu')
+
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'menu-item'
+                    }
+                }
+            )
         }
     }
 
@@ -198,6 +276,8 @@ function RenderLiveTvChannels () {
                 })}
 
             </div>
+
+            {showLocked ? <RenderSettingsParentalCode onClose={lockedOnClose} cb={lockedCb} type={""} /> : false}
 
         </div>
     )

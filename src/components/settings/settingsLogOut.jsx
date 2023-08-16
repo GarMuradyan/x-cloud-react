@@ -2,10 +2,11 @@ import { useState } from "react"
 import useKeydown from "../../remote/useKeydown"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import words from "./words"
 
 function RenderSettingsLogOut ({ onClose }) {
 
-    const arr = [{ name: 'Cancel', type: 'cancel' }, { name: 'Log Out', type: 'log out' }]
+    const arr = [{ name: words[localStorage.getItem('language')].cancel, type: 'cancel' }, { name: words[localStorage.getItem('language')].logOut, type: 'log out' }]
 
     const navigate = useNavigate()
 

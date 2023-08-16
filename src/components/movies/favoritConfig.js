@@ -1,12 +1,12 @@
 export let moviesFavorit = {}
 export let movieFavoritArr = {
-    category_id: 0,
+    category_id: -1,
     category_name: 'Favorites',
     movies: []
 }
 export let seriesFavorit = {}
 export let seriesFavoritArr = {
-    category_id: 0,
+    category_id: -1,
     category_name: 'Favorites',
     movies: []
 }

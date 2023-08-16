@@ -5,8 +5,12 @@ import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { memo } from "react"
 import ResizeImage from "../imgResizer/ResizeImage"
+import lockPng from '../../images/lock.png'
+import { moviesLock, seriesLock } from "../settings/settingsConfig"
 
 function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
+
+    console.log(similar)
 
     const navigate = useNavigate()
 
@@ -53,14 +57,16 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
 
     }
 
-    let originalSrc = data.cover || data.stream_icon || notFound
+    let originalSrc = data.cover || data.stream_icon
 
-    const poster = `https://image.tmdb.org/t/p/w200/${ originalSrc.split("/").pop() }`
+    const poster = originalSrc ? `https://image.tmdb.org/t/p/w200/${ originalSrc.split("/").pop() }` : notFound
 
     return (
         <div onClick={cardClick} style={{ left: index * 352 + 'px' }} className={isActive ? "movie-vods-card-box active" : "movie-vods-card-box"}>
 
-            <img className="movie-vods-card-poster" src={originalSrc} placeholder="blur" />
+            <img className="movie-vods-card-poster" src={poster} placeholder="blur" onError={(e) => {
+                e.target.src = notFound
+            }} />
 
             {/* <ResizeImage src={data.cover || data.stream_icon || notFound} /> */}
 
@@ -73,6 +79,8 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
             {continueWatching[data.stream_id] && continueWatching[data.stream_id].progresBar ? <div className="movie-vods-card-progres">
                 <div style={{ width: continueWatching[data.stream_id].progresBar }} className="movie-vods-card-progresbar-box"></div>
             </div> : false}
+
+            {moviesLock[data.category_id] || seriesLock[data.category_id] ? <img src={lockPng} className="movie-vods-card-poster-box" /> : false}
 
         </div>
     )

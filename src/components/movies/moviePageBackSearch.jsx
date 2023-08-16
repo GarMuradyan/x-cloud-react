@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import useKeydown from '../../remote/useKeydown'
 import RenderBackButton from '../back.jsx'
+import words from '../settings/words'
 
 function RenderMovieBackSearch ({ movies }) {
 
@@ -149,7 +150,7 @@ function RenderMovieBackSearch ({ movies }) {
 
                 <img src={searchLogo} placeholder='blur' />
 
-                Search
+                {words[localStorage.getItem('language')].search}
 
             </div>
 

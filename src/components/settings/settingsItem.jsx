@@ -11,6 +11,12 @@ import logoutLogo from '../../images/logout.png'
 import parentalLogo from '../../images/parental.png'
 import RenderSettingsLogOut from "./settingsLogOut.jsx"
 import RenderSettingsParentalCode from "./settingsParentalCode.jsx"
+import req from "../requests/req"
+import RenderSettingsLockCategories from "./settingsLockCategories.jsx"
+import RenderInfoLoading from "../movies/moviesInfo/movieInfoLoading.jsx"
+import RenderSettingsLanguage from "./settingsLanguage.jsx"
+import words from "./words"
+
 
 function RenderSettingsItem () {
 
@@ -28,11 +34,28 @@ function RenderSettingsItem () {
 
     const [showParentalCode, setShowParentalCode] = useState(false)
 
+    const [showLockCategories, setShowLockCategories] = useState(false)
+
+    const [categories, setCategories] = useState(null)
+
+    const [showLoading, setShowLoading] = useState(false)
+
+    const [showLanguage, setShowLanguage] = useState(false)
+
     const settingsData = [
         {
             img: languageLogo,
-            name: 'Change Language',
+            name: words[localStorage.getItem('language')].changeLanguage,
             onClick: function () {
+                setShowLanguage(true)
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-language-back'
+                        }
+                    }
+                )
             }
 
         },
@@ -79,12 +102,40 @@ function RenderSettingsItem () {
             img: lockLogo,
             name: 'Lock Categories',
             onClick: function () {
-
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'movie-info-loading'
+                        }
+                    }
+                )
+                setShowLoading(true)
+                Promise.all([
+                    req('https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_live_categories', "GET", ''),
+                    req('https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_vod_categories', "GET", ''),
+                    req('https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_series_categories', "GET", '')
+                ]).then((res) => {
+                    console.log(res)
+                    setCategories(res)
+                    setShowLockCategories(true)
+                    setShowLoading(false)
+                    dispatch(
+                        {
+                            type: 'CHANGE_CONTROLS',
+                            payload: {
+                                name: 'settings-lock-categories-back'
+                            }
+                        }
+                    )
+                }).catch((err) => {
+                    console.log(err)
+                })
             }
         },
         {
             img: logoutLogo,
-            name: 'Log Out',
+            name: words[localStorage.getItem('language')].logOut,
             onClick: function () {
                 setShowLogOut(true)
                 dispatch(
@@ -111,8 +162,10 @@ function RenderSettingsItem () {
         )
     }
 
-    const parentalOnClose = () => {
+    const onClose = () => {
         setShowParentalCode(false)
+        setShowLockCategories(false)
+        setShowLanguage(false)
         dispatch(
             {
                 type: 'CHANGE_CONTROLS',
@@ -207,7 +260,13 @@ function RenderSettingsItem () {
 
             {showLogOut ? <RenderSettingsLogOut onClose={setShowLogOut} /> : false}
 
-            {showParentalCode ? <RenderSettingsParentalCode onClose={parentalOnClose} cb={parentalCb} /> : false}
+            {showParentalCode ? <RenderSettingsParentalCode onClose={onClose} cb={parentalCb} type={'Change Pin'} /> : false}
+
+            {showLoading ? <RenderInfoLoading /> : false}
+
+            {showLockCategories ? <RenderSettingsLockCategories onClose={onClose} categories={categories} /> : false}
+
+            {showLanguage ? <RenderSettingsLanguage onClose={onClose} /> : false}
 
         </div>
     )

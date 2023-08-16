@@ -42,6 +42,10 @@ function App () {
     localStorage.setItem('pinCode', '0000')
   }
 
+  if (!localStorage.getItem('language')) {
+    localStorage.setItem('language', 'eng')
+  }
+
   return (
     <Routes>
       <Route path='/' element={<RenderLogin />} />

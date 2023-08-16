@@ -4,6 +4,8 @@ import useKeydown from "../../remote/useKeydown.js"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { memo } from "react"
+import { liveTvLock } from "../settings/settingsConfig.js"
+import RenderSettingsParentalCode from "../settings/settingsParentalCode.jsx"
 
 function RenderLiveTvCategories ({ category, changeCategory }) {
 
@@ -15,11 +17,40 @@ function RenderLiveTvCategories ({ category, changeCategory }) {
         return state.currentControl
     })
 
+    const [showLocked, setShowLocked] = useState(false)
+
     let [isIndex, setIsIndex] = useState(1)
     let [transIndex, setTransIndex] = useState(0)
     let [start, setStart] = useState(0)
     let [end, setEnd] = useState(30)
     const fixCategories = []
+
+    const lockedOnClose = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'live-tv-categories'
+                }
+            }
+        )
+    }
+
+    const lockedCb = () => {
+        if (fixCategories[isIndex].channels.length) {
+            setShowLocked(false)
+            changeCategory(fixCategories[isIndex])
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'live-tv-channels'
+                    }
+                }
+            )
+        }
+    }
 
     for (let i = start; i < end; i++) {
         if (category[i]) {
@@ -32,6 +63,28 @@ function RenderLiveTvCategories ({ category, changeCategory }) {
         isActive: currentControls == 'live-tv-categories',
 
         ok: function (e) {
+            dispatch(
+                {
+                    type: 'CHANGE_SELECTID_CHANNEL',
+                    payload: {
+                        channel: null
+                    }
+                }
+            )
+
+            if (liveTvLock[fixCategories[isIndex].category_id]) {
+                console.log('locked')
+                setShowLocked(true)
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-parental-keyboard'
+                        }
+                    }
+                )
+                return
+            }
             if (fixCategories[isIndex].channels.length) {
                 changeCategory(fixCategories[isIndex])
                 dispatch(
@@ -42,7 +95,9 @@ function RenderLiveTvCategories ({ category, changeCategory }) {
                         }
                     }
                 )
+
             }
+
         },
 
         left: function (e) {
@@ -52,12 +107,38 @@ function RenderLiveTvCategories ({ category, changeCategory }) {
         right: function (e) {
             dispatch(
                 {
-                    type: 'CHANGE_CONTROLS',
+                    type: 'CHANGE_SELECTID_CHANNEL',
                     payload: {
-                        name: 'live-tv-channels'
+                        channel: null
                     }
                 }
             )
+
+            if (liveTvLock[fixCategories[isIndex].category_id]) {
+                console.log('locked')
+                setShowLocked(true)
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-parental-keyboard'
+                        }
+                    }
+                )
+                return
+            }
+            if (fixCategories[isIndex].channels.length) {
+                changeCategory(fixCategories[isIndex])
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'live-tv-channels'
+                        }
+                    }
+                )
+
+            }
         },
 
         up: function (e) {
@@ -128,6 +209,31 @@ function RenderLiveTvCategories ({ category, changeCategory }) {
                     }
                 }
             )
+        },
+
+
+        green: () => {
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'live-tv-categories'
+                    }
+                }
+            )
+        },
+
+        blue: () => {
+            navigate('/menu')
+
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'menu-item'
+                    }
+                }
+            )
         }
     }
 
@@ -145,6 +251,8 @@ function RenderLiveTvCategories ({ category, changeCategory }) {
                 })}
 
             </div>
+
+            {showLocked ? <RenderSettingsParentalCode onClose={lockedOnClose} cb={lockedCb} type={""} /> : false}
 
         </div>
     )

@@ -27,7 +27,7 @@ function RenderMoviePage ({ data }) {
         <div className="movie-page-box">
 
             <RenderMovieLeft data={data} setSelectidCategories={setSelectidCategories} />
-            <RenderMovieVods category={categories[selectidCategories].movies} />
+            <RenderMovieVods category={categories[selectidCategories].movies} movies={categories[selectidCategories]} />
 
         </div>
     )

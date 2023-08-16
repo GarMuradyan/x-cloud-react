@@ -4,6 +4,8 @@ import { useState } from "react"
 import useKeydown from "../../../remote/useKeydown"
 import { useNavigate } from "react-router-dom"
 import { memo } from "react"
+import RenderSettingsParentalCode from "../../settings/settingsParentalCode.jsx"
+import { moviesLock, seriesLock } from "../../settings/settingsConfig.js"
 
 function RenderMovieSearchVodsList ({ movies, onClose, type }) {
     const dispatch = useDispatch()
@@ -15,8 +17,62 @@ function RenderMovieSearchVodsList ({ movies, onClose, type }) {
 
     let [isIndex, setIsIndex] = useState(0)
     let [transIndex, setTransIndex] = useState(0)
+    const [showLocked, setShowLocked] = useState(false)
+
+    const lockedOnClose = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'movies-search-list'
+                }
+            }
+        )
+    }
+
+    const lockedCb = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_SELECTID_MOVIE',
+                payload: {
+                    movie: movies[isIndex]
+                }
+            }
+        )
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'movie-info-loading'
+                }
+            }
+        )
+
+        const stateData = {
+            priviusControl: 'keyboard',
+            type: type.type,
+            id: movies[isIndex].stream_id || movies[isIndex].series_id,
+            similar: movies
+        }
+
+        navigate('/vod_info', { state: stateData })
+    }
 
     const cardClick = (data) => {
+        if (moviesLock[data.category_id] || seriesLock[data.category_id]) {
+            setShowLocked(true)
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'settings-parental-keyboard'
+                    }
+                }
+            )
+            return
+        }
         dispatch(
             {
                 type: 'CHANGE_SELECTID_MOVIE',
@@ -114,6 +170,8 @@ function RenderMovieSearchVodsList ({ movies, onClose, type }) {
                 })}
 
             </div>
+
+            {showLocked ? <RenderSettingsParentalCode cb={lockedCb} onClose={lockedOnClose} type={''} /> : false}
 
         </div>
     )

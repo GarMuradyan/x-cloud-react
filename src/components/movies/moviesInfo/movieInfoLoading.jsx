@@ -34,8 +34,10 @@ function RenderInfoLoading ({ onAbort, onClose }) {
         },
 
         back: () => {
-            onAbort.abort()
-            onClose()
+            if (onAbort && onClose) {
+                onAbort.abort()
+                onClose()
+            }
         }
     }
 

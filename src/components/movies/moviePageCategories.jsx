@@ -3,9 +3,10 @@ import useKeydown from "../../remote/useKeydown";
 import RenderMoviesCategoriesCard from "./moviePageCategoriesCard.jsx";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import ReactDOM from 'react-dom';
 import { useRef } from "react";
 import { memo } from "react";
+import { moviesLock, seriesLock } from "../settings/settingsConfig";
+import RenderSettingsParentalCode from "../settings/settingsParentalCode.jsx";
 
 function RenderMovieCategories ({ category, setSelectidCategories }) {
 
@@ -16,6 +17,7 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
     let [end, setEnd] = useState(30)
     let [selectCateg, setSelectCateg] = useState(0)
     let [transIndex, setTransIndex] = useState(0)
+    const [showLocked, setShowLocked] = useState(false)
     const [isAnimated, setIsAnimated] = useState(true)
     const fixCategories = []
     const currentControls = useSelector(function (state) {
@@ -30,10 +32,65 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
         }
     }
 
+    const lockedOnClose = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'category'
+                }
+            }
+        )
+    }
+
+    const lockedCb = () => {
+        setShowLocked(false)
+        setSelectidCategories(selectCateg)
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'movies'
+                }
+            }
+        )
+
+        dispatch(
+            {
+                type: 'CHANGE_SELECTID_CATEGORY',
+                payload: {
+                    category: selectCateg
+                }
+            }
+        )
+
+        dispatch(
+            {
+                type: 'CHANGE_SELECTID_CATEGORY_ID',
+                payload: {
+                    categoryId: fixCategories[isIndex].category_id
+                }
+            }
+        )
+    }
+
     let control = {
         isActive: currentControls == 'category',
 
         ok: function (e) {
+            if (moviesLock[fixCategories[isIndex].category_id] || seriesLock[fixCategories[isIndex].category_id]) {
+                setShowLocked(true)
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-parental-keyboard'
+                        }
+                    }
+                )
+                return
+            }
             console.log(category)
             setSelectidCategories(selectCateg)
             dispatch(
@@ -69,11 +126,43 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
         },
 
         right: function (e) {
+            if (moviesLock[fixCategories[isIndex].category_id] || seriesLock[fixCategories[isIndex].category_id]) {
+                setShowLocked(true)
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-parental-keyboard'
+                        }
+                    }
+                )
+                return
+            }
+            console.log(category)
+            setSelectidCategories(selectCateg)
             dispatch(
                 {
                     type: 'CHANGE_CONTROLS',
                     payload: {
                         name: 'movies'
+                    }
+                }
+            )
+
+            dispatch(
+                {
+                    type: 'CHANGE_SELECTID_CATEGORY',
+                    payload: {
+                        category: selectCateg
+                    }
+                }
+            )
+
+            dispatch(
+                {
+                    type: 'CHANGE_SELECTID_CATEGORY_ID',
+                    payload: {
+                        categoryId: fixCategories[isIndex].category_id
                     }
                 }
             )
@@ -181,6 +270,8 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
                 })}
 
             </div>
+
+            {showLocked ? <RenderSettingsParentalCode onClose={lockedOnClose} cb={lockedCb} type={""} /> : false}
 
         </div>
     )

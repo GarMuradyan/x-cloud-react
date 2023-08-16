@@ -10,6 +10,7 @@ import useKeydown from "../../remote/useKeydown"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import RenderMenuExit from "./menuExit.jsx"
+import words from "../settings/words.js"
 
 function RenderMenu () {
 
@@ -17,7 +18,7 @@ function RenderMenu () {
 
     const menu_data = [
         {
-            name: 'Live Tv',
+            name: words[localStorage.getItem('language')].liveTv,
             path: '/live_tv',
             img: liveLogo,
             dispatch: function () {
@@ -29,10 +30,20 @@ function RenderMenu () {
                         }
                     }
                 )
+
+                dispatch(
+                    {
+                        type: 'CHANGE_SELECTID_CHANNEL',
+                        payload: {
+                            channel: null
+                        }
+                    }
+                )
             }
+
         },
         {
-            name: 'Movies',
+            name: words[localStorage.getItem('language')].movies,
             path: '/movie',
             img: movieLogo,
             dispatch: function () {
@@ -40,7 +51,7 @@ function RenderMenu () {
                     {
                         type: 'CHANGE_CONTROLS',
                         payload: {
-                            name: 'movies'
+                            name: 'category'
                         }
                     }
                 )
@@ -65,7 +76,7 @@ function RenderMenu () {
             }
         },
         {
-            name: 'Series',
+            name: words[localStorage.getItem('language')].series,
             path: '/series',
             img: seriesLogo,
             dispatch: function () {
@@ -73,7 +84,7 @@ function RenderMenu () {
                     {
                         type: 'CHANGE_CONTROLS',
                         payload: {
-                            name: 'movies'
+                            name: 'category'
                         }
                     }
                 )
@@ -98,7 +109,7 @@ function RenderMenu () {
             }
         },
         {
-            name: 'Settings',
+            name: words[localStorage.getItem('language')].settings,
             path: '/settings',
             img: settingsLogo,
             dispatch: function () {

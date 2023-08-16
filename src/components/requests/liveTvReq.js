@@ -21,7 +21,7 @@ async function GET_LIVE_TV_DATA () {
 
     const liveFavoriteCategory = {
         category_id: "-0",
-        category_name: 'Favorite',
+        category_name: 'Favorites',
         channels: []
     }
 

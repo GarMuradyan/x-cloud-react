@@ -5,6 +5,8 @@ import useKeydown from "../../remote/useKeydown"
 import { useEffect } from "react"
 import { useRef } from "react"
 import { useState } from "react"
+import RenderSettingsParentalCode from "../settings/settingsParentalCode.jsx"
+import { liveTvLock } from "../settings/settingsConfig"
 
 
 function RenderLievTvPlayer () {
@@ -32,6 +34,10 @@ function RenderLievTvPlayer () {
     const [showNumber, setShowNumber] = useState(false)
 
     const [numberTimeOut, setNumberTimeOut] = useState(null)
+
+    const [showLocked, setShowLocked] = useState(false)
+
+    const [key, setkey] = useState(null)
 
     let url = selectidChannel ? `https://globoplay.one/2452366/8950273/${ selectidChannel.stream_id }` : ''
 
@@ -69,7 +75,25 @@ function RenderLievTvPlayer () {
         },
 
         up: function (e) {
+            setkey('up')
+            if (liveCategory.category_id == '-0' || liveCategory.category_id == '-1' || liveCategory.category_id == '-2') {
+                isIndex + 1 > selectidLiveCategory.length - 1 ? isIndex = 0 : false
+                if (liveTvLock[selectidLiveCategory[isIndex + 1].category_id]) {
+                    console.log('locked')
+                    setShowLocked(true)
+                    dispatch(
+                        {
+                            type: 'CHANGE_CONTROLS',
+                            payload: {
+                                name: 'settings-parental-keyboard'
+                            }
+                        }
+                    )
+                    return
+                }
+            }
             if (selectidLiveCategory[isIndex + 1]) {
+                setkey('up')
                 isIndex += 1
                 dispatch(
                     {
@@ -106,7 +130,25 @@ function RenderLievTvPlayer () {
         },
 
         down: function (e) {
+            setkey('down')
+            if (liveCategory.category_id == '-0' || liveCategory.category_id == '-1' || liveCategory.category_id == '-2') {
+                isIndex - 1 < 0 ? isIndex = selectidLiveCategory.length : false
+                if (liveTvLock[selectidLiveCategory[isIndex - 1].category_id]) {
+                    console.log('locked')
+                    setShowLocked(true)
+                    dispatch(
+                        {
+                            type: 'CHANGE_CONTROLS',
+                            payload: {
+                                name: 'settings-parental-keyboard'
+                            }
+                        }
+                    )
+                    return
+                }
+            }
             if (selectidLiveCategory[isIndex - 1]) {
+                setkey('down')
                 isIndex -= 1
                 dispatch(
                     {
@@ -143,7 +185,30 @@ function RenderLievTvPlayer () {
         },
 
         channel_up: () => {
+            control.up()
+        },
+
+        channel_down: () => {
+            control.down()
+        },
+
+        back: () => {
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'live-tv-channels'
+                    }
+                }
+            )
+        }
+    }
+
+    const lockedCb = () => {
+        setShowLocked(false)
+        if (key == 'up') {
             if (selectidLiveCategory[isIndex + 1]) {
+                setkey('up')
                 isIndex += 1
                 dispatch(
                     {
@@ -176,10 +241,9 @@ function RenderLievTvPlayer () {
             }, 2000);
 
             setNumberTimeOut(id)
-        },
-
-        channel_down: () => {
+        } else {
             if (selectidLiveCategory[isIndex - 1]) {
+                setkey('down')
                 isIndex -= 1
                 dispatch(
                     {
@@ -213,27 +277,29 @@ function RenderLievTvPlayer () {
             }, 2000);
 
             setNumberTimeOut(id)
-        },
-
-        back: () => {
-            dispatch(
-                {
-                    type: 'CHANGE_IS_FULL_SCREEN',
-                    payload: {
-                        isFullScreen: false
-                    }
-                }
-            )
-
-            dispatch(
-                {
-                    type: 'CHANGE_CONTROLS',
-                    payload: {
-                        name: 'live-tv-channels'
-                    }
-                }
-            )
         }
+
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'live-tv-full-screen'
+                }
+            }
+        )
+
+    }
+
+    const lockedOnClose = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'live-tv-full-screen'
+                }
+            }
+        )
     }
 
     useKeydown(control)
@@ -247,6 +313,8 @@ function RenderLievTvPlayer () {
 
             {control.isActive && showNumber ? <div className="live-tv-player-num-box">{isIndex + 1}</div> : false}
             {control.isActive && showNumber ? <div className="live-tv-player-name-box">{selectidLiveCategory[isIndex].name}</div> : false}
+
+            {showLocked ? <RenderSettingsParentalCode cb={lockedCb} onClose={lockedOnClose} type={''} /> : false}
 
         </div>
     )

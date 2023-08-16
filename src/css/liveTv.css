@@ -53,15 +53,19 @@
     width: 100%;
     border-radius: 2rem;
     border: 0.3rem solid rgba(255, 255, 255, 0.122);
-    color: white;
-    font-size: 2.8rem;
     display: flex;
     display: -webkit-flex;
     align-items: center;
+}
+
+.live-tv-categories-card-name-box {
     padding-left: 3rem;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    color: white;
+    font-size: 3rem;
+    width: 40rem;
 }
 
 .live-tv-categories-card-box.active {
@@ -231,6 +235,21 @@
     height: 100%;
     width: 65rem;
     overflow: hidden;
+}
+
+.live-tv-categories-card-lock-box {
+    position: absolute;
+    right: 2rem;
+    top: 1.5rem;
+    width: 4rem;
+    height: 4rem;
+}
+
+.live-tv-channel-card-locked-box {
+    position: absolute;
+    right: 1rem;
+    width: 4rem;
+    height: 4rem;
 }
 
 .live-tv-loading-channel-box {

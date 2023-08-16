@@ -140,7 +140,7 @@
 .settings-parental-code-page {
     height: 100vh;
     width: 100%;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     background-image: url(../images/Bg.png);
@@ -148,6 +148,7 @@
     display: -webkit-flex;
     align-items: center;
     justify-content: center;
+    z-index: 999;
 }
 
 .settings-parental-back-box {
@@ -188,7 +189,7 @@
     display: -webkit-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 8rem;
+    margin-top: 6rem;
 }
 
 .parental-code-inputs-item-box {
@@ -199,6 +200,15 @@
     border-radius: 2rem;
     border: 0.1rem solid rgb(59, 59, 60);
     text-align: center;
+    color: white;
+    font-size: 8rem;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
+    background-size: 50%;
+    background-repeat: no-repeat;
 }
 
 .parental-code-inputs-item-box.active {
@@ -235,4 +245,184 @@
 
 .parental-keyboard-item-box:nth-child(1) {
     margin-left: 0rem;
+}
+
+.wrong-pin {
+    position: absolute;
+    top: -28rem;
+    font-size: 4rem;
+    left: 38rem;
+    color: red;
+}
+
+.confirm-new-pin {
+    position: absolute;
+    top: -28rem;
+    font-size: 4rem;
+    left: 35rem;
+    color:green;
+}
+
+.settings-lock-categories-page-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    padding: 2rem 5rem;
+    background-image: url(../images/Bg.png);
+}
+
+.settings-lock-categories-back-box {
+    width: 7.3rem;
+    height: 7.3rem;
+    border-radius: 2rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 0.3rem solid transparent;
+    position: absolute;
+    top: 5rem;
+    left: 5rem;
+}
+
+.settings-lock-categories-back-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.settings-lock-categories-content-box {
+    position: absolute;
+    height: 90rem;
+    top: 15rem;
+    display: flex;
+    display: -webkit-flex;
+}
+
+.lock-categories-row-box {
+    width: 42.5rem;
+    margin-left: 12rem;
+}
+
+.lock-categories-row-box:nth-child(1) {
+    margin-left: 0rem;
+}
+
+.lock-categories-row-title-box {
+    color: white;
+    font-size: 2.6rem;
+    font-weight: 700;
+}
+
+.lock-categories-row-list-box {
+    height: 87rem;
+    overflow: hidden;
+    margin-top: 2.6rem;
+}
+
+.lock-categories-row-list-content-box {
+    transition: 0.3s;
+}
+
+.lock-categories-row-item-box {
+    height: 8.2rem;
+    width: 100%;
+    border-radius: 2rem;
+    border: 0.3rem solid rgba(255, 255, 255, 0.161);
+    margin-top: 2.6rem;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.lock-categories-row-item-box.active {
+    background-color:rgb(44, 153, 17) !important;
+}
+
+.lock-categories-row-item-box:nth-child(1) {
+    margin-top: 0;
+}
+
+.lock-categories-row-item-name-box {
+    color: white;
+    font-size: 2.7rem;
+    width: 20rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.lock-categories-row-item-lock-box {
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    right: 2rem;
+}
+
+.settings-language-page-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-image: url(./../images/Bg.png);
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-language-back-box {
+    width: 7.3rem;
+    height: 7.3rem;
+    border-radius: 2rem;
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 0.3rem solid transparent;
+    position: absolute;
+    top: 5rem;
+    left: 5rem;
+}
+
+.settings-language-back-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.settings-langugae-content-box {
+    width: 71.8rem;
+}
+
+.settings-language-item-box {
+    width: 100%;
+    height: 8.9rem;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    position: relative;
+    border-radius: 2rem;
+    margin-top: 1.5rem;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.051);
+    border: 0.3rem solid rgba(255, 255, 255, 0.169);
+}
+
+.settings-language-item-box.active {
+    border: 0.3rem solid rgb(62, 255, 14) !important;
+}
+
+.settings-language-item-icon-box {
+    position: absolute;
+    left: 1.5rem;
+}
+
+.settings-language-item-name-box {
+    font-size: 2.4rem;
+    color: white;
+    font-weight: 700;
+    margin-left: 5rem;
+}
+
+.settings-language-item-flag-box {
+    width: 4rem;
+    height: 4rem;
+    object-fit: cover;
+    margin-right: 2rem;
 }

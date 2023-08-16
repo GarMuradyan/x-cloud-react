@@ -4,10 +4,10 @@ import { useState } from "react"
 import useKeydown from "../../../remote/useKeydown"
 import { useNavigate } from "react-router-dom";
 import { memo } from "react";
+import RenderSettingsParentalCode from "../../settings/settingsParentalCode.jsx";
+import { moviesLock, seriesLock } from "../../settings/settingsConfig.js";
 
 function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
-    console.log('render-similar')
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -19,6 +19,7 @@ function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
     let [transIndex, setTransIndex] = useState(0)
     let [start, setStart] = useState(0)
     let [end, setEnd] = useState(15)
+    const [showLocked, setShowLocked] = useState(false)
     const [isAnimated, setIsAnimated] = useState(true)
     const fixCategories = []
 
@@ -29,7 +30,60 @@ function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
         }
     }
 
+    const lockedOnClose = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'movie-info-similar'
+                }
+            }
+        )
+    }
+
+    const lockedCb = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_SELECTID_MOVIE',
+                payload: {
+                    movie: fixCategories[isIndex]
+                }
+            }
+        )
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'movie-info-loading'
+                }
+            }
+        )
+
+        const stateData = {
+            priviusControl: close,
+            type: type,
+            id: fixCategories[isIndex].stream_id || fixCategories[isIndex].series_id,
+            similar: similar
+        }
+
+        navigate('/vod_info', { state: stateData })
+    }
+
     const cardClick = (data) => {
+        if (moviesLock[data.category_id] || seriesLock[data.category_id]) {
+            setShowLocked(true)
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'settings-parental-keyboard'
+                    }
+                }
+            )
+            return
+        }
         dispatch(
             {
                 type: 'CHANGE_SELECTID_MOVIE',
@@ -165,6 +219,8 @@ function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
                 </div>
 
             </div>
+
+            {showLocked ? <RenderSettingsParentalCode cb={lockedCb} onClose={lockedOnClose} type={''} /> : false}
 
         </div>
     )

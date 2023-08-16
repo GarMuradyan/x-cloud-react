@@ -4,8 +4,12 @@ import RenderMovieVodsCard from "./moviePageVodsCard.jsx"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { memo } from "react";
+import RenderSettingsParentalCode from "../settings/settingsParentalCode.jsx";
+import { moviesLock, seriesLock } from "../settings/settingsConfig";
 
-function RenderMovieVods ({ category }) {
+function RenderMovieVods ({ category, movies }) {
+
+    console.log(movies)
 
     const viewMoreArray = [];
 
@@ -14,6 +18,7 @@ function RenderMovieVods ({ category }) {
     let [start, setStart] = useState(0)
     let [end, setEnd] = useState(10)
     const contentRef = useRef(null)
+    const [showLocked, setShowLocked] = useState(false)
 
     for (let i = 0; i < category.length; i++) {
         const elem = category[i];
@@ -50,7 +55,66 @@ function RenderMovieVods ({ category }) {
     const dispatch = useDispatch()
     const location = useLocation()
 
+    const lockedOnClose = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'movies'
+                }
+            }
+        )
+    }
+
+    const lockedCb = () => {
+        setShowLocked(false)
+        dispatch(
+            {
+                type: 'CHANGE_SELECTID_MOVIE',
+                payload: {
+                    movie: fixCategories[isRowIndex].category[isIndex]
+                }
+            }
+        )
+
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'movie-info-loading'
+                }
+            }
+        )
+
+        const stateData = {
+            priviusControl: 'movies',
+            type: location.pathname == '/movie' ? 'movie' : 'series',
+            id: fixCategories[isRowIndex].category[isIndex].stream_id || fixCategories[isRowIndex].category[isIndex].series_id,
+            similar: category
+        }
+
+
+        navigate('/vod_info', { state: stateData })
+
+    }
+
     const cardClick = (data) => {
+        if (movies.category_id == -1) {
+            if (moviesLock[data.category_id] || seriesLock[data.category_id]) {
+                setShowLocked(true)
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-parental-keyboard'
+                        }
+                    }
+                )
+                return
+            }
+        }
+
 
         dispatch(
             {
@@ -124,27 +188,33 @@ function RenderMovieVods ({ category }) {
             },
 
             up: function (e) {
-                if (isRowIndex >= 0 && transIndex !== 0) {
-                    if (isAnimated) {
-                        if (viewMoreArray.length > 10) {
-                            setIsRowIndex(isRowIndex -= 1)
-                            if (isRowIndex < 0 && end !== 10) {
-                                setTransIndex(transIndex -= 1)
-                                setIsRowIndex(0)
-                                setStart(start -= 1)
-                                setEnd(end -= 1)
-                            } else {
-                                setTransIndex(transIndex -= 1)
-                            }
-                        } else {
-                            setIsRowIndex(isRowIndex -= 1)
+
+                if (isRowIndex > 0) {
+                    if (viewMoreArray.length > 10) {
+                        if (transIndex !== 0) {
                             setTransIndex(transIndex -= 1)
                         }
-                        setIsAnimated(false)
-                        setTimeout(() => {
-                            setIsAnimated(true)
-                        }, 400);
+                        setIsRowIndex(isRowIndex -= 1)
+                        if (isRowIndex < 5 && end !== 10) {
+                            setIsRowIndex(5)
+                            setStart(start -= 1)
+                            setEnd(end -= 1)
+                        }
+                        console.log(isIndex)
+                    } else {
+                        if (viewMoreArray.length > 3) {
+                            if (transIndex !== 0) {
+                                setTransIndex(transIndex -= 1)
+                            }
+                            setIsRowIndex(isRowIndex -= 1)
+                        } else {
+                            setIsRowIndex(isRowIndex -= 1)
+                            if (isRowIndex < viewMoreArray.length - 2) {
+                                setTransIndex(transIndex -= 1)
+                            }
+                        }
                     }
+
                 }
 
 
@@ -152,31 +222,37 @@ function RenderMovieVods ({ category }) {
 
             down: function (e) {
                 if (isRowIndex < fixCategories.length - 1) {
-                    if (isAnimated) {
-                        if (viewMoreArray.length > 10) {
+                    if (viewMoreArray.length > 10) {
+                        if (transIndex < viewMoreArray.length - 2) {
                             setTransIndex(transIndex += 1)
-                            setIsRowIndex(isRowIndex += 1)
-                            if (isRowIndex > 5 && end < viewMoreArray.length) {
-                                setIsRowIndex(5)
-                                setStart(start += 1)
-                                setEnd(end += 1)
+                        }
+                        setIsRowIndex(isRowIndex += 1)
+                        if (isRowIndex > 5 && end < viewMoreArray.length) {
+                            setIsRowIndex(5)
+                            setStart(start += 1)
+                            setEnd(end += 1)
+                        }
+                        console.log(isIndex)
+                    } else {
+                        if (viewMoreArray.length > 3) {
+                            if (transIndex < viewMoreArray.length - 2) {
+                                setTransIndex(transIndex += 1)
                             }
+                            setIsRowIndex(isRowIndex += 1)
                         } else {
                             setIsRowIndex(isRowIndex += 1)
-                            setTransIndex(transIndex += 1)
+                            if (isRowIndex > viewMoreArray.length - 2) {
+                                setTransIndex(transIndex += 1)
+                                console.log('trans')
+                            }
                         }
-
-                        if (!fixCategories[isRowIndex].category[isIndex]) {
-                            setIsIndex(fixCategories[isRowIndex].category.length - 1)
-                        }
-                        setIsAnimated(false)
-                        setTimeout(() => {
-                            setIsAnimated(true)
-                        }, 400);
-
+                        console.log(isIndex)
                     }
+                    if (!fixCategories[isRowIndex].category[isIndex]) {
+                        setIsIndex(fixCategories[isRowIndex].category.length - 1)
+                    }
+                    console.log(viewMoreArray.length)
                 }
-
             },
 
             back: () => {
@@ -217,6 +293,8 @@ function RenderMovieVods ({ category }) {
                 })}
 
             </div>
+
+            {showLocked ? <RenderSettingsParentalCode cb={lockedCb} onClose={lockedOnClose} type={""} /> : false}
 
         </div>
     )

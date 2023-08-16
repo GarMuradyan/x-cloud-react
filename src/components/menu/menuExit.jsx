@@ -2,10 +2,11 @@ import { useState } from "react"
 import useKeydown from "../../remote/useKeydown"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import words from "../settings/words"
 
 function RenderMenuExit ({ onClose }) {
 
-    const arr = [{ name: 'Cancel', type: 'cancel' }, { name: 'Exit', type: 'exit' }]
+    const arr = [{ name: words[localStorage.getItem('language')].cancel, type: 'cancel' }, { name: words[localStorage.getItem('language')].exit, type: 'exit' }]
 
     let [isIndex, setIsIndex] = useState(0)
 

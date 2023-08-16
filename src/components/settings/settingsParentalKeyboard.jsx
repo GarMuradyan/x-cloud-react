@@ -2,10 +2,13 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import useKeydown from "../../remote/useKeydown"
 
-function RenderParentalKeyboard ({ onClose, cb }) {
+function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
 
     const pinKeyboard = [{ key: '1', type: 'basic' }, { key: '2', type: 'basic' }, { key: '3', type: 'basic' }, { key: '4', type: 'basic' }, { key: '5', type: 'basic' }, { key: '6', type: 'basic' }, { key: '7', type: 'basic' }, { key: '8', type: 'basic' }, { key: '9', type: 'basic' }, { key: '0', type: 'basic' }]
 
+    const [wrongPin, setWrongPin] = useState(false)
+
+    const [confirmPin, setConfirmPin] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -19,6 +22,99 @@ function RenderParentalKeyboard ({ onClose, cb }) {
         isActive: currentControls == 'settings-parental-keyboard',
 
         ok: function (e) {
+            setPinCode({
+                title: pinCode.title,
+                value: pinCode.value += pinKeyboard[isIndex].key,
+                type: pinCode.type,
+                newPin: pinCode.newPin
+            })
+            console.log(pinCode)
+            if (pinCode.value.length == 4) {
+                if (type == 'Change Pin') {
+                    if (pinCode.type == 'Enter Pin') {
+                        if (pinCode.value == localStorage.getItem('pinCode')) {
+                            console.log('eeeee')
+                            setPinCode({
+                                title: 'Enter New Pin',
+                                value: '',
+                                type: 'Enter New Pin',
+                                newPin: ''
+                            })
+                        } else {
+                            setWrongPin(true)
+                            setTimeout(() => {
+                                setWrongPin(false)
+                            }, 300);
+                            console.log('nooo')
+                            setPinCode({
+                                title: 'Enter Pin',
+                                value: '',
+                                type: 'Enter Pin',
+                                newPin: ''
+                            })
+                        }
+                    }
+
+                    if (pinCode.type == 'Enter New Pin') {
+                        setPinCode({
+                            title: 'Confirm PIN',
+                            value: '',
+                            type: 'Confirm PIN',
+                            newPin: pinCode.value
+                        })
+                    }
+
+                    if (pinCode.type == 'Confirm PIN') {
+                        if (pinCode.value == pinCode.newPin) {
+                            setConfirmPin(true)
+                            localStorage.setItem('pinCode', pinCode.newPin)
+                            setPinCode({
+                                title: 'Enter Pin',
+                                value: '',
+                                type: 'Enter Pin',
+                                newPin: ''
+                            })
+                            setTimeout(() => {
+                                cb()
+                            }, 200);
+                        } else {
+                            setPinCode({
+                                title: 'Confirm PIN',
+                                value: '',
+                                type: 'Confirm PIN',
+                                newPin: pinCode.newPin
+                            })
+                            setWrongPin(true)
+                            setTimeout(() => {
+                                setWrongPin(false)
+                            }, 300);
+                        }
+                    }
+                } else {
+                    if (pinCode.value == localStorage.getItem('pinCode')) {
+                        console.log('eeeee')
+                        setPinCode({
+                            title: 'Enter Pin',
+                            value: '',
+                            type: 'Enter Pin',
+                            newPin: ''
+                        })
+                        cb()
+                    } else {
+                        setWrongPin(true)
+                        setTimeout(() => {
+                            setWrongPin(false)
+                        }, 300);
+                        console.log('nooo')
+                        setPinCode({
+                            title: 'Enter Pin',
+                            value: '',
+                            type: 'Enter Pin',
+                            newPin: ''
+                        })
+                    }
+                }
+            }
         },
 
         left: function (e) {
@@ -64,6 +160,10 @@ function RenderParentalKeyboard ({ onClose, cb }) {
                     <div key={i} className={control.isActive && i == isIndex ? "parental-keyboard-item-box active" : "parental-keyboard-item-box"}>{val.key}</div>
                 )
             })}
+
+            {wrongPin ? <div className="wrong-pin">Wrong Pin</div> : false}
+
+            {confirmPin ? <div className="confirm-new-pin">Confirm New Pin</div> : false}
 
         </div>
     )

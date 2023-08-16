@@ -21,15 +21,6 @@ function RenderLiveTvCategoriesAndChannels () {
 
     dispatch(
         {
-            type: 'CHANGE_SELECTID_CHANNEL',
-            payload: {
-                channel: selectidCategory.channels[0]
-            }
-        }
-    )
-
-    dispatch(
-        {
             type: 'CHANGE_SELECTID_LIVE_CATEGORY',
             payload: {
                 liveCategory: selectidCategory

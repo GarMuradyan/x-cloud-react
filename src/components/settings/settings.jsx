@@ -5,6 +5,7 @@ import RenderBackButton from "../back.jsx"
 import '../../css/settings.css'
 import { useNavigate } from "react-router-dom"
 import RenderSettingsItem from './settingsItem.jsx'
+import words from "./words"
 
 function RenderSettingsPage () {
 
@@ -88,7 +89,7 @@ function RenderSettingsPage () {
 
                 <div className={control.isActive ? "settings-header-back-box active" : 'settings-header-back-box'}><RenderBackButton /></div>
 
-                <div className="settings-header-title-box">Settings</div>
+                <div className="settings-header-title-box">{words[localStorage.getItem('language')].settings}</div>
 
             </div>
 

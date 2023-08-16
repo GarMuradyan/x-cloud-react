@@ -5,12 +5,14 @@ import RenderBackButton from "../back.jsx"
 import RenderParentalCodeInputs from "./settingsParentalCodeInputs.jsx"
 import RenderParentalKeyboard from "./settingsParentalKeyboard.jsx"
 
-export const pinCode = {
-    title: 'Enter',
-    value: '',
-}
+function RenderSettingsParentalCode ({ onClose, cb, type }) {
 
-function RenderSettingsParentalCode ({ onClose, cb }) {
+    const [pinCode, setPinCode] = useState({
+        title: 'Enter Pin',
+        value: '',
+        type: 'Enter Pin',
+        newPin: ''
+    })
 
     const dispatch = useDispatch()
 
@@ -70,9 +72,9 @@ function RenderSettingsParentalCode ({ onClose, cb }) {
                 <RenderBackButton />
             </div>
 
-            <RenderParentalCodeInputs onClose={onClose} cb={cb} />
+            <RenderParentalCodeInputs onClose={onClose} cb={cb} pinCode={pinCode} />
 
-            <RenderParentalKeyboard onClose={onClose} cb={cb} />
+            <RenderParentalKeyboard onClose={onClose} cb={cb} pinCode={pinCode} setPinCode={setPinCode} type={type} />
 
         </div>
     )
