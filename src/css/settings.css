@@ -107,21 +107,29 @@
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.541);
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.4s all;
+    opacity: 0;
 }
 
 .log-out-box {
-    height: 30rem;
+    height: 55rem;
     display: flex;
     display: -webkit-flex;
     justify-content: center;
     align-items: center;
     background-color: black;
+    width: 150rem;
+    border-radius: 2rem;
 }
 
 .log-out-item-box {
     width: 30rem;
-    height: 10rem;
-    border-radius: 2rem;
+    height: 7rem;
+    border-radius: 3rem;
     color: white;
     font-size: 2.8rem;
     font-weight: 800;
@@ -131,6 +139,10 @@
     align-items: center;
     background-color: rgba(255, 255, 255, 0.188);
     margin: 0rem 3rem;
+}
+
+.log-out-item-box:nth-child(2) {
+    background-color: rgb(255, 0, 0);
 }
 
 .log-out-item-box.active {
@@ -225,6 +237,8 @@
     display: flex;
     font-size: 4rem;
     color: white;
+    align-items: center;
+    justify-content: center;
 }
 
 .parental-keyboard-item-box {
@@ -251,15 +265,14 @@
     position: absolute;
     top: -28rem;
     font-size: 4rem;
-    left: 38rem;
     color: red;
+    text-align: center;
 }
 
 .confirm-new-pin {
     position: absolute;
     top: -28rem;
     font-size: 4rem;
-    left: 35rem;
     color:green;
 }
 
@@ -309,6 +322,10 @@
     color: white;
     font-size: 2.6rem;
     font-weight: 700;
+    width: 38rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .lock-categories-row-list-box {
@@ -411,6 +428,8 @@
 .settings-language-item-icon-box {
     position: absolute;
     left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .settings-language-item-name-box {

@@ -4,10 +4,13 @@ import useKeydown from "../../../remote/useKeydown.js"
 import { useDispatch, useSelector } from "react-redux"
 import Portal from "../../portal.jsx"
 import RenderMoviePlayerPage from '../moviePlayer/moviePlayer.jsx'
+import words from "../../settings/words.js"
 
 function RenderMovieInfoEpisodes ({ season, type, onClose }) {
 
     const dispatch = useDispatch()
+
+    console.log(season)
 
     const currentControls = useSelector(function (state) {
         return state.currentControl
@@ -29,6 +32,7 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
             fixCategories.push(season[i])
         }
     }
+    console.log(fixCategories)
 
     const cardClick = (data) => {
 
@@ -109,6 +113,7 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
         right: function (e) {
             if (isIndex < fixCategories.length - 1) {
                 if (season.length > 30) {
+                    console.log('render')
                     if (isIndex > 1) {
                         if (transIndex < season.length - 3) {
                             setTransIndex(transIndex += 1)
@@ -122,6 +127,8 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
                     }
                     console.log(isIndex)
                 } else {
+                    console.log('translate')
+                    console.log(season.length)
                     if (season.length > 3) {
                         if (transIndex < season.length - 3) {
                             setTransIndex(transIndex += 1)
@@ -163,7 +170,7 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
     return (
         <div className="movie-info-episodes-box">
 
-            <div className="movie-info-episodes-title">Epizodes</div>
+            <div className="movie-info-episodes-title">{words[localStorage.getItem('language')].episodes}</div>
 
             <div className="movie-info-episodes-list-box">
 

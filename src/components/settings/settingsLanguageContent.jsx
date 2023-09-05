@@ -4,6 +4,8 @@ import englishLogo from '../../images/english.png'
 import portugalLogo from '../../images/portugal.png'
 import selectidLogo from '../../images/selectid.png'
 import russianLogo from '../../images/russian.png'
+import japanseLogo from '../../images/japanse.jpeg'
+import spanishLogo from '../../images/spanish.jpeg'
 import { useDispatch, useSelector } from 'react-redux'
 import useKeydown from '../../remote/useKeydown'
 
@@ -33,6 +35,18 @@ function RenderSettingsLanguageContent ({ onClose }) {
             type: 'portuguese',
             img: portugalLogo,
             id: 3
+        },
+        {
+            name: 'Spanish',
+            type: 'spanish',
+            img: spanishLogo,
+            id: 4
+        },
+        {
+            name: 'Japanese',
+            type: 'japanese',
+            img: japanseLogo,
+            id: 5
         }
     ]
 
@@ -97,7 +111,17 @@ function RenderSettingsLanguageContent ({ onClose }) {
 
             {languages.map((val, i) => {
                 return (
-                    <div key={val.id} className={control.isActive && i == isIndex ? "settings-language-item-box active" : "settings-language-item-box"}>
+                    <div key={val.id} className={control.isActive && i == isIndex ? "settings-language-item-box active" : "settings-language-item-box"} onMouseMove={() => {
+                        dispatch(
+                            {
+                                type: 'CHANGE_CONTROLS',
+                                payload: {
+                                    name: 'settings-language-items'
+                                }
+                            }
+                        )
+                        setIsIndex(i)
+                    }} onClick={control.ok}>
 
                         {val.type == localStorage.getItem('language') ? <img className='settings-language-item-icon-box' src={selectidLogo} /> : false}
 

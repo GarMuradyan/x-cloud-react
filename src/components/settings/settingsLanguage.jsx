@@ -59,7 +59,16 @@ function RenderSettingsLanguage ({ onClose }) {
     return (
         <div className="settings-language-page-box">
 
-            <div className={control.isActive ? "settings-language-back-box active" : "settings-language-back-box"}>
+            <div className={control.isActive ? "settings-language-back-box active" : "settings-language-back-box"} onMouseMove={() => {
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-language-back'
+                        }
+                    }
+                )
+            }} onClick={onClose}>
 
                 <RenderBackButton />
 

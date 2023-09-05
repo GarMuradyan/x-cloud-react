@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import useKeydown from "../../../remote/useKeydown"
 import { memo } from "react";
+import words from "../../settings/words";
 
 function RenderMovieInfoSeasonButtons ({ onClose, seasons, setSelectidSeason }) {
 
@@ -86,7 +87,7 @@ function RenderMovieInfoSeasonButtons ({ onClose, seasons, setSelectidSeason }) 
                     return (
                         <div key={i} style={{ backgroundColor: i == selectid ? 'white' : 'rgba(30, 31, 32, 0.45)', color: i == selectid ? 'black' : 'white', }} className={control.isActive && isIndex == i ? "movie-info-seasons-button active" : "movie-info-seasons-button"} onClick={() => {
                             seasonButtonClick(i + 1)
-                        }}>{`Season ${ i + 1 }`}</div>
+                        }}>{`${ words[localStorage.getItem('language')].season } ${ i + 1 }`}</div>
                     )
                 })}
 

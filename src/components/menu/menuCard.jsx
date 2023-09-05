@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import '../../css/menu.css'
 
-function RenderMenuCard ({ data, isActive }) {
+function RenderMenuCard ({ data, isActive, index, setIsindex }) {
 
     const navigate = useNavigate()
 
@@ -10,8 +10,12 @@ function RenderMenuCard ({ data, isActive }) {
         data.dispatch()
     }
 
+    const cardMouseMove = () => {
+        setIsindex(index)
+    }
+
     return (
-        <div className={isActive ? 'menu-card-box active' : 'menu-card-box'} onClick={cardClick}>
+        <div className={isActive ? 'menu-card-box active' : 'menu-card-box'} onMouseMove={cardMouseMove} onClick={cardClick}>
 
             <div className={isActive ? 'menu-card-poster-box active' : "menu-card-poster-box"}>
 

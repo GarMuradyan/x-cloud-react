@@ -8,7 +8,6 @@ import words from "../../settings/words"
 
 function RenderMovieInfoContent ({ data, onClose, type, similar, setSimilarMovies }) {
 
-    const buttonsInfo = [{ name: words[localStorage.getItem('language')].play, type: "play" }, { name: words[localStorage.getItem('language')].watchTrailer, type: "trailer" }, { name: 'Favorite', type: 'favorit' }]
     const [showPlayer, setShowPlayer] = useState(false)
 
     const selectidMovie = useSelector(function (state) {
@@ -22,6 +21,8 @@ function RenderMovieInfoContent ({ data, onClose, type, similar, setSimilarMovie
     const seriesData = useSelector(function (state) {
         return state.seriesData
     })
+
+    const buttonsInfo = [{ name: words[localStorage.getItem('language')].play, type: "play", id: 0 }, { name: words[localStorage.getItem('language')].watchTrailer, type: "trailer", id: 1 }, { name: moviesFavorit[selectidMovie.stream_id] || seriesFavorit[selectidMovie.series_id] ? words[localStorage.getItem('language')].unFavorite : words[localStorage.getItem('language')].favorite, type: 'favorit', id: 2 }]
 
     const [moviesCategories, movies] = movieData ? movieData : [{}, {}]
 
@@ -285,7 +286,7 @@ function RenderMovieInfoContent ({ data, onClose, type, similar, setSimilarMovie
                 {buttonsInfo.map((val, i) => {
 
                     return (
-                        <div key={i} className={control.isActive && isIndex == i ? "movie-info-content-button-box active" : "movie-info-content-button-box"} onClick={() => {
+                        <div key={val.id} className={control.isActive && isIndex == i ? "movie-info-content-button-box active" : "movie-info-content-button-box"} onClick={() => {
 
                             buttonsClick(val)
 

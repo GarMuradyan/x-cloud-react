@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useKeydown from "../../remote/useKeydown";
 import RenderMoviesCategoriesCard from "./moviePageCategoriesCard.jsx";
 import { useNavigate } from "react-router-dom";
@@ -75,184 +75,197 @@ function RenderMovieCategories ({ category, setSelectidCategories }) {
         )
     }
 
-    let control = {
-        isActive: currentControls == 'category',
+    let control = useMemo(() => {
+        return {
+            isActive: currentControls == 'category',
 
-        ok: function (e) {
-            if (moviesLock[fixCategories[isIndex].category_id] || seriesLock[fixCategories[isIndex].category_id]) {
-                setShowLocked(true)
+            ok: function (e) {
+                if (moviesLock[fixCategories[isIndex].category_id] || seriesLock[fixCategories[isIndex].category_id]) {
+                    setShowLocked(true)
+                    dispatch(
+                        {
+                            type: 'CHANGE_CONTROLS',
+                            payload: {
+                                name: 'settings-parental-keyboard'
+                            }
+                        }
+                    )
+                    return
+                }
+                console.log(category)
+                setSelectidCategories(selectCateg)
                 dispatch(
                     {
                         type: 'CHANGE_CONTROLS',
                         payload: {
-                            name: 'settings-parental-keyboard'
+                            name: 'movies'
                         }
                     }
                 )
-                return
-            }
-            console.log(category)
-            setSelectidCategories(selectCateg)
-            dispatch(
-                {
-                    type: 'CHANGE_CONTROLS',
-                    payload: {
-                        name: 'movies'
+
+                dispatch(
+                    {
+                        type: 'CHANGE_SELECTID_CATEGORY',
+                        payload: {
+                            category: selectCateg
+                        }
                     }
-                }
-            )
+                )
 
-            dispatch(
-                {
-                    type: 'CHANGE_SELECTID_CATEGORY',
-                    payload: {
-                        category: selectCateg
+                dispatch(
+                    {
+                        type: 'CHANGE_SELECTID_CATEGORY_ID',
+                        payload: {
+                            categoryId: fixCategories[isIndex].category_id
+                        }
                     }
+                )
+            },
+
+            left: function (e) {
+
+            },
+
+            right: function (e) {
+                if (moviesLock[fixCategories[isIndex].category_id] || seriesLock[fixCategories[isIndex].category_id]) {
+                    setShowLocked(true)
+                    dispatch(
+                        {
+                            type: 'CHANGE_CONTROLS',
+                            payload: {
+                                name: 'settings-parental-keyboard'
+                            }
+                        }
+                    )
+                    return
                 }
-            )
-
-            dispatch(
-                {
-                    type: 'CHANGE_SELECTID_CATEGORY_ID',
-                    payload: {
-                        categoryId: fixCategories[isIndex].category_id
-                    }
-                }
-            )
-        },
-
-        left: function (e) {
-
-        },
-
-        right: function (e) {
-            if (moviesLock[fixCategories[isIndex].category_id] || seriesLock[fixCategories[isIndex].category_id]) {
-                setShowLocked(true)
+                console.log(category)
+                setSelectidCategories(selectCateg)
                 dispatch(
                     {
                         type: 'CHANGE_CONTROLS',
                         payload: {
-                            name: 'settings-parental-keyboard'
+                            name: 'movies'
                         }
                     }
                 )
-                return
-            }
-            console.log(category)
-            setSelectidCategories(selectCateg)
-            dispatch(
-                {
-                    type: 'CHANGE_CONTROLS',
-                    payload: {
-                        name: 'movies'
-                    }
-                }
-            )
 
-            dispatch(
-                {
-                    type: 'CHANGE_SELECTID_CATEGORY',
-                    payload: {
-                        category: selectCateg
-                    }
-                }
-            )
-
-            dispatch(
-                {
-                    type: 'CHANGE_SELECTID_CATEGORY_ID',
-                    payload: {
-                        categoryId: fixCategories[isIndex].category_id
-                    }
-                }
-            )
-        },
-
-        up: function (e) {
-
-            if (transIndex == 0 && isIndex == 0) {
-                setIsIndex(0)
                 dispatch(
                     {
-                        type: 'CHANGE_CONTROLS',
+                        type: 'CHANGE_SELECTID_CATEGORY',
                         payload: {
-                            name: 'search-button'
+                            category: selectCateg
                         }
                     }
                 )
-                return
-            }
 
-            if (isIndex > 0) {
-                setSelectCateg(selectCateg -= 1)
-                if (category.length > 30) {
-                    if (isIndex < fixCategories.length - 3) {
-                        if (transIndex !== 0) {
-                            setTransIndex(transIndex -= 1)
+                dispatch(
+                    {
+                        type: 'CHANGE_SELECTID_CATEGORY_ID',
+                        payload: {
+                            categoryId: fixCategories[isIndex].category_id
                         }
                     }
-                    setIsIndex(isIndex -= 1)
-                    if (isIndex < 15 && end !== 30) {
-                        setIsIndex(15)
-                        setStart(start -= 1)
-                        setEnd(end -= 1)
-                    }
-                    console.log(isIndex)
-                } else {
-                    if (category.length > 10) {
-                        if (transIndex !== 0) {
-                            setTransIndex(transIndex -= 1)
+                )
+            },
+
+            up: function (e) {
+
+                if (transIndex == 0 && isIndex == 0) {
+                    setIsIndex(0)
+                    dispatch(
+                        {
+                            type: 'CHANGE_CONTROLS',
+                            payload: {
+                                name: 'search-button'
+                            }
+                        }
+                    )
+                    return
+                }
+
+                if (isIndex > 0) {
+                    setSelectCateg(selectCateg -= 1)
+                    if (category.length > 30) {
+                        if (isIndex < fixCategories.length - 3) {
+                            if (transIndex !== 0) {
+                                setTransIndex(transIndex -= 1)
+                            }
                         }
                         setIsIndex(isIndex -= 1)
+                        if (isIndex < 15 && end !== 30) {
+                            setIsIndex(15)
+                            setStart(start -= 1)
+                            setEnd(end -= 1)
+                        }
+                        console.log(isIndex)
                     } else {
-                        setIsIndex(isIndex -= 1)
-                    }
-                }
-            }
-        },
-
-        down: function (e) {
-            if (isIndex < fixCategories.length - 1) {
-                setSelectCateg(selectCateg += 1)
-                if (category.length > 30) {
-                    if (isIndex > 3) {
-                        if (transIndex < category.length - 8) {
-                            setTransIndex(transIndex += 1)
+                        if (category.length > 10) {
+                            if (transIndex !== 0) {
+                                setTransIndex(transIndex -= 1)
+                            }
+                            setIsIndex(isIndex -= 1)
+                        } else {
+                            setIsIndex(isIndex -= 1)
                         }
                     }
-                    setIsIndex(isIndex += 1)
-                    if (isIndex > 15 && end < category.length) {
-                        setIsIndex(15)
-                        setStart(start += 1)
-                        setEnd(end += 1)
+                }
+            },
+
+            down: function (e) {
+                if (isIndex < fixCategories.length - 1) {
+                    setSelectCateg(selectCateg += 1)
+                    if (category.length > 30) {
+                        if (isIndex > 3) {
+                            if (transIndex < category.length - 8) {
+                                setTransIndex(transIndex += 1)
+                            }
+                        }
+                        setIsIndex(isIndex += 1)
+                        if (isIndex > 15 && end < category.length) {
+                            setIsIndex(15)
+                            setStart(start += 1)
+                            setEnd(end += 1)
+                        }
+                        console.log(isIndex)
+                    } else {
+                        if (category.length > 8) {
+                            if (transIndex < category.length - 8) {
+                                setTransIndex(transIndex += 1)
+                            }
+                            setIsIndex(isIndex += 1)
+                        } else {
+                            setIsIndex(isIndex += 1)
+                        }
                     }
-                    console.log(isIndex)
+                }
+            },
+
+            back: () => {
+                if (isIndex > 5) {
+                    dispatch(
+                        {
+                            type: 'CHANGE_CONTROLS',
+                            payload: {
+                                name: 'search-button'
+                            }
+                        }
+                    )
                 } else {
-                    if (category.length > 8) {
-                        if (transIndex < category.length - 8) {
-                            setTransIndex(transIndex += 1)
+                    navigate('/menu')
+                    dispatch(
+                        {
+                            type: 'CHANGE_CONTROLS',
+                            payload: {
+                                name: 'menu-item'
+                            }
                         }
-                        setIsIndex(isIndex += 1)
-                    } else {
-                        setIsIndex(isIndex += 1)
-                    }
+                    )
                 }
             }
-        },
 
-        back: () => {
-            navigate('/menu')
-            dispatch(
-                {
-                    type: 'CHANGE_CONTROLS',
-                    payload: {
-                        name: 'menu-item'
-                    }
-                }
-            )
         }
-
-    }
+    })
 
     useKeydown(control)
 

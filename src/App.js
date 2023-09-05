@@ -33,6 +33,14 @@ function App () {
       )
     } else {
       navigate('/login')
+      dispatch(
+        {
+          type: 'CHANGE_CONTROLS',
+          payload: {
+            name: 'login-items'
+          }
+        }
+      )
     }
   }, [])
 

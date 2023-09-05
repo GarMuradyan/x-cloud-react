@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { memo } from "react";
 import RenderSettingsParentalCode from "../../settings/settingsParentalCode.jsx";
 import { moviesLock, seriesLock } from "../../settings/settingsConfig.js";
+import words from "../../settings/words.js";
 
 function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
     const dispatch = useDispatch()
@@ -204,7 +205,7 @@ function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
     return (
         <div className="movie-info-similar-vods-box">
 
-            <div className="movie-info-similar-title">Similar Movies</div>
+            <div className="movie-info-similar-title">{words[localStorage.getItem('language')].similarMovies}</div>
 
             <div className="movie-info-similar-list-box">
 

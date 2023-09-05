@@ -61,7 +61,16 @@ function RenderSettingsLockCategories ({ onClose, categories }) {
     return (
         <div className="settings-lock-categories-page-box">
 
-            <div className={control.isActive ? "settings-lock-categories-back-box active" : "settings-lock-categories-back-box"}>
+            <div className={control.isActive ? "settings-lock-categories-back-box active" : "settings-lock-categories-back-box"} onMouseMove={() => {
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-lock-categories-back'
+                        }
+                    }
+                )
+            }} onClick={control.ok}>
                 <RenderBackButton />
             </div>
 

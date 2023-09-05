@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from "react-redux"
 import RenderBackButton from "../back.jsx"
 import RenderParentalCodeInputs from "./settingsParentalCodeInputs.jsx"
 import RenderParentalKeyboard from "./settingsParentalKeyboard.jsx"
+import words from "./words"
 
 function RenderSettingsParentalCode ({ onClose, cb, type }) {
 
     const [pinCode, setPinCode] = useState({
-        title: 'Enter Pin',
+        title: words[localStorage.getItem('language')].enterPin,
         value: '',
         type: 'Enter Pin',
         newPin: ''
@@ -68,7 +69,16 @@ function RenderSettingsParentalCode ({ onClose, cb, type }) {
     return (
         <div className="settings-parental-code-page">
 
-            <div className={control.isActive ? "settings-parental-back-box active" : "settings-parental-back-box"}>
+            <div className={control.isActive ? "settings-parental-back-box active" : "settings-parental-back-box"} onClick={onClose} onMouseMove={() => {
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'settings-parental-back'
+                        }
+                    }
+                )
+            }}>
                 <RenderBackButton />
             </div>
 

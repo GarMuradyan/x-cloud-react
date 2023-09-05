@@ -3,12 +3,13 @@ import useKeydown from "../../remote/useKeydown"
 import { useState } from "react"
 import { liveTvLock, moviesLock, seriesLock } from "./settingsConfig"
 import lockPng from "../../images/lock.png"
+import words from "./words"
 
 function RenderSettingsLockCategoriesContent ({ onClose, lockCateg }) {
 
     const dispatch = useDispatch()
 
-    const names = ['Live Categories', 'Movie Categories', 'Series Categories']
+    const names = [words[localStorage.getItem('language')].liveCategories, words[localStorage.getItem('language')].movieCategories, words[localStorage.getItem('language')].seriesCategories]
 
     const currentControls = useSelector(function (state) {
         return state.currentControl
@@ -124,7 +125,21 @@ function RenderSettingsLockCategoriesContent ({ onClose, lockCateg }) {
 
                                 {categ.map((val, i) => {
                                     return (
-                                        <div key={val.category_id} className={control.isActive && index == isRowIndex && i == isIndex ? "lock-categories-row-item-box active" : "lock-categories-row-item-box"}>
+                                        <div key={val.category_id} className={control.isActive && index == isRowIndex && i == isIndex ? "lock-categories-row-item-box active" : "lock-categories-row-item-box"} onMouseMove={() => {
+                                            dispatch(
+                                                {
+                                                    type: 'CHANGE_CONTROLS',
+                                                    payload: {
+                                                        name: 'settings-lock-categories-items'
+                                                    }
+                                                }
+                                            )
+                                            setIsIndex(i)
+                                            setIsRowIndex(index)
+                                            setTransIndex(i)
+                                        }} onClick={() => {
+                                            lockClick(categories[isRowIndex][isIndex])
+                                        }}>
 
                                             <div className="lock-categories-row-item-name-box">{val.category_name}</div>
 

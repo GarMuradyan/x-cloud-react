@@ -5,6 +5,7 @@ import { memo, useEffect, useState } from "react"
 import RenderLiveTvChannelsCard from "./liveTvChannelsCard.jsx"
 import { liveTvLock } from "../settings/settingsConfig"
 import RenderSettingsParentalCode from "../settings/settingsParentalCode.jsx"
+import { liveFavoriteCategory, liveTvFavorits } from "./liveTVConfig"
 
 function RenderLiveTvChannels () {
 
@@ -135,7 +136,8 @@ function RenderLiveTvChannels () {
         },
 
         right: function (e) {
-
+            control.yellow()
+            console.log(selectidChannel)
         },
 
         up: function (e) {
@@ -259,6 +261,39 @@ function RenderLiveTvChannels () {
                     }
                 }
             )
+        },
+
+        yellow: function () {
+            if (selectidChannel) {
+                console.log(liveFavoriteCategory)
+                console.log(liveTvFavorits)
+                if (liveTvFavorits[selectidChannel.stream_id]) {
+                    delete liveTvFavorits[selectidChannel.stream_id]
+                    for (let i = 0; i < liveFavoriteCategory.channels.length; i++) {
+                        if (liveFavoriteCategory.channels[i].stream_id == selectidChannel.stream_id) {
+                            liveFavoriteCategory.channels.splice(i, 1)
+                        }
+                    }
+                } else {
+                    liveTvFavorits[selectidChannel.stream_id] = true
+                    liveFavoriteCategory.channels.push(selectidChannel)
+                }
+
+                dispatch(
+                    {
+                        type: "CHANGE_SELECTID_LIVE_CATEGORY",
+                        payload: {
+                            liveCategory: { ...selectidLiveCategory }
+                        }
+                    }
+                )
+                if (!selectidLiveCategory.channels.length) {
+                    control.green()
+                }
+                console.log(liveFavoriteCategory)
+                console.log(liveTvFavorits)
+                localStorage.setItem('live-favorit', JSON.stringify(liveTvFavorits))
+            }
         }
     }
 

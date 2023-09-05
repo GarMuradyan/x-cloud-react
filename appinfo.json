@@ -1,0 +1,12 @@
+{
+    "vendor": "xCloud",
+    "largeIcon": "./images/Logo.png",
+    "icon": "./images/Logo.png",
+    "main": "index.html",
+    "requiredMemory": 50,
+    "id": "com.xcloud.video.tech",
+    "title": "xCloud",
+    "type": "web",
+    "version": "1.0.0",
+    "disableBackHistoryAPI": true
+}

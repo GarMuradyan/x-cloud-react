@@ -130,8 +130,8 @@
 }
 
 .movie-vods-content-box {
-    transition: 0.2s linear;
     position: relative;
+    transition: 0.2s linear;
 }
 
 .movie-vods-rows-box {
@@ -150,6 +150,7 @@
     position: absolute;
     bottom: 2rem;
     right: 2rem;
+    opacity: 1 !important;
 }
 
 .movie-vods-card-box {
@@ -160,6 +161,7 @@
     /* position: relative; */
     border: 0.3rem solid transparent;
     position: absolute;
+    overflow: hidden;
 }
 
 .movie-vods-card-box:nth-child(1) {
@@ -175,6 +177,8 @@
     height: 100%;
     border-radius: 2rem;
     position: relative;
+    opacity: 0;
+    transition: 0.5s linear;
 }
 
 .movie-vods-card-name {
@@ -189,6 +193,7 @@
     overflow: hidden;
     height: 9rem;
     text-overflow: ellipsis;
+    transition: 0.3s all;
 }
 
 .movie-vods-card-favorit {
@@ -198,6 +203,7 @@
     bottom: 8rem !important;
     right: 2rem !important;
     border-radius: 0rem !important;
+    opacity: 1 !important;
 }
 
 .movie-vods-card-progres {
@@ -607,6 +613,8 @@
     height: 100%;
     object-fit: cover;
     border-radius: 2rem;
+    opacity: 0;
+    transition: 0.5s linear;
 }
 
 .movie-info-episodes-card-box:nth-child(1) {
@@ -638,6 +646,8 @@
     position: relative;
     bottom: 12rem;
     z-index: 99;
+    transition: 0.5s all;
+    opacity: 0;
 }
 
 .movie-info-episodes-num-box {
@@ -648,6 +658,8 @@
     bottom: 12rem;
     z-index: 99;
     font-weight: 700;
+    transition: 0.5s all;
+    opacity: 0;
 }
 
 .movie-info-episodes-gradient-box {

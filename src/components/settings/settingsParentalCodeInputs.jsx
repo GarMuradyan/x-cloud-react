@@ -80,7 +80,17 @@ function RenderParentalCodeInputs ({ onClose, cb, pinCode }) {
 
                 {arr.map((val, i) => {
                     return (
-                        <div key={i} style={{ backgroundImage: pinCode.value[i] ? `url(${ pinPng })` : false, border: pinCode.value[i] ? '0.3rem solid white' : false }} className={control.isActive && i == isIndex ? "parental-code-inputs-item-box active" : "parental-code-inputs-item-box"}></div>
+                        <div key={i} style={{ backgroundImage: pinCode.value[i] ? `url(${ pinPng })` : false, border: pinCode.value[i] ? '0.3rem solid white' : false }} className={control.isActive && i == isIndex ? "parental-code-inputs-item-box active" : "parental-code-inputs-item-box"} onMouseMove={() => {
+                            dispatch(
+                                {
+                                    type: 'CHANGE_CONTROLS',
+                                    payload: {
+                                        name: 'settings-parental-inputs'
+                                    }
+                                }
+                            )
+                            setIsIndex(i)
+                        }} onClick={control.ok}></div>
                     )
                 })}
 

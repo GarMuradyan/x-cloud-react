@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import useKeydown from "../../remote/useKeydown"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -12,9 +12,19 @@ function RenderSettingsLogOut ({ onClose }) {
 
     let [isIndex, setIsIndex] = useState(0)
 
+    const logOutRef = useRef(null)
+
     const cardClick = (data) => {
         if (data.type == 'log out') {
             navigate('/login')
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'login-items'
+                    }
+                }
+            )
         } else {
             dispatch(
                 {
@@ -24,7 +34,10 @@ function RenderSettingsLogOut ({ onClose }) {
                     }
                 }
             )
-            onClose(false)
+            logOutRef.current ? logOutRef.current.style.opacity = '0' : false
+            setTimeout(() => {
+                onClose(false)
+            }, 300);
         }
     }
 
@@ -61,7 +74,6 @@ function RenderSettingsLogOut ({ onClose }) {
         },
 
         back: () => {
-            onClose(false)
             dispatch(
                 {
                     type: 'CHANGE_CONTROLS',
@@ -70,13 +82,23 @@ function RenderSettingsLogOut ({ onClose }) {
                     }
                 }
             )
+            logOutRef.current ? logOutRef.current.style.opacity = '0' : false
+            setTimeout(() => {
+                onClose(false)
+            }, 300);
         }
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            logOutRef.current ? logOutRef.current.style.opacity = '1' : false
+        }, 0);
+    }, [])
 
     useKeydown(control)
 
     return (
-        <div className="settings-log-out-box">
+        <div ref={logOutRef} className="settings-log-out-box">
 
             <div className="log-out-box">
 
@@ -84,6 +106,8 @@ function RenderSettingsLogOut ({ onClose }) {
                     return (
                         <div key={i} className={control.isActive && i == isIndex ? "log-out-item-box active" : 'log-out-item-box'} onClick={() => {
                             cardClick(val)
+                        }} onMouseMove={() => {
+                            setIsIndex(i)
                         }}>{val.name}</div>
                     )
                 })}

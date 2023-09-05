@@ -3,10 +3,10 @@ import liveTvNotFound from '../../images/liveTvNotFound.png'
 import { useSelector } from "react-redux";
 import lockPng from "../../images/lock.png"
 import { liveTvLock } from "../settings/settingsConfig";
+import { liveTvFavorits } from "./liveTVConfig";
+import favoritLogo from '../../images/favorit.png'
 
 function RenderLiveTvChannelsCard ({ data, isActive, index }) {
-
-    console.log(data)
 
     const selectidChannel = useSelector(function (state) {
         return state.selectidChannel
@@ -33,7 +33,9 @@ function RenderLiveTvChannelsCard ({ data, isActive, index }) {
 
             <div style={{ opacity: currentControls == 'live-tv-channels' || currentControls == 'live-tv-full-screen' ? '1' : '0' }} className="live-tv-channel-card-name-box">{trimmed_category_name}</div>
 
-            {liveTvLock[data.category_id] && selectidLiveCategory.category_id < 0 ? <img style={{ opacity: currentControls !== 'live-tv-channels' ? '0' : '1' }} className="live-tv-channel-card-locked-box" src={lockPng} /> : false}
+            {liveTvLock[data.category_id] && selectidLiveCategory.category_id <= 0 ? <img style={{ opacity: currentControls !== 'live-tv-channels' ? '0' : '1' }} className="live-tv-channel-card-locked-box" src={lockPng} /> : false}
+
+            {liveTvFavorits[data.stream_id] ? <img style={{ opacity: currentControls !== 'live-tv-channels' ? '0' : '1' }} src={favoritLogo} className="live-tv-channel-card-favorit-box" /> : false}
 
         </div>
     )

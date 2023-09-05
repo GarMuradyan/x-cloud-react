@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import RenderLiveTvCategories from "./liveTvCategoreis.jsx"
 import RenderLiveTvChannels from "./liveTvChannels.jsx"
+import words from "../settings/words.js"
 
 function RenderLiveTvCategoriesAndChannels () {
 
@@ -40,7 +41,7 @@ function RenderLiveTvCategoriesAndChannels () {
     return (
         <div className="live-tv-categories-and-channels-box">
 
-            <div className="live-tv-title-box">{trimmed_category_name}</div>
+            <div className="live-tv-title-box">{words[localStorage.getItem('language')][category_name.toLowerCase()] || category_name}</div>
 
             <div className="live-tv-categories-and-channels-content-box">
 

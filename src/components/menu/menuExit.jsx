@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import useKeydown from "../../remote/useKeydown"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import words from "../settings/words"
 
 function RenderMenuExit ({ onClose }) {
+
+    const exitRef = useRef(null)
 
     const arr = [{ name: words[localStorage.getItem('language')].cancel, type: 'cancel' }, { name: words[localStorage.getItem('language')].exit, type: 'exit' }]
 
@@ -24,7 +26,10 @@ function RenderMenuExit ({ onClose }) {
                 window.tizen.application.getCurrentApplication().exit();
             }
         }
-        onClose(false)
+        exitRef.current ? exitRef.current.style.opacity = '0' : false
+        setTimeout(() => {
+            onClose(false)
+        }, 300);
         dispatch(
             {
                 type: 'CHANGE_CONTROLS',
@@ -34,8 +39,6 @@ function RenderMenuExit ({ onClose }) {
             }
         )
     }
-
-
 
     let control = {
         isActive: currentControls == 'menu-exit',
@@ -64,7 +67,10 @@ function RenderMenuExit ({ onClose }) {
         },
 
         back: () => {
-            onClose(false)
+            exitRef.current ? exitRef.current.style.opacity = '0' : false
+            setTimeout(() => {
+                onClose(false)
+            }, 300);
             dispatch(
                 {
                     type: 'CHANGE_CONTROLS',
@@ -78,8 +84,14 @@ function RenderMenuExit ({ onClose }) {
 
     useKeydown(control)
 
+    useEffect(() => {
+        setTimeout(() => {
+            exitRef.current ? exitRef.current.style.opacity = '1' : false
+        }, 0);
+    }, [])
+
     return (
-        <div className="menu-exit-parent-box">
+        <div ref={exitRef} className="menu-exit-parent-box">
 
             <div className="menu-exit-box">
 

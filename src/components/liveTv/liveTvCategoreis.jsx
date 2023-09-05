@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 import { memo } from "react"
 import { liveTvLock } from "../settings/settingsConfig.js"
 import RenderSettingsParentalCode from "../settings/settingsParentalCode.jsx"
+import { liveFavoriteCategory, liveTvFavorits } from "./liveTVConfig.js"
 
 function RenderLiveTvCategories ({ category, changeCategory }) {
 
@@ -15,6 +16,10 @@ function RenderLiveTvCategories ({ category, changeCategory }) {
 
     const currentControls = useSelector(function (state) {
         return state.currentControl
+    })
+
+    const selectidChannel = useSelector(function (state) {
+        return state.selectidChannel
     })
 
     const [showLocked, setShowLocked] = useState(false)
@@ -234,6 +239,28 @@ function RenderLiveTvCategories ({ category, changeCategory }) {
                     }
                 }
             )
+        },
+
+        yellow: function () {
+            if (selectidChannel) {
+                console.log(liveFavoriteCategory)
+                console.log(liveTvFavorits)
+                if (liveTvFavorits[selectidChannel.stream_id]) {
+                    delete liveTvFavorits[selectidChannel.stream_id]
+                    for (let i = 0; i < liveFavoriteCategory.channels.length; i++) {
+                        if (liveFavoriteCategory.channels[i].stream_id == selectidChannel.stream_id) {
+                            liveFavoriteCategory.channels.splice(i, 1)
+                        }
+                    }
+                } else {
+                    liveTvFavorits[selectidChannel.stream_id] = true
+                    liveFavoriteCategory.channels.push(selectidChannel)
+                }
+
+                console.log(liveFavoriteCategory)
+                console.log(liveTvFavorits)
+                localStorage.setItem('live-favorit', JSON.stringify(liveTvFavorits))
+            }
         }
     }
 

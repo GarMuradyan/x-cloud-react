@@ -6,6 +6,8 @@ import words from "../settings/words";
 
 function RenderMoviesCategoriesCard ({ data, isActive, setSelectidCategories, index }) {
 
+    console.log('render-category')
+
     const selectidCategoryId = useSelector(function (state) {
         return state.selectidCategoryId
     })

@@ -2,15 +2,19 @@ import { useState } from 'react'
 import '../../css/login.css'
 import useKeydown from '../../remote/useKeydown'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import words from '../settings/words'
 
 function RenderLoginForm () {
 
-    const login_form_data = [{ name: 'Provider' }, { name: 'username' }, { name: 'password' }]
+    const login_form_data = [{ name: 'Provider' }, { name: words[localStorage.getItem('language')].username }, { name: words[localStorage.getItem('language')].password }]
     const [showKeyboard, setShowKeyboard] = useState(false)
     let [isIndex, setIsIndex] = useState(0)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+    const currentControls = useSelector(function (state) {
+        return state.currentControl
+    })
 
     const itemClick = (e) => {
         if (isIndex == 3) {
@@ -28,8 +32,8 @@ function RenderLoginForm () {
         }
     }
 
-    useKeydown({
-        isActive: true,
+    let control = {
+        isActive: currentControls == 'login-items',
 
         ok: function (e) {
             itemClick(e)
@@ -50,13 +54,27 @@ function RenderLoginForm () {
         },
 
         down: function (e) {
-            if (isIndex < 3) {
+            if (isIndex < 4) {
                 setIsIndex(isIndex += 1)
+            }
+
+            if (isIndex == 4) {
+                setIsIndex(3)
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'login-language'
+                        }
+                    }
+                )
             }
         }
 
 
-    })
+    }
+
+    useKeydown(control)
 
     return (
         <div className="login-form-box">
@@ -64,12 +82,12 @@ function RenderLoginForm () {
             {login_form_data.map((val, i) => {
 
                 return (
-                    <input key={i} className={isIndex == i ? 'login-form-input-box active' : 'login-form-input-box'} placeholder={val.name} onClick={itemClick} />
+                    <input key={i} className={control.isActive && isIndex == i ? 'login-form-input-box active' : 'login-form-input-box'} placeholder={val.name} onClick={itemClick} />
                 )
 
             })}
 
-            <button className={isIndex == 3 ? 'login-form-button-box active' : 'login-form-button-box'} onClick={itemClick} >Login</button>
+            <button className={control.isActive && isIndex == 3 ? 'login-form-button-box active' : 'login-form-button-box'} onClick={itemClick} >Login</button>
 
         </div>
     )

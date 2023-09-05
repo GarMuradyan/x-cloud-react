@@ -7,6 +7,7 @@ import { useRef } from "react"
 import { useState } from "react"
 import RenderSettingsParentalCode from "../settings/settingsParentalCode.jsx"
 import { liveTvLock } from "../settings/settingsConfig"
+import { liveFavoriteCategory, liveTvFavorits } from "./liveTVConfig"
 
 
 function RenderLievTvPlayer () {
@@ -201,6 +202,28 @@ function RenderLievTvPlayer () {
                     }
                 }
             )
+        },
+
+        yellow: function () {
+            if (selectidChannel) {
+                console.log(liveFavoriteCategory)
+                console.log(liveTvFavorits)
+                if (liveTvFavorits[selectidChannel.stream_id]) {
+                    delete liveTvFavorits[selectidChannel.stream_id]
+                    for (let i = 0; i < liveFavoriteCategory.channels.length; i++) {
+                        if (liveFavoriteCategory.channels[i].stream_id == selectidChannel.stream_id) {
+                            liveFavoriteCategory.channels.splice(i, 1)
+                        }
+                    }
+                } else {
+                    liveTvFavorits[selectidChannel.stream_id] = true
+                    liveFavoriteCategory.channels.push(selectidChannel)
+                }
+
+                console.log(liveFavoriteCategory)
+                console.log(liveTvFavorits)
+                localStorage.setItem('live-favorit', JSON.stringify(liveTvFavorits))
+            }
         }
     }
 
@@ -311,8 +334,10 @@ function RenderLievTvPlayer () {
                 console.log('wait')
             }} />
 
-            {control.isActive && showNumber ? <div className="live-tv-player-num-box">{isIndex + 1}</div> : false}
-            {control.isActive && showNumber ? <div className="live-tv-player-name-box">{selectidLiveCategory[isIndex].name}</div> : false}
+            {control.isActive && showNumber ? <div className="live-tv-player-info-box">
+                <div className="live-tv-player-num-box">{isIndex + 1}</div>
+                <div className="live-tv-player-name-box">{selectidLiveCategory[isIndex].name}</div>
+            </div> : false}
 
             {showLocked ? <RenderSettingsParentalCode cb={lockedCb} onClose={lockedOnClose} type={''} /> : false}
 

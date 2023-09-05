@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import RenderMenuExit from "./menuExit.jsx"
 import words from "../settings/words.js"
+import req from "../requests/req.js"
 
 function RenderMenu () {
 
@@ -121,6 +122,16 @@ function RenderMenu () {
                         }
                     }
                 )
+
+                function getData () {
+                    req('https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_series_categories', 'GET', '').then((res) => {
+                        console.log(res)
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                }
+
+                getData()
             }
         },
     ]
@@ -188,7 +199,7 @@ function RenderMenu () {
 
                 {menu_data.map((val, i) => {
                     return (
-                        <RenderMenuCard key={i} data={val} isActive={control.isActive && isIndex == i} />
+                        <RenderMenuCard key={i} data={val} isActive={control.isActive && isIndex == i} index={i} setIsindex={setIsIndex} />
                     )
                 })}
 

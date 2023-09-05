@@ -18,22 +18,22 @@ function RenderSettingsPage () {
     const dispatch = useDispatch()
 
     const backClick = () => {
-
+        navigate('/menu')
+        dispatch(
+            {
+                type: 'CHANGE_CONTROLS',
+                payload: {
+                    name: 'menu-item'
+                }
+            }
+        )
     }
 
     let control = {
         isActive: currentControls == 'settings-back',
 
         ok: function (e) {
-            navigate('/menu')
-            dispatch(
-                {
-                    type: 'CHANGE_CONTROLS',
-                    payload: {
-                        name: 'menu-item'
-                    }
-                }
-            )
+            backClick()
         },
 
         left: function (e) {
@@ -87,7 +87,16 @@ function RenderSettingsPage () {
 
             <div className="settings-page-header-box">
 
-                <div className={control.isActive ? "settings-header-back-box active" : 'settings-header-back-box'}><RenderBackButton /></div>
+                <div className={control.isActive ? "settings-header-back-box active" : 'settings-header-back-box'} onMouseMove={() => {
+                    dispatch(
+                        {
+                            type: 'CHANGE_CONTROLS',
+                            payload: {
+                                name: 'settings-back'
+                            }
+                        }
+                    )
+                }} onClick={backClick}><RenderBackButton /></div>
 
                 <div className="settings-header-title-box">{words[localStorage.getItem('language')].settings}</div>
 

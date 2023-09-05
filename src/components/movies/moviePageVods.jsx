@@ -48,6 +48,7 @@ function RenderMovieVods ({ category, movies }) {
     let [isRowIndex, setIsRowIndex] = useState(0)
     let [transIndex, setTransIndex] = useState(0)
     const [isAnimated, setIsAnimated] = useState(true)
+    console.log(isAnimated)
     const navigate = useNavigate()
     const currentControls = useSelector(function (state) {
         return state.currentControl
@@ -214,10 +215,7 @@ function RenderMovieVods ({ category, movies }) {
                             }
                         }
                     }
-
                 }
-
-
             },
 
             down: function (e) {
@@ -241,9 +239,12 @@ function RenderMovieVods ({ category, movies }) {
                             setIsRowIndex(isRowIndex += 1)
                         } else {
                             setIsRowIndex(isRowIndex += 1)
-                            if (isRowIndex > viewMoreArray.length - 2) {
-                                setTransIndex(transIndex += 1)
-                                console.log('trans')
+                            if (viewMoreArray.length >= 3) {
+
+                                if (isRowIndex > viewMoreArray.length - 2) {
+                                    setTransIndex(transIndex += 1)
+                                    console.log('trans')
+                                }
                             }
                         }
                         console.log(isIndex)

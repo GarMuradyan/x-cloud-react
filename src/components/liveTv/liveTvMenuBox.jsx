@@ -1,27 +1,28 @@
 import { memo } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
+import words from "../settings/words"
 
 function RenderLiveTvMenuBox () {
 
     const liveMenuArr = [
         {
-            name: 'Sort',
+            name: words[localStorage.getItem('language')].sort,
             color: 'red',
             id: 0
         },
         {
-            name: 'Category',
+            name: words[localStorage.getItem('language')].category,
             color: 'green',
             id: 1
         },
         {
-            name: 'Favorites',
+            name: words[localStorage.getItem('language')].favorite,
             color: 'yellow',
             id: 2
         },
         {
-            name: 'Menu',
+            name: words[localStorage.getItem('language')].menu,
             color: 'blue',
             id: 3
         }

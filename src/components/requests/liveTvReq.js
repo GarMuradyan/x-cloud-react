@@ -1,3 +1,5 @@
+import { liveAllCategory, liveFavoriteCategory, liveSearchCategory, liveTvFavorits } from "../liveTv/liveTVConfig";
+
 async function GET_LIVE_TV_DATA () {
     const categoryUrl = 'https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_live_categories'
     const chanelUrl = 'https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_live_streams'
@@ -15,27 +17,17 @@ async function GET_LIVE_TV_DATA () {
 
     for (let i = 0; i < channels.length; i++) {
         if (vods[channels[i].category_id]) {
+            if (liveTvFavorits[channels[i].stream_id]) {
+                liveFavoriteCategory.channels.push(channels[i])
+            }
             vods[channels[i].category_id].channels.push(channels[i])
         }
     }
 
-    const liveFavoriteCategory = {
-        category_id: "-0",
-        category_name: 'Favorites',
-        channels: []
-    }
+    liveAllCategory.channels = channels
+    liveSearchCategory.channels = channels
 
-    const liveAllCategory = {
-        category_id: "-1",
-        category_name: 'All',
-        channels: channels
-    }
-
-    const liveSearchCategory = {
-        category_id: "-2",
-        category_name: 'Search',
-        channels: channels
-    }
+    console.log(liveFavoriteCategory)
 
     const ARR = Object.values(vods)
     const MOVIESDATA = []

@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import useKeydown from "../../remote/useKeydown"
+import words from "./words"
 
 function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
 
@@ -35,7 +36,7 @@ function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
                         if (pinCode.value == localStorage.getItem('pinCode')) {
                             console.log('eeeee')
                             setPinCode({
-                                title: 'Enter New Pin',
+                                title: words[localStorage.getItem('language')].enterNewPin,
                                 value: '',
                                 type: 'Enter New Pin',
                                 newPin: ''
@@ -47,7 +48,7 @@ function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
                             }, 300);
                             console.log('nooo')
                             setPinCode({
-                                title: 'Enter Pin',
+                                title: words[localStorage.getItem('language')].enterPin,
                                 value: '',
                                 type: 'Enter Pin',
                                 newPin: ''
@@ -57,7 +58,7 @@ function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
 
                     if (pinCode.type == 'Enter New Pin') {
                         setPinCode({
-                            title: 'Confirm PIN',
+                            title: words[localStorage.getItem('language')].confirmPin,
                             value: '',
                             type: 'Confirm PIN',
                             newPin: pinCode.value
@@ -69,7 +70,7 @@ function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
                             setConfirmPin(true)
                             localStorage.setItem('pinCode', pinCode.newPin)
                             setPinCode({
-                                title: 'Enter Pin',
+                                title: words[localStorage.getItem('language')].enterPin,
                                 value: '',
                                 type: 'Enter Pin',
                                 newPin: ''
@@ -79,7 +80,7 @@ function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
                             }, 200);
                         } else {
                             setPinCode({
-                                title: 'Confirm PIN',
+                                title: words[localStorage.getItem('language')].confirmPin,
                                 value: '',
                                 type: 'Confirm PIN',
                                 newPin: pinCode.newPin
@@ -94,7 +95,7 @@ function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
                     if (pinCode.value == localStorage.getItem('pinCode')) {
                         console.log('eeeee')
                         setPinCode({
-                            title: 'Enter Pin',
+                            title: words[localStorage.getItem('language')].enterPin,
                             value: '',
                             type: 'Enter Pin',
                             newPin: ''
@@ -107,7 +108,7 @@ function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
                         }, 300);
                         console.log('nooo')
                         setPinCode({
-                            title: 'Enter Pin',
+                            title: words[localStorage.getItem('language')].enterPin,
                             value: '',
                             type: 'Enter Pin',
                             newPin: ''
@@ -157,13 +158,23 @@ function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
 
             {pinKeyboard.map((val, i) => {
                 return (
-                    <div key={i} className={control.isActive && i == isIndex ? "parental-keyboard-item-box active" : "parental-keyboard-item-box"}>{val.key}</div>
+                    <div key={i} className={control.isActive && i == isIndex ? "parental-keyboard-item-box active" : "parental-keyboard-item-box"} onClick={control.ok} onMouseMove={() => {
+                        dispatch(
+                            {
+                                type: 'CHANGE_CONTROLS',
+                                payload: {
+                                    name: 'settings-parental-keyboard'
+                                }
+                            }
+                        )
+                        setIsIndex(i)
+                    }}>{val.key}</div>
                 )
             })}
 
-            {wrongPin ? <div className="wrong-pin">Wrong Pin</div> : false}
+            {wrongPin ? <div className="wrong-pin">{words[localStorage.getItem('language')].wrongPin}</div> : false}
 
-            {confirmPin ? <div className="confirm-new-pin">Confirm New Pin</div> : false}
+            {confirmPin ? <div className="confirm-new-pin">{words[localStorage.getItem('language')].confirmedNewPin}</div> : false}
 
         </div>
     )

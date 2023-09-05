@@ -68,7 +68,16 @@ function RenderMovieSearchHeader ({ value, onCLose, searchList }) {
     return (
         <div className="search-header-box">
 
-            <div className={control.isActive ? "search-back-box active" : 'search-back-box'} onClick={backClick}>
+            <div className={control.isActive ? "search-back-box active" : 'search-back-box'} onClick={backClick} onMouseMove={() => {
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'search-back'
+                        }
+                    }
+                )
+            }}>
 
                 <RenderBackButton />
 

@@ -52,7 +52,7 @@ function RenderSettingsItem () {
                     {
                         type: 'CHANGE_CONTROLS',
                         payload: {
-                            name: 'settings-language-back'
+                            name: 'settings-language-items'
                         }
                     }
                 )
@@ -61,7 +61,7 @@ function RenderSettingsItem () {
         },
         {
             img: XtreamLogo,
-            name: 'Use XTREAM code EPG',
+            name: words[localStorage.getItem('language')].useXTREAMCodeEpg,
             type: 'check',
             onClick: function () {
 
@@ -69,7 +69,7 @@ function RenderSettingsItem () {
         },
         {
             img: 'https://png.pngtree.com/png-clipart/20190920/original/pngtree-white-search-icon-png-image_4627638.jpg',
-            name: 'Use TMDB api',
+            name: words[localStorage.getItem('language')].useTMDBApi,
             type: 'check',
             onClick: function () {
 
@@ -77,7 +77,7 @@ function RenderSettingsItem () {
         },
         {
             img: subtitleLogo,
-            name: 'Remove Subtitle Background',
+            name: words[localStorage.getItem('language')].removeSubtitleBackground,
             type: 'check',
             onClick: function () {
 
@@ -85,7 +85,7 @@ function RenderSettingsItem () {
         },
         {
             img: parentalLogo,
-            name: 'Change parental code',
+            name: words[localStorage.getItem('language')].changeParentalCode,
             onClick: function () {
                 setShowParentalCode(true)
                 dispatch(
@@ -100,7 +100,7 @@ function RenderSettingsItem () {
         },
         {
             img: lockLogo,
-            name: 'Lock Categories',
+            name: words[localStorage.getItem('language')].lockCategories,
             onClick: function () {
                 dispatch(
                     {
@@ -242,7 +242,17 @@ function RenderSettingsItem () {
 
             {settingsData.map((val, i) => {
                 return (
-                    <div key={i} className={control.isActive && isIndex == i ? 'settings-item-box active' : 'settings-item-box'}>
+                    <div key={i} className={control.isActive && isIndex == i ? 'settings-item-box active' : 'settings-item-box'} onMouseMove={() => {
+                        dispatch(
+                            {
+                                type: 'CHANGE_CONTROLS',
+                                payload: {
+                                    name: 'settings-items'
+                                }
+                            }
+                        )
+                        setIsIndex(i)
+                    }} onClick={val.onClick}>
 
                         <img className="settings-item-img-box" src={val.img} />
 

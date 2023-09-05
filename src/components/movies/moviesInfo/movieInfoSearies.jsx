@@ -5,6 +5,8 @@ import RenderMovieInfoEpisodes from "./movieInfoEpisodes.jsx";
 function RenderMovieInfoSearies ({ onClose, infoData, type }) {
 
     const seasons = Object.values(infoData.episodes)
+    console.log(seasons)
+    console.log(infoData)
 
     const [selectidSeason, setSelectidSeason] = useState(0)
 

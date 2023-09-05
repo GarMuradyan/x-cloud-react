@@ -228,6 +228,17 @@ function RenderKeyboard ({ onClose, setValue, value, setFilterData, movies, keyb
 
                                     keyboardClick(val, i)
 
+                                }} onMouseMove={() => {
+                                    dispatch(
+                                        {
+                                            type: 'CHANGE_CONTROLS',
+                                            payload: {
+                                                name: 'keyboard'
+                                            }
+                                        }
+                                    )
+                                    setIsIndex(i)
+                                    setIsRowIndex(row)
                                 }}>{val.key}
 
                                     {val.poster ? <img style={{ width: val.imgWidth ? val.imgWidth : false, height: val.imgHeight ? val.imgHeight : false }} className="keyboard-item-img-box" src={val.poster} /> : false}

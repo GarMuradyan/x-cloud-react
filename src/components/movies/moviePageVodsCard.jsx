@@ -10,9 +10,13 @@ import { moviesLock, seriesLock } from "../settings/settingsConfig"
 
 function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
 
-    console.log(similar)
-
     const navigate = useNavigate()
+
+    const imageRef = useRef(null)
+
+    let originalSrc = data.cover || data.stream_icon
+
+    const poster = originalSrc ? `https://image.tmdb.org/t/p/w200/${ originalSrc.split("/").pop() }` : notFound
 
     let favorits = null
     let continueWatching = {}
@@ -57,14 +61,18 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
 
     }
 
-    let originalSrc = data.cover || data.stream_icon
-
-    const poster = originalSrc ? `https://image.tmdb.org/t/p/w200/${ originalSrc.split("/").pop() }` : notFound
+    useEffect(() => {
+        setTimeout(() => {
+            if (imageRef.current) {
+                imageRef.current.style.opacity = '1'
+            }
+        }, 100);
+    }, [data])
 
     return (
         <div onClick={cardClick} style={{ left: index * 352 + 'px' }} className={isActive ? "movie-vods-card-box active" : "movie-vods-card-box"}>
 
-            <img className="movie-vods-card-poster" src={poster} placeholder="blur" onError={(e) => {
+            <img ref={imageRef} className="movie-vods-card-poster" src={poster || notFound} placeholder="blur" onError={(e) => {
                 e.target.src = notFound
             }} />
 
@@ -72,7 +80,7 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
 
             <p className="movie-vods-card-name">{data.name}</p>
 
-            {isActive ? <div className="movie-vods-card-gradient"></div> : false}
+            <div className="movie-vods-card-gradient"></div>
 
             {favorits[data.stream_id || data.series_id] ? <img className="movie-vods-card-favorit" src={favorit} /> : false}
 
