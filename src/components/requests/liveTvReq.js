@@ -1,8 +1,8 @@
 import { liveAllCategory, liveFavoriteCategory, liveSearchCategory, liveTvFavorits } from "../liveTv/liveTVConfig";
 
 async function GET_LIVE_TV_DATA () {
-    const categoryUrl = 'https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_live_categories'
-    const chanelUrl = 'https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_live_streams'
+    const categoryUrl = 'http://xtream.in:9000/player_api.php?username=Aa6262699165AYR52&password=Aa52527965QGDS4256&type=m3u&action=get_live_categories'
+    const chanelUrl = 'http://xtream.in:9000/player_api.php?username=Aa6262699165AYR52&password=Aa52527965QGDS4256&type=m3u&action=get_live_streams'
     let vods = {}
 
     let json_data = await fetch(categoryUrl)

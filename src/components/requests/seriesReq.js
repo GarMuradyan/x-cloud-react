@@ -1,8 +1,8 @@
 import { seriesFavoritArr } from "../movies/favoritConfig"
 
 async function get_series_data () {
-    const CATEGORYURL = 'https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_series_categories'
-    const MOVIESURL = 'https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_series'
+    const CATEGORYURL = 'http://xtream.in:9000/player_api.php?username=Aa6262699165AYR52&password=Aa52527965QGDS4256&type=m3u&action=get_series_categories'
+    const MOVIESURL = 'http://xtream.in:9000/player_api.php?username=Aa6262699165AYR52&password=Aa52527965QGDS4256&type=m3u&action=get_series'
     let vods = {}
     const series_favorite = localStorage.getItem('series-favorit') ? JSON.parse(localStorage.getItem('series-favorit')) : {}
 

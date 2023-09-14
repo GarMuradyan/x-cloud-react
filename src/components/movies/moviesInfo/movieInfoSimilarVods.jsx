@@ -9,6 +9,7 @@ import { moviesLock, seriesLock } from "../../settings/settingsConfig.js";
 import words from "../../settings/words.js";
 
 function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -108,6 +109,15 @@ function RenderMovieInfoSimilarVods ({ similar, onClose, type, close }) {
             id: data.stream_id || data.series_id,
             similar: similar
         }
+
+        dispatch(
+            {
+                type: 'CHANGE_INFO_STATE',
+                payload: {
+                    infoPageState: false
+                }
+            }
+        )
 
         navigate('/vod_info', { state: stateData })
     }

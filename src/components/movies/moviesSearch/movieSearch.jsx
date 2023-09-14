@@ -10,10 +10,10 @@ function RenderMovieSearch () {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
     const inputValue = useSelector(function (state) {
         return state.searchInputValue
     })
-
     const searchList = useSelector(function (state) {
         return state.searchList
     })

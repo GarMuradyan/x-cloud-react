@@ -7,11 +7,9 @@ function RenderLiveTvSearch () {
     const selectidLiveCategory = useSelector(function (state) {
         return state.selectidLiveCategory
     })
-
     const liveTvAllChannels = useSelector(function (state) {
         return state.liveTvAllChannels
     })
-
     const currentControls = useSelector(function (state) {
         return state.currentControl
     })

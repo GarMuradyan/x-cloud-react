@@ -36,6 +36,9 @@ const words = {
         username: 'Username',
         password: 'Password',
         unFavorite: 'Unfavorite',
+        friends: 'Friends',
+        groupWatching: 'Group Watching',
+        hideCategories: 'Hide Categories',
     },
     arm: {
         liveTv: 'Հեռուստասերիալներ',
@@ -74,6 +77,9 @@ const words = {
         username: 'Օգտանուն',
         password: 'Գաղտնաբառ',
         unFavorite: 'Հեռացնել Ֆավորիտներից',
+        friends: 'Ընկերներ',
+        groupWatching: 'Խմբային դիտում',
+        hideCategories: 'Թաքցնել Կատեգորիաները',
     },
     russian: {
         liveTv: 'Телевидение',
@@ -112,6 +118,9 @@ const words = {
         username: 'Имя пользователя',
         password: 'Пароль',
         unFavorite: 'Удалить из избранного',
+        friends: 'Друзья',
+        groupWatching: 'Групповой просмотр',
+        hideCategories: 'Скрыть категории',
     },
     portuguese: {
         liveTv: 'TV ao vivo',
@@ -150,6 +159,9 @@ const words = {
         username: 'Nome de usuário',
         password: 'Senha',
         unFavorite: 'Desfavoritar',
+        friends: 'Amigos',
+        groupWatching: 'Assistindo em grupo',
+        hideCategories: 'Ocultar categorias',
     },
     spanish: {
         liveTv: 'TV en vivo',
@@ -188,6 +200,9 @@ const words = {
         username: 'Nombre de usuario',
         password: 'Contraseña',
         unFavorite: 'Desfavorito',
+        friends: 'Amigos',
+        groupWatching: 'Viendo en grupo',
+        hideCategories: 'Ocultar categorías',
     },
     japanese: {
         liveTv: 'ライブテレビ',
@@ -226,6 +241,9 @@ const words = {
         username: 'ユーザー名',
         password: 'パスワード',
         unFavorite: 'お気に入りから削除',
+        friends: '友達',
+        groupWatching: 'グループ視聴',
+        hideCategories: 'カテゴリを非表示',
     }
 }
 

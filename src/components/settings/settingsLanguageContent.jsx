@@ -11,6 +11,12 @@ import useKeydown from '../../remote/useKeydown'
 
 function RenderSettingsLanguageContent ({ onClose }) {
 
+    const dispatch = useDispatch()
+
+    const currentControls = useSelector(function (state) {
+        return state.currentControl
+    })
+
     const languagesArr = [
         {
             name: 'English',
@@ -51,14 +57,7 @@ function RenderSettingsLanguageContent ({ onClose }) {
     ]
 
     let [isIndex, setIsIndex] = useState(0)
-
     const [languages, setLanguages] = useState(languagesArr)
-
-    const dispatch = useDispatch()
-
-    const currentControls = useSelector(function (state) {
-        return state.currentControl
-    })
 
     let control = {
         isActive: currentControls == 'settings-language-items',

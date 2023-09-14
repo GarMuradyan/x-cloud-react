@@ -16,6 +16,9 @@ function RenderSettingsLockCategoriesContent ({ onClose, lockCateg }) {
     })
 
     const [categories, setCategories] = useState(lockCateg)
+    let [isIndex, setIsIndex] = useState(0)
+    let [isRowIndex, setIsRowIndex] = useState(0)
+    let [transIndex, setTransIndex] = useState(0)
 
     const lockClick = (data) => {
         if (isRowIndex == 0) {
@@ -47,10 +50,6 @@ function RenderSettingsLockCategoriesContent ({ onClose, lockCateg }) {
         }
         setCategories([...lockCateg])
     }
-
-    let [isIndex, setIsIndex] = useState(0)
-    let [isRowIndex, setIsRowIndex] = useState(0)
-    let [transIndex, setTransIndex] = useState(0)
 
     let control = {
         isActive: currentControls == 'settings-lock-categories-items',

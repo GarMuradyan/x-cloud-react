@@ -15,9 +15,7 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
     const imageRef = useRef(null)
 
     let originalSrc = data.cover || data.stream_icon
-
     const poster = originalSrc ? `https://image.tmdb.org/t/p/w200/${ originalSrc.split("/").pop() }` : notFound
-
     let favorits = null
     let continueWatching = {}
 
@@ -57,6 +55,15 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
             similar: similar
         }
 
+        dispatch(
+            {
+                type: 'CHANGE_INFO_STATE',
+                payload: {
+                    infoPageState: false
+                }
+            }
+        )
+
         navigate('/vod_info', { state: stateData })
 
     }
@@ -78,9 +85,9 @@ function RenderMovieVodsCard ({ data, isActive, similar, close, type, index }) {
 
             {/* <ResizeImage src={data.cover || data.stream_icon || notFound} /> */}
 
-            <p className="movie-vods-card-name">{data.name}</p>
+            <p style={{ opacity: isActive ? '0' : '1' }} className="movie-vods-card-name">{data.name}</p>
 
-            <div className="movie-vods-card-gradient"></div>
+            <div style={{ opacity: isActive ? '0' : '1' }} className="movie-vods-card-gradient"></div>
 
             {favorits[data.stream_id || data.series_id] ? <img className="movie-vods-card-favorit" src={favorit} /> : false}
 

@@ -10,15 +10,25 @@ import { moviesLock, seriesLock } from "../settings/settingsConfig";
 function RenderMovieVods ({ category, movies }) {
 
     console.log(movies)
+    const contentRef = useRef(null)
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const location = useLocation()
+
+    const currentControls = useSelector(function (state) {
+        return state.currentControl
+    })
 
     const viewMoreArray = [];
-
     let quantArray = [];
     const fixCategories = []
     let [start, setStart] = useState(0)
     let [end, setEnd] = useState(10)
-    const contentRef = useRef(null)
     const [showLocked, setShowLocked] = useState(false)
+    let [isIndex, setIsIndex] = useState(0)
+    let [isRowIndex, setIsRowIndex] = useState(0)
+    let [transIndex, setTransIndex] = useState(0)
 
     for (let i = 0; i < category.length; i++) {
         const elem = category[i];
@@ -42,19 +52,6 @@ function RenderMovieVods ({ category, movies }) {
             fixCategories.push(obj)
         }
     }
-
-
-    let [isIndex, setIsIndex] = useState(0)
-    let [isRowIndex, setIsRowIndex] = useState(0)
-    let [transIndex, setTransIndex] = useState(0)
-    const [isAnimated, setIsAnimated] = useState(true)
-    console.log(isAnimated)
-    const navigate = useNavigate()
-    const currentControls = useSelector(function (state) {
-        return state.currentControl
-    })
-    const dispatch = useDispatch()
-    const location = useLocation()
 
     const lockedOnClose = () => {
         setShowLocked(false)
@@ -142,6 +139,15 @@ function RenderMovieVods ({ category, movies }) {
             similar: category
         }
 
+        dispatch(
+            {
+                type: 'CHANGE_INFO_STATE',
+                payload: {
+                    infoPageState: false
+                }
+            }
+        )
+
 
         navigate('/vod_info', { state: stateData })
 
@@ -165,7 +171,7 @@ function RenderMovieVods ({ category, movies }) {
 
             left: function (e) {
                 if (isIndex == 0) {
-                    if (isAnimated) {
+                    if (true) {
                         dispatch(
                             {
                                 type: 'CHANGE_CONTROLS',

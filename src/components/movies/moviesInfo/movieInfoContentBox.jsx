@@ -1,43 +1,50 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import useKeydown from "../../../remote/useKeydown"
 import Portal from "../../portal.jsx"
 import RenderMoviePlayerPage from '../moviePlayer/moviePlayer.jsx'
 import { movieFavoritArr, moviesFavorit, seriesFavorit, seriesFavoritArr } from "../favoritConfig"
 import words from "../../settings/words"
+import { events, onPlayerEvent, playerEvents, sendPlayerEvent } from "../../../remote/socket"
+import { socket } from "../../../App"
+import { useLocation, useNavigate } from "react-router-dom"
+import RenderGroupWatching from '../../groupWatching/groupWatching.jsx'
 
-function RenderMovieInfoContent ({ data, onClose, type, similar, setSimilarMovies }) {
-
-    const [showPlayer, setShowPlayer] = useState(false)
+function RenderMovieInfoContent ({ data, onClose, type, similar, setSimilarMovies, infoPageState }) {
 
     const selectidMovie = useSelector(function (state) {
         return state.selectidMovie
     })
-
     const movieData = useSelector(function (state) {
         return state.movieData
     })
-
     const seriesData = useSelector(function (state) {
         return state.seriesData
     })
-
-    const buttonsInfo = [{ name: words[localStorage.getItem('language')].play, type: "play", id: 0 }, { name: words[localStorage.getItem('language')].watchTrailer, type: "trailer", id: 1 }, { name: moviesFavorit[selectidMovie.stream_id] || seriesFavorit[selectidMovie.series_id] ? words[localStorage.getItem('language')].unFavorite : words[localStorage.getItem('language')].favorite, type: 'favorit', id: 2 }]
-
-    const [moviesCategories, movies] = movieData ? movieData : [{}, {}]
-
-    const [seriesCategories, series] = seriesData ? seriesData : [{}, {}]
-
-    let [isIndex, setIsIndex] = useState(0)
-    const dispatch = useDispatch()
     const currentControls = useSelector(function (state) {
         return state.currentControl
     })
 
-    const playerInfo = {
-        src: `https://globoplay.one/movie/2452366/8950273/${ selectidMovie.stream_id }.${ selectidMovie.container_extension }`,
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
+
+    const buttonsInfo = [{ name: words[localStorage.getItem('language')].play, type: "play", id: 0 }, { name: words[localStorage.getItem('language')].groupWatching, type: "group", id: 1 }, { name: words[localStorage.getItem('language')].watchTrailer, type: "trailer", id: 2 }, { name: moviesFavorit[selectidMovie.stream_id] || seriesFavorit[selectidMovie.series_id] ? words[localStorage.getItem('language')].unFavorite : words[localStorage.getItem('language')].favorite, type: 'favorit', id: 3 }]
+    const [moviesCategories, movies] = movieData ? movieData : [{}, {}]
+    const [seriesCategories, series] = seriesData ? seriesData : [{}, {}]
+
+    let [isIndex, setIsIndex] = useState(0)
+    const [showGroupModal, setShowGroupModal] = useState(false)
+
+    let playerInfo = {
+        src: `http://xtream.in:9000/movie/Aa6262699165AYR52/Aa52527965QGDS4256/${ selectidMovie.stream_id }.${ selectidMovie.container_extension }`,
+        movie: selectidMovie,
+        type: type
+    }
+
+    const groupOnClose = {
         onClose: () => {
-            setShowPlayer(false)
+            setShowGroupModal(false)
             dispatch(
                 {
                     type: 'CHANGE_CONTROLS',
@@ -46,26 +53,24 @@ function RenderMovieInfoContent ({ data, onClose, type, similar, setSimilarMovie
                     }
                 }
             )
-            setSimilarMovies([...similar])
-        },
-        movie: selectidMovie,
-        type: type
+        }
     }
 
     const buttonsClick = (val) => {
         if (val.type == 'play') {
             if (type == 'movie') {
-                setShowPlayer(true)
-                dispatch(
-                    {
-                        type: 'CHANGE_CONTROLS',
-                        payload: {
-                            name: 'movie-player'
-                        }
-                    }
-                )
-                console.log(playerInfo.movie)
+                sendPlayerEvent(playerEvents.setupDataSource, { playerInfo: playerInfo, infoPageState: infoPageState, selectidMovie: selectidMovie })
             }
+        } else if (val.type == 'group') {
+            setShowGroupModal(true)
+            dispatch(
+                {
+                    type: 'CHANGE_CONTROLS',
+                    payload: {
+                        name: 'group-buttons'
+                    }
+                }
+            )
         } else if (val.type == 'favorit') {
             if (type == 'movie') {
                 const id = selectidMovie.stream_id
@@ -297,8 +302,7 @@ function RenderMovieInfoContent ({ data, onClose, type, similar, setSimilarMovie
 
             </div>
 
-
-            {showPlayer ? <Portal element={<RenderMoviePlayerPage {...playerInfo} />}></Portal> : false}
+            {showGroupModal ? <Portal element={<RenderGroupWatching {...groupOnClose} />} /> : false}
 
         </div>
     )

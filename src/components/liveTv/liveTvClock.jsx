@@ -3,7 +3,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 function RenderLiveTvClock () {
+
     const [currentTime, setCurrentTime] = useState(new Date());
+    const formattedTime = currentTime.toLocaleTimeString();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -15,7 +17,6 @@ function RenderLiveTvClock () {
         };
     }, []);
 
-    const formattedTime = currentTime.toLocaleTimeString();
 
     return (
         <div className="live-tv-clock-box">

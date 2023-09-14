@@ -11,6 +11,7 @@ function RenderMoviePage ({ data }) {
     const selectidCategory = useSelector(function (state) {
         return state.selectidCategory
     })
+
     const [categories, movies] = data
     const [selectidCategories, setSelectidCategories] = useState(selectidCategory)
 

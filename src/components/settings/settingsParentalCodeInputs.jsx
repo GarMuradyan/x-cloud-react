@@ -5,9 +5,9 @@ import pinPng from '../../images/pin.png'
 
 function RenderParentalCodeInputs ({ onClose, cb, pinCode }) {
 
-    const arr = [1, 2, 3, 4]
-
     const dispatch = useDispatch()
+
+    const arr = [1, 2, 3, 4]
 
     const currentControls = useSelector(function (state) {
         return state.currentControl

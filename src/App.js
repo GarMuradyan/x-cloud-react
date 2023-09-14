@@ -9,16 +9,75 @@ import RenderMovie from './components/movies/movie.js';
 import RenderMovieSearch from './components/movies/moviesSearch/movieSearch.jsx'
 import RenderMovieInfoPage from './components/movies/moviesInfo/movieInfoPage.jsx';
 import RenderSettingsPage from './components/settings/settings.jsx';
-import { useDispatch } from 'react-redux';
+import RenderMoviePlayerPage from './components/movies/moviePlayer/moviePlayer.jsx';
+import RenderFriendsPage from './components/friends/friendsPage.jsx';
+import { useDispatch, useSelector } from 'react-redux';
 import RenderLiveTv from './components/liveTv/liveTv.jsx';
 import os from './remote/register';
+import io from 'socket.io-client';
+import { events, playerEvents } from './remote/socket';
 
+function makeid (length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let counter = 0;
 
+  while (counter < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    counter += 1;
+  }
+
+  return result;
+}
+
+const id = makeid(12)
+
+// export const socket = io('http://192.168.8.127:6543', { transports: ["websocket"], auth: { code: id } });
+export const socket = io('http://173.249.2.23:6543', { transports: ["websocket"], auth: { code: id } });
 
 function App () {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
+  const onPlayerEvent = (e) => {
+    switch (e.event) {
+      case playerEvents.setupDataSource: {
+        navigate('/player', { state: e.data.playerInfo })
+
+        dispatch(
+          {
+            type: 'CHANGE_INFO_STATE',
+            payload: {
+              infoPageState: e.data.infoPageState
+            }
+          }
+        )
+
+        dispatch(
+          {
+            type: 'CHANGE_CONTROLS',
+            payload: {
+              name: 'movie-player'
+            }
+          }
+        )
+
+        dispatch(
+          {
+            type: 'CHANGE_SELECTID_MOVIE',
+            payload: {
+              movie: e.data.selectidMovie
+            }
+          }
+        )
+        break;
+      }
+    }
+
+  }
+
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -42,6 +101,10 @@ function App () {
         }
       )
     }
+
+    socket.on(events.playerEvent, (e) => onPlayerEvent(e))
+
+    return () => { }
   }, [])
 
   os()
@@ -52,6 +115,10 @@ function App () {
 
   if (!localStorage.getItem('language')) {
     localStorage.setItem('language', 'eng')
+  }
+
+  if (!localStorage.getItem('mac')) {
+    localStorage.setItem('mac', id)
   }
 
   return (
@@ -65,6 +132,8 @@ function App () {
       <Route path='/vod_info' element={<RenderMovieInfoPage />} />
       <Route path='/settings' element={<RenderSettingsPage />} />
       <Route path='/live_tv' element={<RenderLiveTv />} />
+      <Route path='/player' element={<RenderMoviePlayerPage />} />
+      <Route path='/friends' element={<RenderFriendsPage />} />
     </Routes>
   );
 }

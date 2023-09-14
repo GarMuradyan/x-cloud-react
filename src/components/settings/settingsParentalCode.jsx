@@ -8,17 +8,17 @@ import words from "./words"
 
 function RenderSettingsParentalCode ({ onClose, cb, type }) {
 
+    const dispatch = useDispatch()
+
+    const currentControls = useSelector(function (state) {
+        return state.currentControl
+    })
+
     const [pinCode, setPinCode] = useState({
         title: words[localStorage.getItem('language')].enterPin,
         value: '',
         type: 'Enter Pin',
         newPin: ''
-    })
-
-    const dispatch = useDispatch()
-
-    const currentControls = useSelector(function (state) {
-        return state.currentControl
     })
 
     let control = {

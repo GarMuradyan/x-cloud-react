@@ -11,8 +11,14 @@ import words from '../settings/words'
 function RenderMovieBackSearch ({ movies }) {
 
     const navigate = useNavigate()
-
     const location = useLocation()
+    const dispatch = useDispatch()
+
+    const currentControls = useSelector(function (state) {
+        return state.currentControl
+    })
+
+    let [isIndex, setIsIndex] = useState(true)
 
     const searchButtonClick = () => {
         if (location.pathname == '/movie') {
@@ -52,14 +58,6 @@ function RenderMovieBackSearch ({ movies }) {
             }
         )
     }
-
-    const currentControls = useSelector(function (state) {
-        return state.currentControl
-    })
-
-    const dispatch = useDispatch()
-
-    let [isIndex, setIsIndex] = useState(true)
 
     let control = {
         isActive: currentControls == 'search-button',

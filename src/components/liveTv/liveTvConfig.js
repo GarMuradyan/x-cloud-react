@@ -18,6 +18,4 @@ export const liveSearchCategory = {
 
 export let liveTvFavorits = {}
 
-console.log(localStorage.getItem('live-favorit'))
-
 liveTvFavorits = localStorage.getItem('live-favorit') ? JSON.parse(localStorage.getItem('live-favorit')) : {}

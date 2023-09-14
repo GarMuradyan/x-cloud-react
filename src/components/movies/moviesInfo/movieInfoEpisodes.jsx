@@ -5,25 +5,29 @@ import { useDispatch, useSelector } from "react-redux"
 import Portal from "../../portal.jsx"
 import RenderMoviePlayerPage from '../moviePlayer/moviePlayer.jsx'
 import words from "../../settings/words.js"
+import { events, onPlayerEvent, playerEvents, sendPlayerEvent } from "../../../remote/socket.js"
+import { socket } from "../../../App.js"
+import { useLocation, useNavigate } from "react-router-dom"
 
-function RenderMovieInfoEpisodes ({ season, type, onClose }) {
+function RenderMovieInfoEpisodes ({ season, type, onClose, infoPageState }) {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
 
     console.log(season)
 
     const currentControls = useSelector(function (state) {
         return state.currentControl
     })
-
-    const [showPlayer, setShowPlayer] = useState(false)
-    const [playerInfo, setPLayerInfo] = useState(false)
+    const selectidMovie = useSelector(function (state) {
+        return state.selectidMovie
+    })
 
     let [isIndex, setIsIndex] = useState(0)
     let [transIndex, setTransIndex] = useState(0)
     let [start, setStart] = useState(0)
     let [end, setEnd] = useState(30)
-    const [isAnimated, setIsAnimated] = useState(true)
     const fixCategories = []
 
     for (let i = start; i < end; i++) {
@@ -32,39 +36,18 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
             fixCategories.push(season[i])
         }
     }
-    console.log(fixCategories)
 
     const cardClick = (data) => {
+        console.log('episode-click')
 
         const playerData = {
             src: null,
-            onClose: () => {
-                setShowPlayer(false)
-                dispatch(
-                    {
-                        type: 'CHANGE_CONTROLS',
-                        payload: {
-                            name: 'movie-info-episodes'
-                        }
-                    }
-                )
-            },
             movie: data,
             type: type
         }
-        playerData.src = `https://globoplay.one/series/2452366/8950273/${ data.id }.${ data.container_extension }`
-        setPLayerInfo(playerData)
+        playerData.src = `http://xtream.in:9000/series/Aa6262699165AYR52/Aa52527965QGDS4256/${ data.id }.${ data.container_extension }`
 
-        setShowPlayer(true)
-
-        dispatch(
-            {
-                type: 'CHANGE_CONTROLS',
-                payload: {
-                    name: 'movie-player'
-                }
-            }
-        )
+        sendPlayerEvent(playerEvents.setupDataSource, { playerInfo: playerData, infoPageState: infoPageState, selectidMovie: selectidMovie })
     }
 
     useEffect(() => {
@@ -170,7 +153,7 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
     return (
         <div className="movie-info-episodes-box">
 
-            <div className="movie-info-episodes-title">{words[localStorage.getItem('language')].episodes}</div>
+            <div className="movie-info-episodes-title">{words[localStorage.getItem('language')].episodes + " " + season.length}</div>
 
             <div className="movie-info-episodes-list-box">
 
@@ -185,9 +168,6 @@ function RenderMovieInfoEpisodes ({ season, type, onClose }) {
                 </div>
 
             </div>
-
-
-            {showPlayer ? <Portal element={<RenderMoviePlayerPage {...playerInfo} />}></Portal> : false}
 
         </div>
     )

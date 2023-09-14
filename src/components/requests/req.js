@@ -5,7 +5,7 @@ function req (url, method, data) {
 
         xhr.open(method, url)
 
-        data ? xhr.setRequestHeader('Content-Type', 'aplication/json') : false
+        data ? xhr.setRequestHeader('Content-Type', 'application/json') : false
 
         data ? xhr.send(JSON.stringify(data)) : xhr.send()
 
@@ -20,10 +20,12 @@ function req (url, method, data) {
         Promise.prototype.abort = function () {
             xhr.abort()
         }
+
     })
 
     return promise
 
 }
+
 
 export default req

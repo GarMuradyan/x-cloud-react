@@ -11,17 +11,14 @@ function RenderLiveTvChannelsCard ({ data, isActive, index }) {
     const selectidChannel = useSelector(function (state) {
         return state.selectidChannel
     })
-
     const selectidLiveCategory = useSelector(function (state) {
         return state.selectidLiveCategory
     })
-
     const currentControls = useSelector(function (state) {
         return state.currentControl
     })
 
     let channel_name = data.name;
-
     let trimmed_category_name = channel_name.replace(/⭐️/g, '');
 
     return (

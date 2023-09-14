@@ -12,9 +12,7 @@ function RenderLiveTvCategoriesCard ({ data, isActive, index }) {
     })
 
     let category_name = data.category_name;
-
     let trimmed_category_name = category_name.replace(/⭐️/g, '');
-
     let name = words[localStorage.getItem('language')][data.category_name.toLowerCase()] || data.category_name
 
     return (

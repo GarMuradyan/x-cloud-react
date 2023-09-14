@@ -5,18 +5,16 @@ import words from "./words"
 
 function RenderParentalKeyboard ({ onClose, cb, pinCode, setPinCode, type }) {
 
-    const pinKeyboard = [{ key: '1', type: 'basic' }, { key: '2', type: 'basic' }, { key: '3', type: 'basic' }, { key: '4', type: 'basic' }, { key: '5', type: 'basic' }, { key: '6', type: 'basic' }, { key: '7', type: 'basic' }, { key: '8', type: 'basic' }, { key: '9', type: 'basic' }, { key: '0', type: 'basic' }]
-
-    const [wrongPin, setWrongPin] = useState(false)
-
-    const [confirmPin, setConfirmPin] = useState(false)
-
     const dispatch = useDispatch()
+
+    const pinKeyboard = [{ key: '1', type: 'basic' }, { key: '2', type: 'basic' }, { key: '3', type: 'basic' }, { key: '4', type: 'basic' }, { key: '5', type: 'basic' }, { key: '6', type: 'basic' }, { key: '7', type: 'basic' }, { key: '8', type: 'basic' }, { key: '9', type: 'basic' }, { key: '0', type: 'basic' }]
 
     const currentControls = useSelector(function (state) {
         return state.currentControl
     })
 
+    const [wrongPin, setWrongPin] = useState(false)
+    const [confirmPin, setConfirmPin] = useState(false)
     let [isIndex, setIsIndex] = useState(0)
 
     let control = {

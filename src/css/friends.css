@@ -1,0 +1,58 @@
+.friends-page-box {
+    height: 100vh;
+    padding: 0rem 5rem;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+}
+
+.friends-list-box {
+    width: 75rem;
+    height: 95rem;
+    overflow: hidden;
+}
+
+.friends-list-title-box {
+    color: white;
+    font-size: 5rem;
+}
+
+.friends-not-found-box {
+    color: white;
+    font-size: 5rem;
+    position: absolute;
+    top: 35rem;
+}
+
+.friends-list-row-box {
+    height: 86.1rem;
+    margin-top: 3rem;
+}
+
+.friends-list-row-content-box {
+    transition: 0.3s all;
+}
+
+.friends-list-card-box {
+    height: 7rem;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    padding: 0rem 3rem;
+    border-radius: 2rem;
+    border: 0.3rem solid rgb(124, 124, 124);
+}
+
+.friends-list-card-name-box {
+    color: white;
+    font-size: 4rem;
+    overflow: hidden;
+    width: 15rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.friends-list-card-logo-box {
+    margin-left: 5rem;
+    width: 3.5rem;
+}

@@ -9,17 +9,31 @@ import GET_INFO_DATA from "../../requests/infoReq.js";
 import RenderMovieInfoSearies from "./movieInfoSearies.jsx";
 import { memo } from "react";
 import { useRef } from "react";
+import { playerEvents, sendPlayerEvent } from "../../../remote/socket.js";
 
 function RenderMovieInfoPage () {
+
+    const dispatch = useDispatch()
     const navigate = useNavigate()
+    const location = useLocation()
+
+    const infoRef = useRef(null)
 
     let backgroundImage = null
-    const infoRef = useRef(null)
+    let state
+
+    const infoPageState = useSelector(function (state) {
+        return state.infoPageState
+    })
+
+    if (infoPageState) {
+        state = infoPageState
+    } else {
+        state = location.state
+    }
 
     const [infoData, setInfoData] = useState(null)
     const [loadingInfo, setLoadingInfo] = useState({})
-    const location = useLocation()
-    const state = location.state
     const [similarMovies, setSimilarMovies] = useState(state.similar)
 
     if (infoData) {
@@ -29,11 +43,6 @@ function RenderMovieInfoPage () {
             backgroundImage = infoData.info.movie_image
         }
     }
-
-    const dispatch = useDispatch()
-    const currentControls = useSelector(function (state) {
-        return state.currentControl
-    })
 
     const onClose = () => {
         if (state.priviusControl == 'keyboard') {
@@ -64,7 +73,25 @@ function RenderMovieInfoPage () {
                 }
             )
         }
+        dispatch(
+            {
+                type: 'CHANGE_INFO_STATE',
+                payload: {
+                    infoPageState: false
+                }
+            }
+        )
     }
+
+    const test = e => {
+        e.stopPropagation();
+    }
+
+    setTimeout(() => {
+        if (infoRef.current) {
+            infoRef.current.style.opacity = '1'
+        }
+    }, 50);
 
     useEffect(() => {
 
@@ -80,9 +107,10 @@ function RenderMovieInfoPage () {
         }
 
         onAbort.onAbort = GET_INFO_DATA(state.id, function (data) {
-            if (data.info) {
-                if (currentControls == 'movie-info-loading') {
-                    setInfoData(data)
+
+            if (infoPageState !== state) {
+                if (data.info) {
+                    console.log(data, 'info-data===========')
                     dispatch(
                         {
                             type: 'CHANGE_CONTROLS',
@@ -92,24 +120,18 @@ function RenderMovieInfoPage () {
                         }
                     )
                 }
+            }
+            if (data.info) {
+                setInfoData(data)
             } else {
                 onClose()
             }
+
         }, state.type)
 
         setLoadingInfo(onAbort)
 
     }, [state])
-
-    const test = e => {
-        e.stopPropagation();
-    }
-
-    setTimeout(() => {
-        if (infoRef.current) {
-            infoRef.current.style.opacity = '1'
-        }
-    }, 50);
 
     return (
         <>{infoData ? <div ref={infoRef} style={{ backgroundImage: 'url(' + backgroundImage + ')' }} className="movie-info-page-box" onClick={test}>
@@ -118,9 +140,9 @@ function RenderMovieInfoPage () {
 
             <div className="movie-info-bottom-gradient"></div>
 
-            <RenderMovieInfoContent data={infoData} onClose={onClose} type={state.type} similar={similarMovies} setSimilarMovies={setSimilarMovies} />
+            <RenderMovieInfoContent data={infoData} onClose={onClose} type={state.type} similar={similarMovies} setSimilarMovies={setSimilarMovies} infoPageState={state} />
 
-            {state.type == 'movie' ? <RenderMovieInfoSimilarVods similar={similarMovies} onClose={onClose} type={state.type} close={state.priviusControl} /> : <RenderMovieInfoSearies onClose={onClose} infoData={infoData} type={state.type} />}
+            {state.type == 'movie' ? <RenderMovieInfoSimilarVods similar={similarMovies} onClose={onClose} type={state.type} close={state.priviusControl} /> : <RenderMovieInfoSearies onClose={onClose} infoData={infoData} type={state.type} infoPageState={state} />}
 
         </div> : <RenderInfoLoading onAbort={loadingInfo.onAbort} onClose={loadingInfo.onClose} />}</>
 

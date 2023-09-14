@@ -13,7 +13,6 @@ import { liveFavoriteCategory, liveTvFavorits } from "./liveTVConfig"
 function RenderLievTvPlayer () {
 
     const livePlayerRef = useRef(null)
-
     const reactPlayerRef = useRef(null)
 
     const dispatch = useDispatch()
@@ -21,27 +20,19 @@ function RenderLievTvPlayer () {
     const selectidChannel = useSelector(function (state) {
         return state.selectidChannel
     })
-
     const currentControls = useSelector(function (state) {
         return state.currentControl
     })
-
     const liveCategory = useSelector(function (state) {
         return state.selectidLiveCategory
     })
 
     const selectidLiveCategory = liveCategory ? liveCategory.channels : null
-
     const [showNumber, setShowNumber] = useState(false)
-
     const [numberTimeOut, setNumberTimeOut] = useState(null)
-
     const [showLocked, setShowLocked] = useState(false)
-
     const [key, setkey] = useState(null)
-
-    let url = selectidChannel ? `https://globoplay.one/2452366/8950273/${ selectidChannel.stream_id }` : ''
-
+    let url = selectidChannel ? `http://xtream.in:9000/Aa6262699165AYR52/Aa52527965QGDS4256/${ selectidChannel.stream_id }` : ''
     let isIndex = 0
 
     if (selectidLiveCategory) {
@@ -104,7 +95,7 @@ function RenderLievTvPlayer () {
                         }
                     }
                 )
-                url = `https://globoplay.one/2452366/8950273/${ selectidChannel.stream_id }`
+                url = `http://xtream.in:9000/Aa6262699165AYR52/Aa52527965QGDS4256/${ selectidChannel.stream_id }`
             } else {
                 isIndex = 0
                 dispatch(
@@ -115,7 +106,7 @@ function RenderLievTvPlayer () {
                         }
                     }
                 )
-                url = `https://globoplay.one/2452366/8950273/${ selectidChannel.stream_id }`
+                url = `http://xtream.in:9000/Aa6262699165AYR52/Aa52527965QGDS4256/${ selectidChannel.stream_id }`
             }
             if (numberTimeOut) {
                 clearTimeout(numberTimeOut)
@@ -159,7 +150,7 @@ function RenderLievTvPlayer () {
                         }
                     }
                 )
-                url = `https://globoplay.one/2452366/8950273/${ selectidChannel.stream_id }`
+                url = `http://xtream.in:9000/Aa6262699165AYR52/Aa52527965QGDS4256/${ selectidChannel.stream_id }`
             } else {
                 isIndex = selectidLiveCategory.length - 1
                 dispatch(
@@ -170,7 +161,7 @@ function RenderLievTvPlayer () {
                         }
                     }
                 )
-                url = `https://globoplay.one/2452366/8950273/${ selectidChannel.stream_id }`
+                url = `http://xtream.in:9000/Aa6262699165AYR52/Aa52527965QGDS4256/${ selectidChannel.stream_id }`
 
             }
             if (numberTimeOut) {
@@ -241,7 +232,7 @@ function RenderLievTvPlayer () {
                         }
                     }
                 )
-                url = `https://globoplay.one/2452366/8950273/${ selectidChannel.stream_id }`
+                url = `http://xtream.in:9000/Aa6262699165AYR52/Aa52527965QGDS4256/${ selectidChannel.stream_id }`
             } else {
                 isIndex = 0
                 dispatch(
@@ -252,7 +243,7 @@ function RenderLievTvPlayer () {
                         }
                     }
                 )
-                url = `https://globoplay.one/2452366/8950273/${ selectidChannel.stream_id }`
+                url = `http://xtream.in:9000/Aa6262699165AYR52/Aa52527965QGDS4256/${ selectidChannel.stream_id }`
             }
             if (numberTimeOut) {
                 clearTimeout(numberTimeOut)
@@ -276,7 +267,7 @@ function RenderLievTvPlayer () {
                         }
                     }
                 )
-                url = `https://globoplay.one/2452366/8950273/${ selectidChannel.stream_id }`
+                url = `http://xtream.in:9000/Aa6262699165AYR52/Aa52527965QGDS4256/${ selectidChannel.stream_id }`
             } else {
                 isIndex = selectidLiveCategory.length - 1
                 dispatch(
@@ -287,7 +278,7 @@ function RenderLievTvPlayer () {
                         }
                     }
                 )
-                url = `https://globoplay.one/2452366/8950273/${ selectidChannel.stream_id }`
+                url = `http://xtream.in:9000/Aa6262699165AYR52/Aa52527965QGDS4256/${ selectidChannel.stream_id }`
 
             }
             if (numberTimeOut) {

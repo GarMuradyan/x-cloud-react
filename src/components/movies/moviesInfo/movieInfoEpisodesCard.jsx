@@ -7,40 +7,11 @@ import { useState } from 'react';
 
 function RenderMovieInfoEpisodesCard ({ data, type, isActive, index }) {
 
-    const [showPlayer, setShowPlayer] = useState(false)
-
     const imgRef = useRef(null)
 
-    const dispatch = useDispatch()
-
     let continueWatching = localStorage.getItem('series-continue') ? JSON.parse(localStorage.getItem('series-continue')) : {}
-
-    const cardClick = () => {
-        setShowPlayer(true)
-        dispatch(
-            {
-                type: 'CHANGE_CONTROLS',
-                payload: {
-                    name: 'movie-player'
-                }
-            }
-        )
-    }
-
-    const playerInfo = {
-        src: `https://globoplay.one/series/2452366/8950273/${ data.id }.${ data.container_extension }`,
-        onClose: () => {
-            setShowPlayer(false)
-            dispatch(
-                {
-                    type: 'CHANGE_CONTROLS',
-                    payload: {
-                        name: 'movie-info-episodes'
-                    }
-                }
-            )
-        }
-    }
+    let originalSrc = data.info.movie_image
+    const poster = originalSrc ? `https://image.tmdb.org/t/p/w200/${ originalSrc.split("/").pop() }` : notFound
 
     useEffect(() => {
         setTimeout(() => {
@@ -50,14 +21,11 @@ function RenderMovieInfoEpisodesCard ({ data, type, isActive, index }) {
         }, 100);
     }, [data])
 
-    let originalSrc = data.info.movie_image
-
-    const poster = originalSrc ? `https://image.tmdb.org/t/p/w200/${ originalSrc.split("/").pop() }` : notFound
 
     console.log(poster)
 
     return (
-        <div className={isActive ? "movie-info-episodes-card-box active" : "movie-info-episodes-card-box"} style={{ left: index * 53 + 'rem' }} onClick={cardClick}>
+        <div className={isActive ? "movie-info-episodes-card-box active" : "movie-info-episodes-card-box"} style={{ left: index * 53 + 'rem' }}>
 
             <img ref={imgRef} style={{ objectFit: data.info.movie_image ? 'cover' : 'contain' }} className="movie-info-episodes-poster-box" src={data.info.movie_image || notFound} onError={(e) => {
                 e.target.src = notFound
@@ -73,8 +41,6 @@ function RenderMovieInfoEpisodesCard ({ data, type, isActive, index }) {
             {continueWatching[data.id] && continueWatching[data.id].progresBar ? <div className='movie-info-episodes-progres-box'>
                 <div style={{ width: continueWatching[data.id].progresBar }} className='movie-info-episodes-progresbar-box'></div>
             </div> : false}
-
-            {showPlayer ? <Portal element={<RenderMoviePlayerPage {...playerInfo} />}></Portal> : false}
 
         </div>
     )

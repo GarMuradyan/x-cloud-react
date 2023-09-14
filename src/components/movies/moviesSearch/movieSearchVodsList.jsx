@@ -8,6 +8,7 @@ import RenderSettingsParentalCode from "../../settings/settingsParentalCode.jsx"
 import { moviesLock, seriesLock } from "../../settings/settingsConfig.js"
 
 function RenderMovieSearchVodsList ({ movies, onClose, type }) {
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -96,6 +97,15 @@ function RenderMovieSearchVodsList ({ movies, onClose, type }) {
             id: data.stream_id || data.series_id,
             similar: movies
         }
+
+        dispatch(
+            {
+                type: 'CHANGE_INFO_STATE',
+                payload: {
+                    infoPageState: false
+                }
+            }
+        )
 
         navigate('/vod_info', { state: stateData })
     }

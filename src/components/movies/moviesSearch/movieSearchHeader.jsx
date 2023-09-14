@@ -16,7 +16,6 @@ function RenderMovieSearchHeader ({ value, onCLose, searchList }) {
         return state.currentControl
     })
 
-
     let control = {
         isActive: currentControls == 'search-back',
 

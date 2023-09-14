@@ -2,7 +2,7 @@ import { useState } from "react";
 import RenderMovieInfoSeasonButtons from "./movieInfoSeasonButtons.jsx";
 import RenderMovieInfoEpisodes from "./movieInfoEpisodes.jsx";
 
-function RenderMovieInfoSearies ({ onClose, infoData, type }) {
+function RenderMovieInfoSearies ({ onClose, infoData, type, infoPageState }) {
 
     const seasons = Object.values(infoData.episodes)
     console.log(seasons)
@@ -14,7 +14,7 @@ function RenderMovieInfoSearies ({ onClose, infoData, type }) {
         <div className="movie-info-series-box">
 
             <RenderMovieInfoSeasonButtons onClose={onClose} seasons={seasons} setSelectidSeason={setSelectidSeason} />
-            <RenderMovieInfoEpisodes onClose={onClose} type={type} season={seasons[selectidSeason]} />
+            <RenderMovieInfoEpisodes onClose={onClose} type={type} season={seasons[selectidSeason]} infoPageState={infoPageState} />
 
         </div>
     )

@@ -8,13 +8,12 @@ function RenderMenuExit ({ onClose }) {
 
     const exitRef = useRef(null)
 
-    const arr = [{ name: words[localStorage.getItem('language')].cancel, type: 'cancel' }, { name: words[localStorage.getItem('language')].exit, type: 'exit' }]
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
+    const arr = [{ name: words[localStorage.getItem('language')].cancel, type: 'cancel' }, { name: words[localStorage.getItem('language')].exit, type: 'exit' }]
     let [isIndex, setIsIndex] = useState(0)
 
-    const navigate = useNavigate()
-
-    const dispatch = useDispatch()
 
     const currentControls = useSelector(function (state) {
         return state.currentControl

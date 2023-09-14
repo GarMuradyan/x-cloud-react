@@ -6,13 +6,19 @@ import words from "./words"
 
 function RenderSettingsLogOut ({ onClose }) {
 
-    const arr = [{ name: words[localStorage.getItem('language')].cancel, type: 'cancel' }, { name: words[localStorage.getItem('language')].logOut, type: 'log out' }]
+    const logOutRef = useRef(null)
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const currentControls = useSelector(function (state) {
+        return state.currentControl
+    })
+
+    const arr = [{ name: words[localStorage.getItem('language')].cancel, type: 'cancel' }, { name: words[localStorage.getItem('language')].logOut, type: 'log out' }]
 
     let [isIndex, setIsIndex] = useState(0)
 
-    const logOutRef = useRef(null)
 
     const cardClick = (data) => {
         if (data.type == 'log out') {
@@ -41,11 +47,6 @@ function RenderSettingsLogOut ({ onClose }) {
         }
     }
 
-    const dispatch = useDispatch()
-
-    const currentControls = useSelector(function (state) {
-        return state.currentControl
-    })
 
     let control = {
         isActive: currentControls == 'settings-log-out',

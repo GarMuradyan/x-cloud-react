@@ -11,19 +11,16 @@ import { liveFavoriteCategory, liveTvFavorits } from "./liveTVConfig.js"
 function RenderLiveTvCategories ({ category, changeCategory }) {
 
     const dispatch = useDispatch()
-
     const navigate = useNavigate()
 
     const currentControls = useSelector(function (state) {
         return state.currentControl
     })
-
     const selectidChannel = useSelector(function (state) {
         return state.selectidChannel
     })
 
     const [showLocked, setShowLocked] = useState(false)
-
     let [isIndex, setIsIndex] = useState(1)
     let [transIndex, setTransIndex] = useState(0)
     let [start, setStart] = useState(0)

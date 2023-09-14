@@ -6,16 +6,12 @@ import words from "../settings/words";
 
 function RenderMoviesCategoriesCard ({ data, isActive, setSelectidCategories, index }) {
 
-    console.log('render-category')
-
     const selectidCategoryId = useSelector(function (state) {
         return state.selectidCategoryId
     })
 
     let category_name = data.category_name;
-
     let trimmed_category_name = category_name.replace(/⭐️/g, '');
-
     let name = words[localStorage.getItem('language')][data.category_name.toLowerCase()] || data.category_name
 
     return (

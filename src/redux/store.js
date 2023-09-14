@@ -1,6 +1,7 @@
 import { createStore } from "redux";
 
 const store = createStore(function (state, action) {
+
     if (action.type === 'CHANGE_CONTROLS') {
         return {
             ...state,
@@ -95,7 +96,13 @@ const store = createStore(function (state, action) {
 
     }
 
+    if (action.type === 'CHANGE_INFO_STATE') {
+        return {
+            ...state,
+            infoPageState: action.payload.infoPageState
+        }
 
+    }
 
     return state
 }, {
@@ -111,7 +118,9 @@ const store = createStore(function (state, action) {
     selectidChannel: 0,
     selectidLiveCategory: null,
     liveTvAllChannels: null,
+    infoPageState: false
 
 })
+
 
 export default store

@@ -10,20 +10,23 @@ import RenderSettingsParentalCode from "../settings/settingsParentalCode.jsx";
 
 function RenderMovieCategories ({ category, setSelectidCategories }) {
 
-    const navigate = useNavigate()
     const contentRef = useRef(null)
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const currentControls = useSelector(function (state) {
+        return state.currentControl
+    })
+
     let [isIndex, setIsIndex] = useState(0)
     let [start, setStart] = useState(0)
     let [end, setEnd] = useState(30)
     let [selectCateg, setSelectCateg] = useState(0)
     let [transIndex, setTransIndex] = useState(0)
     const [showLocked, setShowLocked] = useState(false)
-    const [isAnimated, setIsAnimated] = useState(true)
     const fixCategories = []
-    const currentControls = useSelector(function (state) {
-        return state.currentControl
-    })
-    const dispatch = useDispatch()
+
 
     for (let i = start; i < end; i++) {
         if (category[i]) {

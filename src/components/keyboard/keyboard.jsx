@@ -4,8 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import useKeydown from "../../remote/useKeydown";
 import { useState } from "react";
 import { memo } from "react";
+import { useLocation } from "react-router-dom";
 
 function RenderKeyboard ({ onClose, setValue, value, setFilterData, movies, keyboardClose }) {
+
+    const dispatch = useDispatch()
+    const location = useLocation()
+
+    const searchListt = useSelector(function (state) {
+        return state.searchList
+    })
+    const currentControls = useSelector(function (state) {
+        return state.currentControl
+    })
 
     function lowerCase () {
         for (let i = 0; i < keyboard.length; i++) {
@@ -28,12 +39,9 @@ function RenderKeyboard ({ onClose, setValue, value, setFilterData, movies, keyb
     }
 
     let searchList = []
-
-    const searchListt = useSelector(function (state) {
-        return state.searchList
-    })
-
     const [vodsList, setVodsList] = useState(searchListt)
+    let [isIndex, setIsIndex] = useState(0)
+    let [isRowIndex, setIsRowIndex] = useState(0)
     const [shift, setShift] = useState(false)
 
     const keyboardClick = (data, index) => {
@@ -64,25 +72,31 @@ function RenderKeyboard ({ onClose, setValue, value, setFilterData, movies, keyb
 
     const basicClick = (data, index) => {
         setValue(value + data.key)
-        for (var i = 0; i < movies.length; i++) {
-            if (movies[i].name.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
-                searchList.push(movies[i])
+        console.log(location)
+        if (location.pathname == "/search") {
+            for (var i = 0; i < movies.length; i++) {
+                if (movies[i].name.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                    searchList.push(movies[i])
+                }
             }
+            setVodsList(searchList)
+            setFilterData(searchList)
         }
-        setVodsList(searchList)
-        setFilterData(searchList)
     }
 
     const closeClick = (data, index) => {
         let x = value.substring(0, value.length - 1)
         setValue(x)
-        for (var i = 0; i < movies.length; i++) {
-            if (movies[i].name.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
-                searchList.push(movies[i])
+        if (location.pathname == "/search") {
+
+            for (var i = 0; i < movies.length; i++) {
+                if (movies[i].name.toLowerCase().indexOf(value.toLowerCase()) !== -1) {
+                    searchList.push(movies[i])
+                }
             }
+            setVodsList(searchList)
+            setFilterData(searchList)
         }
-        setVodsList(searchList)
-        setFilterData(searchList)
     }
 
     const shiftClick = () => {
@@ -96,35 +110,28 @@ function RenderKeyboard ({ onClose, setValue, value, setFilterData, movies, keyb
     }
 
     const doneClick = () => {
-        if (vodsList.length) {
-            dispatch(
-                {
-                    type: 'CHANGE_CONTROLS',
-                    payload: {
-                        name: 'movies-search-list'
+        if (location.pathname == "/search") {
+            if (vodsList.length) {
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'movies-search-list'
+                        }
                     }
-                }
-            )
-        } else {
-            dispatch(
-                {
-                    type: 'CHANGE_CONTROLS',
-                    payload: {
-                        name: 'search-back'
+                )
+            } else {
+                dispatch(
+                    {
+                        type: 'CHANGE_CONTROLS',
+                        payload: {
+                            name: 'search-back'
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
-
-    const dispatch = useDispatch()
-
-    let [isIndex, setIsIndex] = useState(0)
-    let [isRowIndex, setIsRowIndex] = useState(0)
-
-    const currentControls = useSelector(function (state) {
-        return state.currentControl
-    })
 
     let control = {
         isActive: currentControls == 'keyboard',
@@ -148,24 +155,36 @@ function RenderKeyboard ({ onClose, setValue, value, setFilterData, movies, keyb
         up: function (e) {
 
             if (isRowIndex == 0) {
-                if (vodsList.length) {
-                    dispatch(
-                        {
-                            type: 'CHANGE_CONTROLS',
-                            payload: {
-                                name: 'movies-search-list'
+                if (location.pathname == "/search") {
+                    if (vodsList.length) {
+                        dispatch(
+                            {
+                                type: 'CHANGE_CONTROLS',
+                                payload: {
+                                    name: 'movies-search-list'
+                                }
                             }
-                        }
-                    )
+                        )
+                    } else {
+                        dispatch(
+                            {
+                                type: 'CHANGE_CONTROLS',
+                                payload: {
+                                    name: 'search-back'
+                                }
+                            }
+                        )
+                    }
                 } else {
                     dispatch(
                         {
                             type: 'CHANGE_CONTROLS',
                             payload: {
-                                name: 'search-back'
+                                name: 'login-items'
                             }
                         }
                     )
+                    onClose()
                 }
             }
 

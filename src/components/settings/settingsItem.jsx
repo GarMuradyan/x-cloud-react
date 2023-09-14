@@ -4,7 +4,7 @@ import { useState } from "react"
 import { memo } from "react"
 import { useNavigate } from "react-router-dom"
 import subtitleLogo from '../../images/subtitle.png'
-import XtreamLogo from '../../images/Xtream.png'
+import hideLogo from '../../images/hide.png'
 import lockLogo from '../../images/lock.png'
 import languageLogo from '../../images/language.png'
 import logoutLogo from '../../images/logout.png'
@@ -20,26 +20,19 @@ import words from "./words"
 
 function RenderSettingsItem () {
 
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const currentControls = useSelector(function (state) {
         return state.currentControl
     })
 
-    const navigate = useNavigate()
-
-    const dispatch = useDispatch()
-
     let [isIndex, setIsIndex] = useState(0)
-
     const [showLogOut, setShowLogOut] = useState(false)
-
     const [showParentalCode, setShowParentalCode] = useState(false)
-
     const [showLockCategories, setShowLockCategories] = useState(false)
-
     const [categories, setCategories] = useState(null)
-
     const [showLoading, setShowLoading] = useState(false)
-
     const [showLanguage, setShowLanguage] = useState(false)
 
     const settingsData = [
@@ -60,27 +53,10 @@ function RenderSettingsItem () {
 
         },
         {
-            img: XtreamLogo,
-            name: words[localStorage.getItem('language')].useXTREAMCodeEpg,
-            type: 'check',
+            img: hideLogo,
+            name: words[localStorage.getItem('language')].hideCategories,
             onClick: function () {
-
-            }
-        },
-        {
-            img: 'https://png.pngtree.com/png-clipart/20190920/original/pngtree-white-search-icon-png-image_4627638.jpg',
-            name: words[localStorage.getItem('language')].useTMDBApi,
-            type: 'check',
-            onClick: function () {
-
-            }
-        },
-        {
-            img: subtitleLogo,
-            name: words[localStorage.getItem('language')].removeSubtitleBackground,
-            type: 'check',
-            onClick: function () {
-
+                console.log('hide-categories')
             }
         },
         {
@@ -112,9 +88,9 @@ function RenderSettingsItem () {
                 )
                 setShowLoading(true)
                 Promise.all([
-                    req('https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_live_categories', "GET", ''),
-                    req('https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_vod_categories', "GET", ''),
-                    req('https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_series_categories', "GET", '')
+                    req('http://xtream.in:9000/player_api.php?username=Aa6262699165AYR52&password=Aa52527965QGDS4256&type=m3u&action=get_live_categories', "GET", ''),
+                    req('http://xtream.in:9000/player_api.php?username=Aa6262699165AYR52&password=Aa52527965QGDS4256&type=m3u&action=get_vod_categories', "GET", ''),
+                    req('http://xtream.in:9000/player_api.php?username=Aa6262699165AYR52&password=Aa52527965QGDS4256&type=m3u&action=get_series_categories', "GET", '')
                 ]).then((res) => {
                     console.log(res)
                     setCategories(res)
@@ -257,12 +233,6 @@ function RenderSettingsItem () {
                         <img className="settings-item-img-box" src={val.img} />
 
                         <div className="settings-item-name-box">{val.name}</div>
-
-                        {val.type ? <div className="settigs-item-check-box">
-
-                            <div className="check-button-box"></div>
-
-                        </div> : false}
 
                     </div>
                 )

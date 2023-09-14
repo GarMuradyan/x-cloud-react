@@ -9,13 +9,12 @@ import words from "./words"
 
 function RenderSettingsPage () {
 
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const currentControls = useSelector(function (state) {
         return state.currentControl
     })
-
-    const navigate = useNavigate()
-
-    const dispatch = useDispatch()
 
     const backClick = () => {
         navigate('/menu')

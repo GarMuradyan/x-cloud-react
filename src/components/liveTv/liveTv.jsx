@@ -5,11 +5,12 @@ import RenderLiveTvPage from "./liveTvPage.jsx";
 import RenderLiveTvLoading from "./liveTvLoading.jsx";
 
 function RenderLiveTv () {
+
+    const dispatch = useDispatch()
+
     const liveTvData = useSelector(function (state) {
         return state.liveTvData
     })
-
-    const dispatch = useDispatch()
 
     const [data, setData] = useState(liveTvData);
 
@@ -31,6 +32,7 @@ function RenderLiveTv () {
             getLiveTvData();
         }
     }, [])
+
     return (
         <>{data ? <RenderLiveTvPage /> : <RenderLiveTvLoading />}</>
     )

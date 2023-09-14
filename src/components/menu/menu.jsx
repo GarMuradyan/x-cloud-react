@@ -2,6 +2,7 @@ import RenderMenuCard from "./menuCard.jsx"
 import movieLogo from '../../images/movie.png'
 import seriesLogo from '../../images/series.png'
 import liveLogo from '../../images/live.png'
+import friendsLogo from '../../images/friends.png'
 import settingsLogo from '../../images/settings.png'
 import Logo from '../../images/Logo.png'
 import '../../css/menu.css'
@@ -15,7 +16,8 @@ import req from "../requests/req.js"
 
 function RenderMenu () {
 
-    const [showExit, setShowExit] = useState(false)
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const menu_data = [
         {
@@ -109,6 +111,21 @@ function RenderMenu () {
                 )
             }
         },
+        // {
+        //     name: words[localStorage.getItem('language')].friends,
+        //     path: '/friends',
+        //     img: friendsLogo,
+        //     dispatch: function () {
+        //         dispatch(
+        //             {
+        //                 type: 'CHANGE_CONTROLS',
+        //                 payload: {
+        //                     name: ''
+        //                 }
+        //             }
+        //         )
+        //     }
+        // },
         {
             name: words[localStorage.getItem('language')].settings,
             path: '/settings',
@@ -124,7 +141,7 @@ function RenderMenu () {
                 )
 
                 function getData () {
-                    req('https://globoplay.one/player_api.php?username=2452366&password=8950273&type=m3u_plus&output=ts&action=get_series_categories', 'GET', '').then((res) => {
+                    req('http://xtream.in:9000/player_api.php?username=Aa6262699165AYR52&password=Aa52527965QGDS4256&type=m3u&action=get_series_categories', 'GET', '').then((res) => {
                         console.log(res)
                     }).catch((err) => {
                         console.log(err)
@@ -137,10 +154,7 @@ function RenderMenu () {
     ]
 
     let [isIndex, setIsIndex] = useState(0)
-
-    const navigate = useNavigate()
-
-    const dispatch = useDispatch()
+    const [showExit, setShowExit] = useState(false)
 
     const currentControls = useSelector(function (state) {
         return state.currentControl
@@ -162,7 +176,7 @@ function RenderMenu () {
         },
 
         right: function (e) {
-            if (isIndex < 3) {
+            if (isIndex < menu_data.length - 1) {
                 setIsIndex(isIndex += 1)
             }
         },

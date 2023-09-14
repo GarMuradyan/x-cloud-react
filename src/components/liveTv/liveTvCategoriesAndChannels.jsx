@@ -13,11 +13,8 @@ function RenderLiveTvCategoriesAndChannels () {
     })
 
     const [categories, channels] = liveTvData
-
     const [selectidCategory, setSelectidCategory] = useState(categories[1])
-
     let category_name = selectidCategory.category_name
-
     let trimmed_category_name = category_name.replace(/⭐️/g, '');
 
     dispatch(
@@ -28,7 +25,6 @@ function RenderLiveTvCategoriesAndChannels () {
             }
         }
     )
-
     dispatch(
         {
             type: 'CHANGE_LIVETV_ALL_CHANNELS',

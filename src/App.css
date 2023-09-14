@@ -13,6 +13,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   animation: loading 1s linear infinite;
+
 }
 
 @-webkit-keyframes loading {
